@@ -4,6 +4,8 @@ require("dotenv").config();
 
 const port = process.env.PORT || 5000;
 
+app.set("view engine", "ejs");
+
 app.listen(port, () => {
     console.log(`server running on port ${port}`);
 })

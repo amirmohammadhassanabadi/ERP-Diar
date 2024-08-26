@@ -1,0 +1,3 @@
+exports.renderLoginPage = (req, res) => {
+    
+}
