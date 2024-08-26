@@ -1,3 +1,7 @@
 :root{
-    --dark-back: #121212;
+    --dark-1: #121212;
+    --dark-2: #1e1e1e;
+    --purple: #7f22fd;
+    --teal: #03dac5;
+    --teal-shadow: rgb(3, 218, 197, .3);
 }
