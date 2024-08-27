@@ -30,3 +30,25 @@ body{
 .page-container>.login-wrapper>.logo-wrapper>img{
     width: 20%;
 }
+
+.page-container>.login-wrapper>.input-wrapper{
+    padding: 1.5rem;
+}
+
+.page-container>.login-wrapper>.input-wrapper>input{
+    width: 100%;
+    border: 0;
+    padding: .7rem 0;
+    margin: 0;
+    line-height: 0;
+    margin-bottom: 1rem;
+    box-sizing: content-box;
+    background-color: transparent;
+    border-bottom: 1px solid #bb86fc;
+    color: aliceblue;
+}
+
+.page-container>.login-wrapper>.input-wrapper>input:focus{
+    outline: 0;
+    border-bottom: 1px solid #03dac5;
+}
