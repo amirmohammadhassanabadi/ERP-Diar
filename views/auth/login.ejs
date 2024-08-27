@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="/css/variables.css">
-    <link rel="stylesheet" href="/css/login.css">
-</head>
-<body>
-    
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+  </head>
+  <body>
     <div class="page-container">
-        <div class="login-wrapper">
-            <div class="logo-wrapper">
-                <img src="/img/logo/logo-low.png" alt="">
-            </div>
-            
-            <div class="input-wrapper">
-                <input type="text" placeholder="username">
-                <div class="password-input-wrapper">
-                    <div class="icon-wrapper">
-                        <i class="fa-solid fa-eye"></i>
-                    </div>
-                    <input type="password" placeholder="password">
-                </div>
-                <button>
-                    Log in
-                </button>
-            </div>
+      <div class="login-wrapper">
+        <div class="logo-wrapper">
+          <img src="/img/logo/logo-low.png" alt="" />
         </div>
+
+        <div class="input-wrapper">
+          <input type="text" placeholder="username" />
+          <div class="password-input-wrapper">
+            <div class="icon-wrapper">
+              <i class="fa-solid fa-eye" id="showIcon"></i>
+            </div>
+            <input type="password" placeholder="password" />
+          </div>
+          <button>Log in</button>
+        </div>
+      </div>
     </div>
 
     <script src="/js/packages/fa.min.js" crossorigin="anonymous"></script>
-</body>
+    <script src="/js/login.js"></script>
+  </body>
 </html>

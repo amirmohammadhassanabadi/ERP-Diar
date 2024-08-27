@@ -4,4 +4,4 @@ const authController = require("../controllers/auth");
 
 authRouter.get("/login", authController.renderLoginPage);
 
-module.exports = {authRouter}
+module.exports = { authRouter };

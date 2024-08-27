@@ -1,11 +1,12 @@
-:root{
-    /* Colors */
-    --dark-1: #121212;
-    --dark-2: #1e1e1e;
-    --white: #fff;
-    --purple: #bb86fc;
-    --teal: #03dac5;
-    --teal-shadow:#019592 ;
-    /* ------------------------------------------ */
-    --transition: all .3s ease;
+:root {
+  /* Colors */
+  --dark-1: #121212;
+  --dark-2: #1e1e1e;
+  --gray: #6f6f6f;
+  --white: #fff;
+  --purple: #bb86fc;
+  --teal: #03dac5;
+  --teal-shadow: #019592;
+  /* ------------------------------------------ */
+  --transition: all 0.3s ease;
 }

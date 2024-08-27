@@ -1,94 +1,103 @@
-body{
-    background-color: var(--dark-back);
-    color: aliceblue;
-    margin: 0;
-    padding: 0;
+body {
+  background-color: var(--dark-back);
+  color: aliceblue;
+  margin: 0;
+  padding: 0;
 }
 
-.page-container{
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--dark-1);
+.page-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--dark-1);
 }
 
-.page-container>.login-wrapper{
-    width: 30%;
-    background-color: var(--dark-2);
-    border-radius: .5rem;
-    box-shadow: #000 0px 5px 15px;
+.page-container > .login-wrapper {
+  width: 30%;
+  background-color: var(--dark-2);
+  border-radius: 0.5rem;
+  box-shadow: #000 0px 5px 15px;
 }
 
-.page-container>.login-wrapper>.logo-wrapper{
-    width: 100%;
-    padding: 1rem 0;
-    text-align: center;
+.page-container > .login-wrapper > .logo-wrapper {
+  width: 100%;
+  padding: 1rem 0;
+  text-align: center;
 }
 
-.page-container>.login-wrapper>.logo-wrapper>img{
-    width: 20%;
+.page-container > .login-wrapper > .logo-wrapper > img {
+  width: 20%;
 }
 
-.page-container>.login-wrapper>.input-wrapper{
-    padding: 1.5rem;
+.page-container > .login-wrapper > .input-wrapper {
+  padding: 1.5rem;
 }
 
-.page-container>.login-wrapper>.input-wrapper input{
-    width: 100%;
-    border: 0;
-    padding: .7rem 0;
-    /* margin-bottom: 1rem; */
-    background-color: transparent;
-    border-bottom: 1px solid var(--purple);
-    color: aliceblue;
+.page-container > .login-wrapper > .input-wrapper input {
+  width: 100%;
+  border: 0;
+  padding: 0.7rem 0;
+  /* margin-bottom: 1rem; */
+  background-color: transparent;
+  border-bottom: 1px solid var(--purple);
+  color: aliceblue;
 }
 
-.page-container>.login-wrapper>.input-wrapper input:nth-child(1){
-    margin-bottom: 1rem;
+.page-container > .login-wrapper > .input-wrapper input:nth-child(1) {
+  margin-bottom: 1rem;
 }
 
-.page-container>.login-wrapper>.input-wrapper input:focus{
-    outline: 0;
-    border-bottom: 1px solid var(--teal);
+.page-container > .login-wrapper > .input-wrapper input:focus {
+  outline: 0;
+  border-bottom: 1px solid var(--teal);
 }
 
-.page-container>.login-wrapper>.input-wrapper>.password-input-wrapper{
-    position: relative;
-    display: flex; /* Enable flexbox */
-    align-items: center; /* Vertically center the contents */
-    width: 100%;
+.page-container > .login-wrapper > .input-wrapper > .password-input-wrapper {
+  position: relative;
+  display: flex; /* Enable flexbox */
+  align-items: center; /* Vertically center the contents */
+  width: 100%;
 }
 
-.page-container>.login-wrapper>.input-wrapper>.password-input-wrapper>.icon-wrapper{
-    position: absolute;
-    right: 10px; /* Distance from the left edge */
-    top: 0;
-    height: 100%;
-    color: #888; /* Icon color */
-    display: flex;
-    align-items: center;
+.page-container
+  > .login-wrapper
+  > .input-wrapper
+  > .password-input-wrapper
+  > .icon-wrapper {
+  position: absolute;
+  right: 10px; /* Distance from the left edge */
+  top: 0;
+  height: 100%;
+  color: var(--gray); /* Icon color */
+  display: flex;
+  align-items: center;
 }
 
-.page-container>.login-wrapper>.input-wrapper>.password-input-wrapper>.icon-wrapper>i{
-    cursor: pointer;
+.page-container
+  > .login-wrapper
+  > .input-wrapper
+  > .password-input-wrapper
+  > .icon-wrapper
+  > i {
+  cursor: pointer;
 }
 
-.page-container>.login-wrapper>.input-wrapper>button{
-    width: 100%;
-    padding: .7rem 0;
-    text-align: center;
-    background-color: var(--teal);
-    border: 0;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--white);
-    margin-top: 2rem;
-    transition: var(--transition);
-    cursor: pointer;
+.page-container > .login-wrapper > .input-wrapper > button {
+  width: 100%;
+  padding: 0.7rem 0;
+  text-align: center;
+  background-color: var(--teal);
+  border: 0;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--white);
+  margin-top: 2rem;
+  transition: var(--transition);
+  cursor: pointer;
 }
 
-.page-container>.login-wrapper>.input-wrapper>button:hover{
-    background-color: var(--teal-shadow);
+.page-container > .login-wrapper > .input-wrapper > button:hover {
+  background-color: var(--teal-shadow);
 }
