@@ -15,9 +15,18 @@ body{
 }
 
 .page-container>.login-wrapper{
-    width: 40%;
-    height: 40%;
+    width: 30%;
     background-color: var(--dark-2);
     border-radius: .5rem;
     box-shadow: #000 0px 5px 15px;
+}
+
+.page-container>.login-wrapper>.logo-wrapper{
+    width: 100%;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.page-container>.login-wrapper>.logo-wrapper>img{
+    width: 20%;
 }
