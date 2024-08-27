@@ -10,13 +10,47 @@ body {
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  background-color: var(--dark-1);
+  flex-direction: column;
+  position: relative;
+}
+
+.page-container > .top-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.page-container > .top-line > .top-line-1 {
+  width: 100%;
+  height: 5px;
+  background-color: var(--red);
+}
+.page-container > .top-line > .top-line-2 {
+  width: 100%;
+  height: 5px;
+  background-color: var(--white);
+}
+
+.page-container > .top {
+  width: 100%;
+  height: 50vh;
+  background-color: var(--navy);
+}
+
+.page-container > .bottom {
+  width: 100%;
+  height: 50vh;
+  background-color: var(--white);
 }
 
 .page-container > .login-wrapper {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
   width: 30%;
-  background-color: var(--dark-2);
+  background-color: var(--navy);
   border-radius: 0.5rem;
   box-shadow: #000 0px 5px 15px;
 }
