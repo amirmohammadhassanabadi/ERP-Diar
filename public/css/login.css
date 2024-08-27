@@ -53,7 +53,7 @@ body {
   background-color: var(--navy);
   border-radius: 0.5rem;
   box-shadow: #000 0px 5px 15px;
-  border-bottom: 5px solid var(--red);
+  border: 3px solid var(--white);
 }
 
 .page-container > .login-wrapper > .logo-wrapper {
