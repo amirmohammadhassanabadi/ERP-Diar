@@ -1,7 +1,11 @@
 :root{
+    /* Colors */
     --dark-1: #121212;
     --dark-2: #1e1e1e;
-    --purple: #7f22fd;
+    --white: #fff;
+    --purple: #bb86fc;
     --teal: #03dac5;
-    --teal-shadow: rgb(3, 218, 197, .3);
+    --teal-shadow:#019592 ;
+    /* ------------------------------------------ */
+    --transition: all .3s ease;
 }

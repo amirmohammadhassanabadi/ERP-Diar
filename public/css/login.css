@@ -44,11 +44,29 @@ body{
     margin-bottom: 1rem;
     box-sizing: content-box;
     background-color: transparent;
-    border-bottom: 1px solid #bb86fc;
+    border-bottom: 1px solid var(--purple);
     color: aliceblue;
 }
 
 .page-container>.login-wrapper>.input-wrapper>input:focus{
     outline: 0;
-    border-bottom: 1px solid #03dac5;
+    border-bottom: 1px solid var(--teal);
+}
+
+.page-container>.login-wrapper>.input-wrapper>button{
+    width: 100%;
+    padding: .7rem 0;
+    text-align: center;
+    background-color: var(--teal);
+    border: 0;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--white);
+    margin-top: 1rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.page-container>.login-wrapper>.input-wrapper>button:hover{
+    background-color: var(--teal-shadow);
 }
