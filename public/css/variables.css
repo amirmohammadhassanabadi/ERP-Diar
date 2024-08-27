@@ -2,16 +2,11 @@
   /* Colors */
   --navy: #202f4e;
   --gold: #cfab5d;
+  --gold-shadow: #ffca58;
   --red: #e52422;
   --white: #f2f2f2;
   --light-gray: #d1d3d4;
-
-  --dark-1: #121212;
-  --dark-2: #1e1e1e;
-  --gray: #6f6f6f;
-  --purple: #bb86fc;
-  --teal: #03dac5;
-  --teal-shadow: #019592;
+  --gray: #cbcbcb;
   /* ------------------------------------------ */
   --transition: all 0.3s ease;
 }

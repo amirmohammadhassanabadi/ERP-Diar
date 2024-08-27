@@ -53,6 +53,7 @@ body {
   background-color: var(--navy);
   border-radius: 0.5rem;
   box-shadow: #000 0px 5px 15px;
+  border-bottom: 5px solid var(--red);
 }
 
 .page-container > .login-wrapper > .logo-wrapper {
@@ -75,8 +76,8 @@ body {
   padding: 0.7rem 0;
   /* margin-bottom: 1rem; */
   background-color: transparent;
-  border-bottom: 1px solid var(--purple);
-  color: aliceblue;
+  border-bottom: 1px solid var(--gold);
+  color: #fff;
 }
 
 .page-container > .login-wrapper > .input-wrapper input:nth-child(1) {
@@ -85,7 +86,11 @@ body {
 
 .page-container > .login-wrapper > .input-wrapper input:focus {
   outline: 0;
-  border-bottom: 1px solid var(--teal);
+  border-bottom: 1px solid var(--gold-shadow);
+}
+
+::placeholder{
+    color: var(--gray);
 }
 
 .page-container > .login-wrapper > .input-wrapper > .password-input-wrapper {
@@ -122,7 +127,7 @@ body {
   width: 100%;
   padding: 0.7rem 0;
   text-align: center;
-  background-color: var(--teal);
+  background-color: var(--gold);
   border: 0;
   font-weight: 700;
   font-size: 1rem;
@@ -133,5 +138,11 @@ body {
 }
 
 .page-container > .login-wrapper > .input-wrapper > button:hover {
-  background-color: var(--teal-shadow);
+  background-color: var(--gold-shadow);
+}
+
+.page-container > .login-wrapper >.login-end-line{
+    width: 100%;
+    height: 3px;
+    background-color: var(--white);
 }
