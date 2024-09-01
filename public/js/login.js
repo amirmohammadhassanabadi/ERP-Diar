@@ -11,7 +11,7 @@ loginWrapper.addEventListener("click", (e) => {
       e.target.classList = "fa-solid fa-eye-slash";
     }
   } else if (e.target.id == "logInBtn") {
-    fetch("/auth/login", {
+    fetch("/auth/postlogin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
