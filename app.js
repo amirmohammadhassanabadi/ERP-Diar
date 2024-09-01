@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const path = require("path");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 // importing routers
 const { authRouter } = require("./routers/auth");
@@ -10,6 +11,10 @@ const { authRouter } = require("./routers/auth");
 const app = express();
 
 const port = process.env.PORT || 5000;
+
+// Body Parser
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // static files - public
 app.use(express.static(path.join(__dirname, "public")));
@@ -23,4 +28,4 @@ mongoose.connect("mongodb://localhost:27017/Diar-ERP").then(() => {
   app.listen(port, () => {
     console.log(`server running on port ${port}`);
   });
-})
+});
