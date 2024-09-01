@@ -20,6 +20,7 @@ loginWrapper.addEventListener("click", (e) => {
         username: e.target.parentElement.children[0].value,
         password: e.target.parentElement.children[1].children[1].value,
         department: "it",
+        test: "test"
       }),
     })
       .then((res) => res.json())

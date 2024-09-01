@@ -15,7 +15,8 @@ const Schema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ["it"]
-    }
+    },
+    test: {type: String, required: true}
 })
 
 const User = new mongoose.model("User", Schema);

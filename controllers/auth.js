@@ -5,12 +5,13 @@ exports.renderLoginPage = (req, res) => {
 }
 
 exports.addUser = async (req, res) => {
-    const {username, password, department} = req.body;
+    const {username, password, department, test} = req.body;
     
     let newUser = new User({
         username: username,
         password: password,
-        department: department 
+        department: department,
+        test: test
     })
 
     newUser = await newUser.save();
