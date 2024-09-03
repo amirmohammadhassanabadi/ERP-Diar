@@ -1,0 +1,17 @@
+.top-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.top-line > .top-line-1 {
+  width: 100%;
+  height: 5px;
+  background-color: var(--red);
+}
+.top-line > .top-line-2 {
+  width: 100%;
+  height: 5px;
+  background-color: var(--white);
+}
