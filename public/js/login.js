@@ -33,7 +33,7 @@ loginWrapper.addEventListener("click", (e) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
-          location.href = `/user/profile/${data.data.userId}`
+          location.href = `/user/profile`
         }else if(data.status === 404){
           errorHandler("نام کاربری یا رمز عبور نادرست است")
         }else if(data.status === 500){
