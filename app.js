@@ -3,6 +3,7 @@ require("dotenv").config();
 const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
 
 // importing routers
 const { authRouter } = require("./routers/auth");
@@ -19,7 +20,7 @@ app.set("view engine", "ejs");
 
 // Request Body handling
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Cookie Parser
 app.use(cookieParser());
@@ -27,6 +28,8 @@ app.use(cookieParser());
 // Routers
 app.use("/auth", authRouter);
 
-app.listen(port, () => {
-  console.log(`server running on port ${port}, ${process.env.JWTSECRETKEY}`);
+mongoose.connect("mongodb://127.0.0.1:27017/Diar-ERP").then(() => {
+  app.listen(port, () => {
+    console.log(`server running on port ${port}`);
+  });
 });

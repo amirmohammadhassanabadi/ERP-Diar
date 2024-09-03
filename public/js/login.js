@@ -10,7 +10,7 @@ loginWrapper.addEventListener("click", (e) => {
       e.target.parentElement.nextElementSibling.type = "text";
       e.target.classList = "fa-solid fa-eye-slash";
     }
-  } else if (e.target.id == "logInBtn") {
+  } else if (e.target.id == "logInBtn") { 
     fetch("/auth/postlogin", {
       method: "POST",
       headers: {
