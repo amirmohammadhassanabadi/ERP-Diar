@@ -26,8 +26,10 @@ loginWrapper.addEventListener("click", (e) => {
         if (data.status === 200) {
           location.href = `/user/profile/${data.data.userId}`
         }else if(data.status === 404){
-          console.log("Error");
-          
+          document.querySelector(".alert-wrapper").style.animation = "showAlert 1s ease forwards"
+          setTimeout(() => {
+            document.querySelector(".alert-wrapper").style.animation = "hideAlert 1s ease forwards"
+          }, 5000)
         }
       });
   }
