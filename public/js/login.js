@@ -1,5 +1,14 @@
 // DOM Variables
 const loginWrapper = document.querySelector(".login-wrapper");
+const errorContent = document.querySelector(".main-alert>h3");
+
+function errorHandler(message) {
+  document.querySelector(".alert-wrapper").style.animation = "showAlert 1s ease forwards";
+  errorContent.innerText = message
+  setTimeout(() => {
+    document.querySelector(".alert-wrapper").style.animation = "hideAlert 1s ease forwards"
+  }, 5000)
+}
 
 loginWrapper.addEventListener("click", (e) => {
   if (e.target.id == "showIcon") {
@@ -26,10 +35,9 @@ loginWrapper.addEventListener("click", (e) => {
         if (data.status === 200) {
           location.href = `/user/profile/${data.data.userId}`
         }else if(data.status === 404){
-          document.querySelector(".alert-wrapper").style.animation = "showAlert 1s ease forwards"
-          setTimeout(() => {
-            document.querySelector(".alert-wrapper").style.animation = "hideAlert 1s ease forwards"
-          }, 5000)
+          errorHandler("نام کاربری یا رمز عبور نادرست است")
+        }else if(data.status === 500){
+          errorHandler("مشکلی پیش آمده لطفا لحظاتی دیگر دوباره تلاش کنید")
         }
       });
   }
