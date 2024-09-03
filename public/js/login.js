@@ -25,6 +25,9 @@ loginWrapper.addEventListener("click", (e) => {
       .then((data) => {
         if (data.status === 200) {
           location.href = `/user/profile/${data.data.userId}`
+        }else if(data.status === 404){
+          console.log("Error");
+          
         }
       });
   }
