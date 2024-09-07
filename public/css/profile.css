@@ -1,3 +1,24 @@
 body{
-    background-color: var(--navy);
+    background-color: var(--dark-gray);
+    padding: 0;
+    margin: 0;
+}
+
+.page-wrapper{
+    padding: 1.5rem;
+    height: calc(100vh - 3rem);
+    display: flex;
+    justify-content: space-between;
+}
+
+.page-wrapper > .right{
+    width: 20%;
+    height: 100%;
+}
+
+.page-wrapper > .left{
+    width: 80%;
+    height: 100%;
+    background-color: var(--white);
+    border-radius: 1rem;
 }
