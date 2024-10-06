@@ -9,7 +9,7 @@
 html {
   scroll-behavior: smooth;
   line-height: 1.5;
-  font-size: 100%;
+  font-size: 85%;
 }
 
 body {
@@ -17,7 +17,7 @@ body {
   flex-direction: column;
   height: 100vh;
   overflow-y: hidden;
-  font-family: Arial, sans-serif;
+  font-family: sans-serif;
   background-color: #f5f5f5;
 }
 
