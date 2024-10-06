@@ -29,9 +29,9 @@ header .user-info span {
   border-radius: 50%;
   margin-left: 1rem;
   text-align: center;
-  line-height: 1.8rem;
+  line-height: 2rem;
   color: #ffffff;
-  background-color: #afb6e0;
+  background-color: #e0cfaf;
 }
 
 /* Main layout */
@@ -83,7 +83,6 @@ main {
 .task--nav {
   display: flex;
   flex-direction: column;
-  padding-bottom: 1rem;
   background-color: #304d6d;
   color: #ffffff;
 }
@@ -91,7 +90,6 @@ main {
 .tasks--title {
   font-size: 1.5rem;
   font-weight: bold;
-  /* display: block; */
   margin-bottom: 1rem;
   margin-right: 2rem;
   margin-top: 0.3rem;
@@ -101,17 +99,61 @@ main {
   display: flex;
   list-style: none;
   justify-content: flex-start;
-  gap: 4rem;
-  margin-right: 4rem;
-  /* direction: rtl; */
+  margin-right: 2rem;
 }
 
 .task--nav-items li {
+  color: #c2daf5;
+
   cursor: pointer;
+  padding: 0 2rem 1rem 2rem;
+  /* padding-bottom: 0.5rem; */
+}
+.active--tab {
+  border-bottom: 3px solid #cfab5d;
 }
 
 .task--nav-items li:hover {
-  color: #007bff;
+  color: #ffffff;
+}
+
+.task--view-body {
+  margin: 2rem;
+}
+
+.task--body-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn--task {
+  border: none;
+  cursor: pointer;
+}
+
+.btn--task-add {
+  background-color: #2a6fb9;
+  color: #ffffff;
+  padding: 0.5rem;
+  font-size: 120%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 0.2rem;
+}
+
+.btn--task-filter {
+  align-items: left;
+  padding: 0.5rem;
+}
+
+.btn--task-filter:hover {
+  background-color: #dddddd;
+}
+
+.btn--task-filter > img {
+  margin-left: 0.5rem;
+  width: 15px;
+  height: 15px;
 }
 
 /*  RESPONSIVE  */

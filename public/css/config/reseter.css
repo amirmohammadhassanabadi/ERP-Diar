@@ -21,6 +21,10 @@ body {
   background-color: #f5f5f5;
 }
 
+button {
+  font-family: inherit;
+}
+
 li {
   transition: 0.3s;
 }
