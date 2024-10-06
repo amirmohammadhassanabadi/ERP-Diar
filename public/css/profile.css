@@ -1,31 +1,35 @@
-/* Reset some default styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: sans-serif;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow-y: hidden;
-  background-color: #f5f5f5;
-}
-
 header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  background-color: #343a40;
-  padding: 10px;
+  padding: 1rem 2%;
+  background-color: #182b3f;
 }
 
-nav {
-  justify-content: space-between;
+header .logo img {
+  width: 80px;
+  height: 80px;
+}
+
+header .user-info {
+  display: flex;
   align-items: center;
 }
 
-nav .logo {
+header .user-info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-left: 1rem;
+}
+
+/* nav {
+  justify-content: space-between;
+  align-items: center;
+} */
+
+/* nav .logo {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -52,30 +56,33 @@ nav .user-info img {
   height: 30px;
   border-radius: 50%;
   margin-left: 10px;
-}
+} */
 
 /* Main layout */
+
 main {
   display: flex;
   flex-grow: 1;
-  /* flex-wrap: wrap; */
+  width: 100%;
+  padding: 2% 2%;
+  gap: 2%;
 }
 
-/* Side menu on the right */
+/* Side menu */
+
 .side--menu {
   width: 20%;
+  padding: 2%;
   background-color: #f8f9fa;
   border-left: 1px solid #ddd;
-  padding: 20px;
 }
 
 .side--menu ul {
-  list-style-type: none;
+  list-style: none;
 }
 
 .side--menu li {
-  padding: 10px 0;
-  font-size: 1.1rem;
+  padding: 1rem 0;
   cursor: pointer;
 }
 
@@ -83,43 +90,97 @@ main {
   background-color: #ddd;
 }
 
-/* Task view taking most of the space on the left */
+/* Task view */
+
 .task--view {
-  flex-grow: 1;
-  padding: 20px;
-  overflow-y: auto;
+  width: 78%;
+  padding: 2%;
+  /* overflow-y: auto; */
   background-color: #ffffff;
   border-right: 1px solid #ddd;
 }
 
-/* Task nav bar inside task view */
+/* Task nav bar*/
+
 .task--nav {
-  /* display: flex; */
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
   border-bottom: 2px solid #343a40;
-  padding-bottom: 10px;
-  text-align: right;
+  padding-bottom: 1rem;
 }
 
 .tasks--title {
-  display: block;
-  width: 100%;
   font-size: 1.5rem;
-  margin-bottom: 10px;
   font-weight: bold;
+  /* display: block; */
+  margin-bottom: 1rem;
 }
 
 .task--nav-items {
   display: flex;
-  list-style-type: none;
-  direction: rtl;
+  list-style: none;
+  justify-content: flex-start;
+  gap: 1rem;
+  /* direction: rtl; */
 }
 
 .task--nav-items li {
-  margin-left: 20px;
   cursor: pointer;
 }
 
 .task--nav-items li:hover {
   color: #007bff;
+}
+
+/*  RESPONSIVE  */
+
+@media (max-width: 1024px) {
+  /* Stack the layout vertically on smaller screens */
+  main {
+    flex-direction: column;
+  }
+
+  .side--menu {
+    width: 100%;
+    padding: 1rem;
+    border-left: none;
+    border-top: 1px solid #ddd;
+  }
+
+  .task--view {
+    width: 100%;
+    padding: 1rem;
+    border-right: none;
+  }
+
+  .task--nav-items {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Smaller adjustments for mobile */
+  header {
+    flex-direction: column;
+  }
+
+  .task--nav-items {
+    flex-direction: column;
+  }
+
+  header .user-info {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Compact view for very small screens */
+  .tasks--title {
+    font-size: 1.2rem;
+  }
+
+  .task--nav-items li {
+    font-size: 0.9rem;
+  }
 }
