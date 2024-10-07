@@ -125,6 +125,7 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2rem;
 }
 
 .btn--task {
@@ -142,6 +143,7 @@ main {
 }
 
 .btn--task-filter {
+  color: #888888;
   align-items: left;
   padding: 0.5rem;
 }
@@ -154,6 +156,89 @@ main {
   margin-left: 0.5rem;
   width: 15px;
   height: 15px;
+}
+
+.task--view-body > span {
+  color: #888888;
+  margin: 2rem;
+}
+
+.btn--task-show:nth-child(1) {
+  margin-top: 1rem;
+}
+
+.btn--task-show {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.1rem;
+  margin-bottom: 0.5rem;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.btn--task-show:hover {
+  background-color: #dddddd;
+}
+
+.task-left {
+  display: flex;
+  align-items: center;
+}
+
+.deadline {
+  margin-right: 2rem;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.assigned {
+  display: flex;
+  position: relative;
+}
+
+.initial {
+  width: 2rem;
+  height: 2rem;
+  background-color: #f3c3b4;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: bold;
+  text-align: center;
+  line-height: 2rem;
+  border-radius: 50%;
+  margin-left: -0.75rem; /* Overlap the circles */
+  border: 1px solid white;
+}
+
+/* TEMP FOR DEMO DEL_LATER */
+
+.initial-2 {
+  background-color: #6aa7e9;
+}
+.initial-3 {
+  background-color: #e0cfaf;
+}
+
+/* TEMP FOR DEMO DEL_LATER */
+
+.task-right {
+  display: flex;
+  align-items: center;
+}
+
+.task-title {
+  margin-right: 1rem;
+  font-size: 1rem;
+}
+
+input[type='checkbox'] {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 20px solid #007bff;
+  border-radius: 1.25rem;
 }
 
 /*  RESPONSIVE  */
