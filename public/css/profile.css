@@ -57,15 +57,25 @@ main {
 
 .side--menu ul {
   list-style: none;
+  /* margin-right: 1.5rem; */
 }
 
 .side--menu li {
-  padding: 1rem 0;
+  padding: 1rem 1.5rem 1rem 0;
   cursor: pointer;
+}
+
+.side--menu li i {
+  margin-left: 1rem;
 }
 
 .side--menu li:hover {
   background-color: #ddd;
+}
+
+.divider {
+  border-bottom: 2px solid #ddd;
+  margin: 0.5rem 1rem;
 }
 
 /* Task view */
@@ -177,6 +187,7 @@ main {
   margin-bottom: 0.5rem;
   background-color: #f9f9f9;
   cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 5px;
 }
 
 .btn--task-show:hover {
