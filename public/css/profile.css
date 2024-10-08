@@ -6,7 +6,7 @@ header {
   padding: 0.5rem 0.5%;
   box-shadow: -6px 0 15px rgba(0, 0, 0, 0.8);
   position: relative;
-  background-color: #182b3f;
+  background-color: var(--color-primary);
 }
 
 header .btn--menu {
@@ -30,8 +30,8 @@ header .user-info span {
   margin-left: 1rem;
   text-align: center;
   line-height: 2rem;
-  color: #ffffff;
-  background-color: #e0cfaf;
+  color: var(--color-white);
+  background-color: #e0cfaf; /* user profile color*/
 }
 
 /* Main layout */
@@ -40,7 +40,6 @@ main {
   display: flex;
   flex-grow: 1;
   width: 100%;
-  /* padding: 2% 2%; */
 }
 
 /* Side menu */
@@ -50,14 +49,13 @@ main {
   padding: 0.5%;
   position: relative;
   /* z-index: 0; */
-  background-color: #ffffff;
+  background-color: var(--color-white);
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-  border-left: 1px solid #ddd;
+  border-left: 1px solid var(--color-gray-light);
 }
 
 .side--menu ul {
   list-style: none;
-  /* margin-right: 1.5rem; */
 }
 
 .side--menu li {
@@ -70,11 +68,11 @@ main {
 }
 
 .side--menu li:hover {
-  background-color: #ddd;
+  background-color: var(--color-gray-light-2);
 }
 
 .divider {
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid var(--color-gray-light-2);
   margin: 0.5rem 1rem;
 }
 
@@ -82,10 +80,9 @@ main {
 
 .task--view {
   width: 88%;
-  /* padding: 0.5%; */
   /* overflow-y: auto; */
-  background-color: #f2f2f2;
-  border-right: 1px solid #ddd;
+  background-color: var(--color-gray-light-1);
+  border-right: 1px solid var(--color-gray-light-2);
 }
 
 /* Task nav bar*/
@@ -93,8 +90,8 @@ main {
 .task--nav {
   display: flex;
   flex-direction: column;
-  background-color: #304d6d;
-  color: #ffffff;
+  background-color: var(--color-grad-1);
+  color: var(--color-white);
 }
 
 .tasks--title {
@@ -113,18 +110,18 @@ main {
 }
 
 .task--nav-items li {
-  color: #c2daf5;
+  color: var(--color-grad-4);
 
   cursor: pointer;
   padding: 0 2rem 1rem 2rem;
   /* padding-bottom: 0.5rem; */
 }
 .active--tab {
-  border-bottom: 3px solid #cfab5d;
+  border-bottom: 3px solid var(--color-secondary);
 }
 
 .task--nav-items li:hover {
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 .task--view-body {
@@ -144,8 +141,8 @@ main {
 }
 
 .btn--task-add {
-  background-color: #2a6fb9;
-  color: #ffffff;
+  background-color: var(--color-grad-2);
+  color: var(--color-white);
   padding: 0.5rem;
   font-size: 120%;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -153,13 +150,13 @@ main {
 }
 
 .btn--task-filter {
-  color: #888888;
+  color: var(--color-gray-dark-1);
   align-items: left;
   padding: 0.5rem;
 }
 
 .btn--task-filter:hover {
-  background-color: #dddddd;
+  background-color: var(--color-gray-light-2);
 }
 
 .btn--task-filter > img {
@@ -169,7 +166,7 @@ main {
 }
 
 .task--view-body > span {
-  color: #888888;
+  color: var(--color-gray-dark-1);
   margin: 2rem;
 }
 
@@ -182,16 +179,16 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-gray-light-2);
   border-radius: 0.1rem;
   margin-bottom: 0.5rem;
-  background-color: #f9f9f9;
+  background-color: var(--color-white);
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 5px;
 }
 
 .btn--task-show:hover {
-  background-color: #dddddd;
+  background-color: var(--color-gray-light-2);
 }
 
 .task-left {
@@ -202,7 +199,7 @@ main {
 .deadline {
   margin-right: 2rem;
   font-size: 0.875rem;
-  color: #888;
+  color: var(--color-gray-dark-1);
 }
 
 .assigned {
@@ -213,24 +210,24 @@ main {
 .initial {
   width: 2rem;
   height: 2rem;
-  background-color: #f3c3b4;
+  background-color: #f3c3b4; /* user profile color*/
   color: white;
   font-size: 0.875rem;
   font-weight: bold;
   text-align: center;
   line-height: 2rem;
   border-radius: 50%;
-  margin-left: -0.75rem; /* Overlap the circles */
+  margin-left: -0.75rem; /* Overlap circles */
   border: 1px solid white;
 }
 
 /* TEMP FOR DEMO DEL_LATER */
 
 .initial-2 {
-  background-color: #6aa7e9;
+  background-color: #6aa7e9; /* user profile color*/
 }
 .initial-3 {
-  background-color: #e0cfaf;
+  background-color: #e0cfaf; /* user profile color*/
 }
 
 /* TEMP FOR DEMO DEL_LATER */
@@ -248,8 +245,7 @@ main {
 input[type='checkbox'] {
   width: 1.25rem;
   height: 1.25rem;
-  border: 20px solid #007bff;
-  border-radius: 1.25rem;
+  /* border: 20px solid var(--color-grad-3); */
 }
 
 /*  RESPONSIVE  */
@@ -264,7 +260,7 @@ input[type='checkbox'] {
     width: 100%;
     padding: 1rem;
     border-left: none;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--color-gray-light-2);
   }
 
   .task--view {
