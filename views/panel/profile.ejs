@@ -65,7 +65,7 @@
               مرتب سازی: پیش فرض
             </button> -->
           </div>
-          <span>وظایف امروز (2 مورد)</span>
+          <span>وظایف امروز (3 مورد)</span>
           <div class="task--container">
             <div class="btn--task-show">
               <div class="task-right">
@@ -110,6 +110,58 @@
         </div>
       </div>
     </main>
+
+    <div class="overlay">
+      <div class="popup--task-container">
+        <!-- <div class="popup--task-content"> -->
+        <div class="popup--task-upside">
+          <div class="popup--task-header">
+            <span>ایجاد وظیفه</span>
+          </div>
+          <div class="popup--task--title">
+            <p>عنوان فعالیت جدید</p>
+            <input
+              class="popup--task--title-input"
+              type="text"
+              placeholder="عنوان فعالیت جدید..."
+            />
+          </div>
+          <div class="popup--task--options">
+            <input class="task-desc" type="text" placeholder="توضیحات فعالیت" />
+            <button class="icon-btn">
+              <i
+                class="fa-solid fa-tag fa-rotate-by fa-2xl"
+                style="--fa-rotate-angle: 315deg; color: #182b3f"
+              ></i>
+            </button>
+            <button class="icon-btn">
+              <i
+                class="fa-solid fa-list fa-flip-horizontal fa-2xl"
+                style="color: #182b3f"
+              ></i>
+            </button>
+            <button class="icon-btn">
+              <i
+                class="fa-solid fa-paperclip fa-rotate-by fa-2xl"
+                style="--fa-rotate-angle: 315deg"
+              ></i>
+            </button>
+            <button class="icon-btn">
+              <i class="fa-regular fa-clock fa-2xl" style="color: #182b3f"></i>
+            </button>
+            <button class="icon-btn">
+              <i class="fa-solid fa-user fa-2xl" style="color: #182b3f"></i>
+              مسئول انجام
+            </button>
+          </div>
+        </div>
+        <div class="popup--task-downside">
+          <button class="btn--popup-cancel">انصراف</button>
+          <button class="btn--popup-submit">ثبت</button>
+        </div>
+        <!-- </div> -->
+      </div>
+    </div>
 
     <script
       src="https://kit.fontawesome.com/7a20fd358e.js"
