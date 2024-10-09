@@ -24,6 +24,18 @@ class TaskView extends View {
     });
   }
 
+  addHandlerTaskPopupSubmit() {
+    const submitBtnEl = document.querySelector('.btn--popup-submit');
+    const parentElTask = document.querySelector('.popup--task--title-input');
+    submitBtnEl.addEventListener('click', function (e) {
+      console.log(parentElTask.value);
+      // check input to be less than 50 char AND not empty
+      // save input in var & return
+      this._data = parentElTask.value;
+      return this._data;
+    });
+  }
+
   //mtd: save to local
 }
 
