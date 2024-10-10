@@ -1,174 +1,157 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile</title>
-    <link rel="shortcut icon" href="/img/logo/logo-low.png" />
-    <link rel="stylesheet" href="/css/config/variables.css" />
-    <link rel="stylesheet" href="/css/includes/top-line.css" />
-    <link rel="stylesheet" href="/css/profile.css" />
-    <link rel="stylesheet" href="/css/config/reseter.css" />
-  </head>
 
-  <body>
-    <header>
-      <div class="btn--menu">
-        <img src="/img/icons/icon-menu.png" alt="menu-icon" />
-      </div>
-      <div class="icon--logo">
-        <img src="/img/logo/logo-low.png" alt="logo-png" />
-      </div>
-      <div class="user-info">
-        <span>SE</span>
-      </div>
-    </header>
-    <main>
-      <div class="side--menu">
-        <ul>
-          <li>
-            <i class="fa-solid fa-house" style="color: #cf564c"></i>
-            داشبورد
-          </li>
-          <div class="divider"></div>
-          <li>
-            <i class="fa-solid fa-circle-check" style="color: #2c9e66"></i>
-            وظایف
-          </li>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile</title>
+  <link rel="shortcut icon" href="/img/logo/logo-low.png" />
+  <link rel="stylesheet" href="/css/config/variables.css" />
+  <link rel="stylesheet" href="/css/includes/top-line.css" />
+  <link rel="stylesheet" href="/css/profile.css" />
+  <link rel="stylesheet" href="/css/config/reseter.css" />
+</head>
+
+<body>
+  <header>
+    <div class="menu__btn">
+      <img src="/img/icons/icon-menu.png" alt="menu-icon" />
+    </div>
+    <img class="header__logo" src="/img/logo/logo-low.png" alt="logo-png" />
+    <div class="header__profile">
+      <span>SE</span>
+    </div>
+  </header>
+  <main>
+    <div class="menu">
+      <ul class="menu__list">
+        <li class="menu__item menu__dashboard">
+          <i class="fa-solid fa-house" style="color: #cf564c"></i>
+          داشبورد
+        </li>
+        <div class="divider"></div>
+        <li class="menu__item menu__tasks">
+          <i class="fa-solid fa-circle-check" style="color: #2c9e66"></i>
+          وظایف
+        </li>
+      </ul>
+    </div>
+
+    <div class="container">
+      <nav class="container__header">
+        <span class="c_header-text">وظایف</span>
+        <ul class="c_header__nav">
+          <li class="nav__item nav__item-active">کارهای من</li>
+          <li class="nav__item">انجام شده</li>
+          <li class="nav__item">تقویم</li>
         </ul>
-      </div>
-
-      <div class="task--view">
-        <nav class="task--nav">
-          <span class="tasks--title">وظایف</span>
-          <ul class="task--nav-items">
-            <li class="active--tab">کارهای من</li>
-            <li>انجام شده</li>
-            <li>تقویم</li>
-          </ul>
-        </nav>
-        <div class="task--view-body">
-          <div class="task--body-header">
-            <button class="btn--task-add btn--task">
-              <i class="fa-solid fa-plus fa-2xs" style="color: #ffffff"></i>
-              ایجاد وظیفه
-            </button>
-            <button class="btn--task btn--task-filter">
-              <img src="/img/icons/sort-icon.png" alt="sort-icon" />
-              فیلتر نمایش وظایف
-            </button>
-            <!-- <button class="btn--task btn--task-sort">
+      </nav>
+      <div class="container__body">
+        <div class="c_body__head">
+          <button class="task__btn-add task__btn">
+            <i class="fa-solid fa-plus fa-2xs" style="color: #ffffff"></i>
+            ایجاد وظیفه
+          </button>
+          <button class="task__btn task__btn-filter">
+            <img src="/img/icons/sort-icon.png" alt="sort-icon" />
+            فیلتر نمایش وظایف
+          </button>
+          <!-- <button class="task__btn task__btn-sort">
               <i
                 class="fa-regular fa-bars-sort fa-flip-horizontal"
                 style="color: #979797"
               ></i>
               مرتب سازی: پیش فرض
             </button> -->
-          </div>
-          <span>وظایف امروز (3 مورد)</span>
-          <div class="task--container">
-            <div class="btn--task-show">
-              <div class="task-right">
-                <input type="checkbox" />
-                <span class="task-title">تیتر تسک</span>
-              </div>
-              <div class="task-left">
-                <div class="assigned">
-                  <div class="initial initial-2">CD</div>
-                  <div class="initial">AB</div>
-                  <div class="initial initial-3">SE</div>
-                </div>
-                <span class="deadline">3 روز مانده</span>
-              </div>
-            </div>
-            <div class="btn--task-show">
-              <div class="task-right">
-                <input type="checkbox" />
-                <span class="task-title">تیتر تسک</span>
-              </div>
-              <div class="task-left">
-                <div class="assigned">
-                  <div class="initial">AB</div>
-                  <div class="initial initial-3">SE</div>
-                </div>
-                <span class="deadline">4 روز مانده</span>
-              </div>
-            </div>
-            <div class="btn--task-show">
-              <div class="task-right">
-                <input type="checkbox" />
-                <span class="task-title">تیتر تسک</span>
-              </div>
-              <div class="task-left">
-                <div class="assigned">
-                  <div class="initial initial-3">SE</div>
-                </div>
-                <span class="deadline">5 روز مانده</span>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-    </main>
-
-    <div class="overlay hidden">
-      <div class="popup--task-container">
-        <!-- <div class="popup--task-content"> -->
-        <div class="popup--task-upside">
-          <div class="popup--task-header">
-            <span>ایجاد وظیفه</span>
-          </div>
-          <div class="popup--task--title">
-            <p>عنوان فعالیت جدید</p>
-            <input
-              class="popup--task--title-input"
-              type="text"
-              placeholder="عنوان فعالیت جدید..."
-            />
-          </div>
-          <div class="popup--task--options">
-            <input class="task-desc" type="text" placeholder="توضیحات فعالیت" />
-            <button class="icon-btn">
-              <i
-                class="fa-solid fa-tag fa-rotate-by fa-xl"
-                style="--fa-rotate-angle: 315deg; color: #888888"
-              ></i>
-            </button>
-            <button class="icon-btn">
-              <i
-                class="fa-solid fa-list fa-flip-horizontal fa-xl"
-                style="color: #888888"
-              ></i>
-            </button>
-            <button class="icon-btn">
-              <i
-                class="fa-solid fa-paperclip fa-rotate-by fa-xl"
-                style="--fa-rotate-angle: 315deg; color: #888888"
-              ></i>
-            </button>
-            <button class="icon-btn">
-              <i class="fa-regular fa-clock fa-xl" style="color: #888888"></i>
-              بدون زمان یادآوری
-            </button>
-            <button class="icon-btn">
-              <i class="fa-solid fa-user fa-xl" style="color: #888888"></i>
-              مسئول انجام
-            </button>
-          </div>
-        </div>
-        <div class="popup--task-downside">
-          <button class="btn--popup-cancel">انصراف</button>
-          <button class="btn--popup-submit">ثبت</button>
-          <!-- onclick="getInputValue()" -->
-        </div>
-        <!-- </div> -->
+        <span class="hint-text">وظایف امروز (3 مورد)</span>
+        <ul class="task__list">
+          <li class="task">
+            <div class="task__right">
+              <input class="checkbox" type="checkbox" />
+              <span class="task-text">تیتر تسک</span>
+            </div>
+            <div class="task__left">
+              <div class="assignedto">
+                <div class="initial initial-2">CD</div>
+                <div class="initial">AB</div>
+                <div class="initial initial-3">SE</div>
+              </div>
+              <span class="deadline">3 روز مانده</span>
+            </div>
+          </li>
+          <li class="task">
+            <div class="task__right">
+              <input class="checkbox" type="checkbox" />
+              <span class="task-text">تیتر تسک</span>
+            </div>
+            <div class="task__left">
+              <div class="assignedto">
+                <div class="initial">AB</div>
+                <div class="initial initial-3">SE</div>
+              </div>
+              <span class="deadline">4 روز مانده</span>
+            </div>
+          </li>
+          <li class="task">
+            <div class="task__right">
+              <input class="checkbox" type="checkbox" />
+              <span class="task-text">تیتر تسک</span>
+            </div>
+            <div class="task__left">
+              <div class="assignedto">
+                <div class="initial initial-3">SE</div>
+              </div>
+              <span class="deadline">5 روز مانده</span>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
+  </main>
 
-    <script
-      src="https://kit.fontawesome.com/7a20fd358e.js"
-      crossorigin="anonymous"
-    ></script>
-    <script type="module" src="/js/tempController.js"></script>
-  </body>
+  <div class="overlay hidden">
+    <div class="popup__container">
+      <!-- <div class="popup--task-content"> -->
+      <div class="popup__upside">
+        <p class="popup-text">ایجاد وظیفه</p>
+        <div class="task__title">
+          <p class="title-text">عنوان فعالیت جدید</p>
+          <input class="title-input" type="text" placeholder="عنوان فعالیت جدید..." />
+        </div>
+        <ul class="options__list">
+          <!-- <li class="option__item description__item">test</li> -->
+          <input class="option__item description__item" type="text" placeholder="توضیحات فعالیت" />
+          <button class="option__item tag__item">
+            <i class="fa-solid fa-tag fa-rotate-by fa-xl" style="--fa-rotate-angle: 315deg; color: #888888"></i>
+          </button>
+          <button class="option__item todo__item">
+            <i class="fa-solid fa-list fa-flip-horizontal fa-xl" style="color: #888888"></i>
+          </button>
+          <button class="option__item attach__item">
+            <i class="fa-solid fa-paperclip fa-rotate-by fa-xl" style="--fa-rotate-angle: 315deg; color: #888888"></i>
+          </button>
+          <button class="option__item remind__item">
+            <i class="fa-regular fa-clock fa-xl" style="color: #888888"></i>
+            بدون زمان یادآوری
+          </button>
+          <button class="option__item assign__item">
+            <i class="fa-solid fa-user fa-xl" style="color: #888888"></i>
+            مسئول انجام
+          </button>
+        </ul>
+      </div>
+      <div class="popup__downside">
+        <button class="cancel__btn">انصراف</button>
+        <button class="submit__btn">ثبت</button>
+        <!-- onclick="getInputValue()" -->
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+
+  <script src="https://kit.fontawesome.com/7a20fd358e.js" crossorigin="anonymous"></script>
+  <script type="module" src="/js/tempController.js"></script>
+</body>
+
 </html>
