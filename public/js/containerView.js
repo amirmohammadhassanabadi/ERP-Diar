@@ -1,4 +1,20 @@
 import view from '/js/view.js';
+
+const state = {
+  completed: [],
+  ongoing: [
+    {
+      taskId: 1,
+      taskTitle: 'تیتر تسک',
+      assignedTo: ['SE', 'AB', 'CD'],
+      days: 3
+    },
+    { taskId: 2, taskTitle: 'تیتر تسک', assignedTo: ['SE', 'AB'], days: 4 },
+    { taskId: 3, taskTitle: 'تیتر تسک', assignedTo: ['SE'], days: 5 }
+  ]
+};
+let taskCounter = 4;
+
 // menu event handler
 
 const handleMenuChange = function () {
@@ -12,7 +28,7 @@ const handleMenuChange = function () {
     containerEl.innerHTML = '';
 
     // 2. take away active class
-    parentEl.querySelector('.menu-active').classList.remove('menu-active');
+    parentEl.querySelector('.menu-active')?.classList.remove('menu-active');
     console.log(parentEl);
 
     // 3. generate menu markup
@@ -59,7 +75,7 @@ const generateMarkupTasks = function () {
               مرتب سازی: پیش فرض
             </button> -->
         </div>
-        <span class="hint-text">وظایف امروز (3 مورد)</span>
+        <span class="hint-text">وظایف امروز (${state.ongoing.length} مورد)</span>
         <ul class="task__list">
           <li class="task">
             <div class="task__right">
@@ -121,6 +137,7 @@ const generateMarkupDashboard = function () {
 // container event handlers
 
 // gets called while no container child on screen BUG
+// should handle when it gets called in control so it doesn't get called on init()
 const handleTaskAddBtn = async function () {
   const overlayEl = document.querySelector('.overlay');
   const parentEl = document.querySelector('.container__body');
@@ -154,11 +171,42 @@ const handlePopupClose = function () {
 const handlePopupSubmit = function () {
   const btnParentEl = document.querySelector('.popup__downside');
   const inputEl = document.querySelector('.title-input');
+  const overlayEl = document.querySelector('.overlay');
+  // temporary day input
+  const timeInputEl = document.querySelector('.description__item');
 
   btnParentEl.addEventListener('click', function (e) {
     const btn = e.target.closest('.submit__btn');
     if (!btn) return;
+    // func to check conditions
+    if (!inputEl.value) {
+      console.log('no input');
+      return;
+    }
     console.log(inputEl.value);
+
+    // default day is set to 1
+    let daysInput = Number(timeInputEl.value) ? Number(timeInputEl.value) : 1;
+    // store in state
+    state.ongoing.push({
+      taskId: taskCounter,
+      taskTitle: inputEl.value,
+      assignedTo: ['SE'],
+      days: daysInput
+    });
+    taskCounter++;
+
+    // close popup
+    overlayEl.classList.remove('hidden');
+
+    // show success message
+    console.log(
+      `successfully added task with title "${
+        state.ongoing[state.ongoing.length - 1].taskTitle
+      }" .`
+    );
+    console.log(state);
+    // re-render tasks list
   });
 };
 
