@@ -40,7 +40,25 @@ const handlePopupSubmit = function () {
   });
 };
 
-export default { handleTaskAddBtn, handlePopupClose, handlePopupSubmit };
+const handleMenuBrn = function () {
+  const parentEl = document.querySelector('header');
+  const menuEl = document.querySelector('.menu');
+  const containerEl = document.querySelector('.container');
+
+  parentEl.addEventListener('click', function (e) {
+    const btn = e.target.closest('.menu__btn');
+    if (!btn) return;
+    menuEl.classList.toggle('collapse');
+    containerEl.classList.toggle('fullscreen');
+  });
+};
+
+export default {
+  handleTaskAddBtn,
+  handlePopupClose,
+  handlePopupSubmit,
+  handleMenuBrn
+};
 
 // class TaskView extends View {
 //   _overlayEl = document.querySelector('.overlay');

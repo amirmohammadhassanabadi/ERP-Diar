@@ -78,6 +78,7 @@ main {
 }
 
 .collapse {
+  display: none;
   width: 0%;
 }
 
@@ -86,7 +87,6 @@ main {
   width: 88%;
   /* overflow-y: auto; */
   background-color: var(--color-gray-light-1);
-  border-right: 1px solid var(--color-gray-light-2);
 }
 
 .fullscreen {
