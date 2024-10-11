@@ -69,6 +69,10 @@ main {
 }
 
 .menu li:hover {
+  background-color: var(--color-gray-light-3);
+}
+
+.menu-active {
   background-color: var(--color-gray-light-2);
 }
 

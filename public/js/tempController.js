@@ -7,7 +7,8 @@ const init = function () {
   containerView.handleTaskAddBtn();
   containerView.handlePopupClose();
   containerView.handlePopupSubmit();
-  containerView.handleMenuBrn();
+  containerView.handleMenuBtn();
+  containerView.handleMenuChange();
 };
 
 init();

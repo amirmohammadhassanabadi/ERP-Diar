@@ -1,8 +1,9 @@
-export default class View {
-  _parentEl;
-  _errMessage;
-  _message;
-  _data;
+const renderHTML = function (generateMarkup, parentEl) {
+  parentEl.insertAdjacentHTML('afterbegin', generateMarkup());
+};
 
-  render(data) {}
-}
+// const clearElement = function (el) {
+//   el.innerHTML = '';
+// };
+
+export default { renderHTML };

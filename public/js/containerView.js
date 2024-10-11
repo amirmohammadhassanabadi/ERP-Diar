@@ -1,17 +1,139 @@
-import View from '/js/view.js';
+import view from '/js/view.js';
+// menu event handler
+
+const handleMenuChange = function () {
+  const parentEl = document.querySelector('.menu');
+  parentEl.addEventListener('click', function (e) {
+    const menu = e.target.closest('.menu__item');
+    if (!menu || menu.classList.contains('menu-active')) return;
+
+    // 1. empty container
+    const containerEl = document.querySelector('.container');
+    containerEl.innerHTML = '';
+
+    // 2. take away active class
+    parentEl.querySelector('.menu-active').classList.remove('menu-active');
+    console.log(parentEl);
+
+    // 3. generate menu markup
+    if (menu.classList.contains('menu__tasks')) {
+      console.log('going to tasks');
+      view.renderHTML(generateMarkupTasks, containerEl);
+      handleTaskAddBtn();
+    } else if (menu.classList.contains('menu__dashboard')) {
+      console.log('going to dashboard');
+      view.renderHTML(generateMarkupDashboard, containerEl);
+      // initialize dashboard event handlers
+    }
+
+    // 4. add active class to selected menu
+    menu.classList.add('menu-active');
+  });
+};
+
+const generateMarkupTasks = function () {
+  return `
+        <nav class="container__header">
+        <span class="c_header-text">وظایف</span>
+        <ul class="c_header__nav">
+          <li class="nav__item nav__item-active">کارهای من</li>
+          <li class="nav__item">انجام شده</li>
+          <li class="nav__item">تقویم</li>
+        </ul>
+      </nav>
+      <div class="container__body">
+        <div class="c_body__head">
+          <button class="task__btn-add task__btn">
+            <i class="fa-solid fa-plus fa-2xs" style="color: #ffffff"></i>
+            ایجاد وظیفه
+          </button>
+          <button class="task__btn task__btn-filter">
+            <img src="/img/icons/sort-icon.png" alt="sort-icon" />
+            فیلتر نمایش وظایف
+          </button>
+          <!-- <button class="task__btn task__btn-sort">
+              <i
+                class="fa-regular fa-bars-sort fa-flip-horizontal"
+                style="color: #979797"
+              ></i>
+              مرتب سازی: پیش فرض
+            </button> -->
+        </div>
+        <span class="hint-text">وظایف امروز (3 مورد)</span>
+        <ul class="task__list">
+          <li class="task">
+            <div class="task__right">
+              <input class="checkbox" type="checkbox" />
+              <span class="task-text">تیتر تسک</span>
+            </div>
+            <div class="task__left">
+              <div class="assignedto">
+                <div class="initial initial-2">CD</div>
+                <div class="initial">AB</div>
+                <div class="initial initial-3">SE</div>
+              </div>
+              <span class="deadline">3 روز مانده</span>
+            </div>
+          </li>
+          <li class="task">
+            <div class="task__right">
+              <input class="checkbox" type="checkbox" />
+              <span class="task-text">تیتر تسک</span>
+            </div>
+            <div class="task__left">
+              <div class="assignedto">
+                <div class="initial">AB</div>
+                <div class="initial initial-3">SE</div>
+              </div>
+              <span class="deadline">4 روز مانده</span>
+            </div>
+          </li>
+          <li class="task">
+            <div class="task__right">
+              <input class="checkbox" type="checkbox" />
+              <span class="task-text">تیتر تسک</span>
+            </div>
+            <div class="task__left">
+              <div class="assignedto">
+                <div class="initial initial-3">SE</div>
+              </div>
+              <span class="deadline">5 روز مانده</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+  `;
+};
+
+const generateMarkupDashboard = function () {
+  return `
+      <nav class="container__header">
+        <p class="c_header-text" style="margin-bottom: 4rem;">داشبورد</p>
+      </nav>
+      <div class="container__body">
+        <div class="c_body__head" style="font-size: 150%; margin-right: 40%; margin-top: 20%;">
+          این بخش در حال توسعه است...
+        </div>
+      </div>
+  `;
+};
 
 // container event handlers
 
-const handleTaskAddBtn = function () {
+// gets called while no container child on screen BUG
+const handleTaskAddBtn = async function () {
   const overlayEl = document.querySelector('.overlay');
   const parentEl = document.querySelector('.container__body');
-
-  parentEl.addEventListener('click', function (e) {
-    const btn = e.target.closest('.task__btn-add');
-    if (!btn) return;
-    console.log('add btn pressed');
-    overlayEl.classList.remove('hidden');
-  });
+  try {
+    parentEl.addEventListener('click', function (e) {
+      const btn = e.target.closest('.task__btn-add');
+      if (!btn) return;
+      console.log('add btn pressed');
+      overlayEl.classList.remove('hidden');
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // popup event handlers
@@ -40,7 +162,9 @@ const handlePopupSubmit = function () {
   });
 };
 
-const handleMenuBrn = function () {
+// header event handlers
+
+const handleMenuBtn = function () {
   const parentEl = document.querySelector('header');
   const menuEl = document.querySelector('.menu');
   const containerEl = document.querySelector('.container');
@@ -54,10 +178,11 @@ const handleMenuBrn = function () {
 };
 
 export default {
+  handleMenuBtn,
+  handleMenuChange,
   handleTaskAddBtn,
   handlePopupClose,
-  handlePopupSubmit,
-  handleMenuBrn
+  handlePopupSubmit
 };
 
 // class TaskView extends View {
