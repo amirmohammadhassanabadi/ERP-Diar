@@ -9,6 +9,7 @@ const init = function () {
   containerView.handlePopupSubmit();
   containerView.handleMenuBtn();
   containerView.handleMenuChange();
+  containerView.handleContainerNav();
 };
 
 init();

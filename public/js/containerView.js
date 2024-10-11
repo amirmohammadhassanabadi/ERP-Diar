@@ -1,7 +1,14 @@
 import view from '/js/view.js';
 
 const state = {
-  completed: [],
+  completed: [
+    {
+      taskId: 4,
+      taskTitle: 'task title 4',
+      assignedTo: ['SE', 'AB', 'CD'],
+      days: 5
+    }
+  ],
   ongoing: [
     {
       taskId: 1,
@@ -13,7 +20,7 @@ const state = {
     { taskId: 3, taskTitle: 'task title 3', assignedTo: ['SE'], days: 5 }
   ]
 };
-let taskCounter = 4;
+let taskCounter = 5;
 
 // menu event handler
 
@@ -36,6 +43,7 @@ const handleMenuChange = function () {
       console.log('going to tasks');
       view.renderHTML(generateMarkupTasks, containerEl);
       handleTaskAddBtn();
+      handleContainerNav();
     } else if (menu.classList.contains('menu__dashboard')) {
       console.log('going to dashboard');
       view.renderHTML(generateMarkupDashboard, containerEl);
@@ -52,8 +60,8 @@ const generateMarkupTasks = function () {
         <nav class="container__header">
         <span class="c_header-text">وظایف</span>
         <ul class="c_header__nav">
-          <li class="nav__item nav__item-active">کارهای من</li>
-          <li class="nav__item">انجام شده</li>
+          <li class="nav__item nav__item-active my__tasks">کارهای من</li>
+          <li class="nav__item completed__tasks">انجام شده</li>
           <li class="nav__item">تقویم</li>
         </ul>
       </nav>
@@ -76,7 +84,7 @@ const generateMarkupTasks = function () {
             </button> -->
         </div>
         <div class="task__container">
-        ${generateTaskItems()}
+        ${generateTaskItems(0)}
         </div>
       </div>
   `;
@@ -95,11 +103,76 @@ const generateMarkupDashboard = function () {
   `;
 };
 
+const generateMarkupCompletedTasks = function (stat) {
+  return `
+        <div class="container__body">
+        <div class="c_body__head">
+          <button class="task__btn-add task__btn">
+            <i class="fa-solid fa-plus fa-2xs" style="color: #ffffff"></i>
+            ایجاد وظیفه
+          </button>
+          <button class="task__btn task__btn-filter">
+            <img src="/img/icons/sort-icon.png" alt="sort-icon" />
+            فیلتر نمایش وظایف
+          </button>
+          <!-- <button class="task__btn task__btn-sort">
+              <i
+                class="fa-regular fa-bars-sort fa-flip-horizontal"
+                style="color: #979797"
+              ></i>
+              مرتب سازی: پیش فرض
+            </button> -->
+        </div>
+        <div class="task__container">
+        ${generateTaskItems(stat)}
+        </div>
+      </div>
+
+  `;
+};
+
 // container event handlers
+
+const handleContainerNav = function () {
+  const parentEl = document.querySelector('.c_header__nav');
+  const containerBodyEl = document.querySelector('.container__body');
+  parentEl.addEventListener('click', function (e) {
+    const navItem = e.target.closest('.nav__item');
+    console.log(navItem);
+    if (!navItem || navItem.classList.contains('nav__item-active')) return;
+
+    // empty container
+    containerBodyEl.innerHTML = '';
+
+    // remove active class
+    console.log(parentEl);
+    parentEl
+      .querySelector('.nav__item-active')
+      ?.classList.remove('nav__item-active');
+
+    // generate menu markup
+    if (navItem.classList.contains('my__tasks')) {
+      console.log('going to my tasks');
+      view.renderHTML(generateMarkupCompletedTasks, containerBodyEl);
+      document.querySelector('.task__btn-add').classList?.remove('hidden');
+
+      // handleCheckbox
+    } else if (navItem.classList.contains('completed__tasks')) {
+      console.log('going to completed tasks');
+      view.renderHTML(
+        generateMarkupCompletedTasks.bind(null, 1),
+        containerBodyEl
+      );
+      document.querySelector('.task__btn-add').classList?.add('hidden');
+      // handleCheckbox
+    }
+    navItem.classList.add('nav__item-active');
+  });
+};
 
 // gets called while no container child on screen BUG
 // should handle when it gets called in control so it doesn't get called on init()
-const handleTaskAddBtn = async function () {
+const handleTaskAddBtn = function () {
   const overlayEl = document.querySelector('.overlay');
   const parentEl = document.querySelector('.container__body');
   try {
@@ -175,13 +248,17 @@ const handlePopupSubmit = function () {
   });
 };
 
-const generateTaskItems = function () {
+const generateTaskItems = function (taskState = 0) {
   return `
             <span class="hint-text">وظایف امروز (${
-              state.ongoing.length
+              taskState ? state.completed.length : state.ongoing.length
             } مورد)</span>
           <ul class="task__list">
-          ${state.ongoing.map(generateSingleTask).join('')}
+          ${
+            taskState
+              ? state.completed.map(generateSingleTask).join('')
+              : state.ongoing.map(generateSingleTask).join('')
+          }
           </ul>
 
   `;
@@ -234,7 +311,8 @@ export default {
   handleMenuChange,
   handleTaskAddBtn,
   handlePopupClose,
-  handlePopupSubmit
+  handlePopupSubmit,
+  handleContainerNav
 };
 
 // class TaskView extends View {
