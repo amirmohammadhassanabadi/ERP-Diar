@@ -5,12 +5,12 @@ const state = {
   ongoing: [
     {
       taskId: 1,
-      taskTitle: 'تیتر تسک',
+      taskTitle: 'task title 1',
       assignedTo: ['SE', 'AB', 'CD'],
       days: 3
     },
-    { taskId: 2, taskTitle: 'تیتر تسک', assignedTo: ['SE', 'AB'], days: 4 },
-    { taskId: 3, taskTitle: 'تیتر تسک', assignedTo: ['SE'], days: 5 }
+    { taskId: 2, taskTitle: 'task title 2', assignedTo: ['SE', 'AB'], days: 4 },
+    { taskId: 3, taskTitle: 'task title 3', assignedTo: ['SE'], days: 5 }
   ]
 };
 let taskCounter = 4;
@@ -75,48 +75,9 @@ const generateMarkupTasks = function () {
               مرتب سازی: پیش فرض
             </button> -->
         </div>
-        <span class="hint-text">وظایف امروز (${state.ongoing.length} مورد)</span>
-        <ul class="task__list">
-          <li class="task">
-            <div class="task__right">
-              <input class="checkbox" type="checkbox" />
-              <span class="task-text">تیتر تسک</span>
-            </div>
-            <div class="task__left">
-              <div class="assignedto">
-                <div class="initial initial-2">CD</div>
-                <div class="initial">AB</div>
-                <div class="initial initial-3">SE</div>
-              </div>
-              <span class="deadline">3 روز مانده</span>
-            </div>
-          </li>
-          <li class="task">
-            <div class="task__right">
-              <input class="checkbox" type="checkbox" />
-              <span class="task-text">تیتر تسک</span>
-            </div>
-            <div class="task__left">
-              <div class="assignedto">
-                <div class="initial">AB</div>
-                <div class="initial initial-3">SE</div>
-              </div>
-              <span class="deadline">4 روز مانده</span>
-            </div>
-          </li>
-          <li class="task">
-            <div class="task__right">
-              <input class="checkbox" type="checkbox" />
-              <span class="task-text">تیتر تسک</span>
-            </div>
-            <div class="task__left">
-              <div class="assignedto">
-                <div class="initial initial-3">SE</div>
-              </div>
-              <span class="deadline">5 روز مانده</span>
-            </div>
-          </li>
-        </ul>
+        <div class="task__container">
+        ${generateTaskItems()}
+        </div>
       </div>
   `;
 };
@@ -206,8 +167,51 @@ const handlePopupSubmit = function () {
       }" .`
     );
     console.log(state);
+
     // re-render tasks list
+    const taskContainerEl = document.querySelector('.task__container');
+    taskContainerEl.innerHTML = '';
+    view.renderHTML(generateTaskItems, taskContainerEl);
   });
+};
+
+const generateTaskItems = function () {
+  return `
+            <span class="hint-text">وظایف امروز (${
+              state.ongoing.length
+            } مورد)</span>
+          <ul class="task__list">
+          ${state.ongoing.map(generateSingleTask).join('')}
+          </ul>
+
+  `;
+};
+
+const generateSingleTask = function (task) {
+  let i = 0;
+
+  return `
+              <li class="task">
+              <div class="task__right">
+                <input class="checkbox" type="checkbox" />
+                <span class="task-text">${task.taskTitle}</span>
+              </div>
+              <div class="task__left">
+                <div class="assignedto">
+                  ${task.assignedTo
+                    .map(person => {
+                      i++;
+
+                      return `<div class="initial ${
+                        i == 1 ? '' : `initial-${i}`
+                      }">${person}</div>`;
+                    })
+                    .join('')}
+                </div>
+                <span class="deadline">${task.days} روز مانده</span>
+              </div>
+            </li>
+  `;
 };
 
 // header event handlers
