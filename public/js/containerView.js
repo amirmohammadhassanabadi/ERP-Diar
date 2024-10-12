@@ -1,6 +1,6 @@
 import view from '/js/view.js';
 
-const state = {
+let state = {
   completed: [
     {
       taskId: 4,
@@ -207,6 +207,7 @@ const handleTaskCompletion = function () {
     const containerBodyEl = document.querySelector('.container__body');
     containerBodyEl.innerHTML = '';
     view.renderHTML(generateMarkupCompletedTasks, containerBodyEl);
+    persistTasks();
     handleTaskCompletion();
   });
 };
@@ -271,6 +272,7 @@ const handlePopupSubmit = function () {
     view.renderHTML(generateTaskItems, taskContainerEl);
     inputEl.value = '';
     timeInputEl.value = '';
+    persistTasks();
     overlayEl.classList.add('hidden');
   });
 };
@@ -365,6 +367,15 @@ const handleMenuBtn = function () {
   });
 };
 
+const persistTasks = function () {
+  sessionStorage.setItem('tasks', JSON.stringify(state));
+};
+
+const sessionStorageInit = function () {
+  const storage = sessionStorage.getItem('tasks');
+  if (storage) state = JSON.parse(storage);
+};
+
 export default {
   handleMenuBtn,
   handleMenuChange,
@@ -373,6 +384,7 @@ export default {
   handlePopupSubmit,
   handleContainerNav,
   handleTaskCompletion,
+  sessionStorageInit,
 };
 
 // class TaskView extends View {
