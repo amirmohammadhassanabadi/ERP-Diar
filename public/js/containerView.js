@@ -6,19 +6,19 @@ const state = {
       taskId: 4,
       taskTitle: 'task title 4',
       assignedTo: ['SE', 'AB', 'CD'],
-      days: 5
-    }
+      days: 5,
+    },
   ],
   ongoing: [
     {
       taskId: 1,
       taskTitle: 'task title 1',
       assignedTo: ['SE', 'AB', 'CD'],
-      days: 3
+      days: 3,
     },
     { taskId: 2, taskTitle: 'task title 2', assignedTo: ['SE', 'AB'], days: 4 },
-    { taskId: 3, taskTitle: 'task title 3', assignedTo: ['SE'], days: 5 }
-  ]
+    { taskId: 3, taskTitle: 'task title 3', assignedTo: ['SE'], days: 5 },
+  ],
 };
 let taskCounter = 5;
 
@@ -44,6 +44,7 @@ const handleMenuChange = function () {
       view.renderHTML(generateMarkupTasks, containerEl);
       handleTaskAddBtn();
       handleContainerNav();
+      handleTaskCompletion();
     } else if (menu.classList.contains('menu__dashboard')) {
       console.log('going to dashboard');
       view.renderHTML(generateMarkupDashboard, containerEl);
@@ -155,8 +156,8 @@ const handleContainerNav = function () {
       console.log('going to my tasks');
       view.renderHTML(generateMarkupCompletedTasks, containerBodyEl);
       document.querySelector('.task__btn-add').classList?.remove('hidden');
-
       // handleCheckbox
+      handleTaskCompletion();
     } else if (navItem.classList.contains('completed__tasks')) {
       console.log('going to completed tasks');
       view.renderHTML(
@@ -165,6 +166,7 @@ const handleContainerNav = function () {
       );
       document.querySelector('.task__btn-add').classList?.add('hidden');
       // handleCheckbox
+      handleTaskCompletion();
     }
     navItem.classList.add('nav__item-active');
   });
@@ -185,6 +187,28 @@ const handleTaskAddBtn = function () {
   } catch (err) {
     console.log(err);
   }
+};
+
+const handleTaskCompletion = function () {
+  const parentEl = document.querySelector('.task__container');
+  parentEl.addEventListener('click', function (e) {
+    const checkbox = e.target.closest('.checkbox');
+    if (!checkbox) return;
+    const checkboxId = Number(checkbox.dataset.id);
+    const taskIndex = state.ongoing.reduce((acc, task, i) => {
+      return task.taskId === checkboxId ? i : acc;
+    }, -1);
+
+    console.log(taskIndex);
+    state.completed.push(state.ongoing[taskIndex]);
+    state.ongoing.splice(taskIndex, 1);
+
+    // re-render task list
+    const containerBodyEl = document.querySelector('.container__body');
+    containerBodyEl.innerHTML = '';
+    view.renderHTML(generateMarkupCompletedTasks, containerBodyEl);
+    handleTaskCompletion();
+  });
 };
 
 // popup event handlers
@@ -226,7 +250,7 @@ const handlePopupSubmit = function () {
       taskId: taskCounter,
       taskTitle: inputEl.value,
       assignedTo: ['SE'],
-      days: daysInput
+      days: daysInput,
     });
     taskCounter++;
 
@@ -245,6 +269,9 @@ const handlePopupSubmit = function () {
     const taskContainerEl = document.querySelector('.task__container');
     taskContainerEl.innerHTML = '';
     view.renderHTML(generateTaskItems, taskContainerEl);
+    inputEl.value = '';
+    timeInputEl.value = '';
+    overlayEl.classList.add('hidden');
   });
 };
 
@@ -256,7 +283,7 @@ const generateTaskItems = function (taskState = 0) {
           <ul class="task__list">
           ${
             taskState
-              ? state.completed.map(generateSingleTask).join('')
+              ? state.completed.map(generateSingleTaskCompleted).join('')
               : state.ongoing.map(generateSingleTask).join('')
           }
           </ul>
@@ -267,16 +294,18 @@ const generateTaskItems = function (taskState = 0) {
 const generateSingleTask = function (task) {
   let i = 0;
 
-  return `
+  let markup = `
               <li class="task">
               <div class="task__right">
-                <input class="checkbox" type="checkbox" />
+                <input class="checkbox" data-id=${
+                  task.taskId
+                } type="checkbox" />
                 <span class="task-text">${task.taskTitle}</span>
               </div>
               <div class="task__left">
                 <div class="assignedto">
                   ${task.assignedTo
-                    .map(person => {
+                    .map((person) => {
                       i++;
 
                       return `<div class="initial ${
@@ -289,6 +318,36 @@ const generateSingleTask = function (task) {
               </div>
             </li>
   `;
+  i = 0;
+  return markup;
+};
+
+const generateSingleTaskCompleted = function (task) {
+  let i = 0;
+
+  let markup = `
+              <li class="task">
+              <div class="task__right">
+                <span class="task-text">${task.taskTitle}</span>
+              </div>
+              <div class="task__left">
+                <div class="assignedto">
+                  ${task.assignedTo
+                    .map((person) => {
+                      i++;
+
+                      return `<div class="initial ${
+                        i == 1 ? '' : `initial-${i}`
+                      }">${person}</div>`;
+                    })
+                    .join('')}
+                </div>
+                <span class="deadline">${task.days} روز مانده</span>
+              </div>
+            </li>
+  `;
+  i = 0;
+  return markup;
 };
 
 // header event handlers
@@ -312,7 +371,8 @@ export default {
   handleTaskAddBtn,
   handlePopupClose,
   handlePopupSubmit,
-  handleContainerNav
+  handleContainerNav,
+  handleTaskCompletion,
 };
 
 // class TaskView extends View {
