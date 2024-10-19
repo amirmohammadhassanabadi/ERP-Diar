@@ -6,19 +6,19 @@ let state = {
       taskId: 4,
       taskTitle: 'task title 4',
       assignedTo: ['SE', 'AB', 'CD'],
-      days: 5,
-    },
+      days: 5
+    }
   ],
   ongoing: [
     {
       taskId: 1,
       taskTitle: 'task title 1',
       assignedTo: ['SE', 'AB', 'CD'],
-      days: 3,
+      days: 3
     },
     { taskId: 2, taskTitle: 'task title 2', assignedTo: ['SE', 'AB'], days: 4 },
-    { taskId: 3, taskTitle: 'task title 3', assignedTo: ['SE'], days: 5 },
-  ],
+    { taskId: 3, taskTitle: 'task title 3', assignedTo: ['SE'], days: 5 }
+  ]
 };
 let taskCounter = 5;
 
@@ -251,7 +251,7 @@ const handlePopupSubmit = function () {
       taskId: taskCounter,
       taskTitle: inputEl.value,
       assignedTo: ['SE'],
-      days: daysInput,
+      days: daysInput
     });
     taskCounter++;
 
@@ -307,7 +307,7 @@ const generateSingleTask = function (task) {
               <div class="task__left">
                 <div class="assignedto">
                   ${task.assignedTo
-                    .map((person) => {
+                    .map(person => {
                       i++;
 
                       return `<div class="initial ${
@@ -335,7 +335,7 @@ const generateSingleTaskCompleted = function (task) {
               <div class="task__left">
                 <div class="assignedto">
                   ${task.assignedTo
-                    .map((person) => {
+                    .map(person => {
                       i++;
 
                       return `<div class="initial ${
@@ -352,39 +352,25 @@ const generateSingleTaskCompleted = function (task) {
   return markup;
 };
 
-// header event handlers
-
-const handleMenuBtn = function () {
-  const parentEl = document.querySelector('header');
-  const menuEl = document.querySelector('.menu');
-  const containerEl = document.querySelector('.container');
-
-  parentEl.addEventListener('click', function (e) {
-    const btn = e.target.closest('.menu__btn');
-    if (!btn) return;
-    menuEl.classList.toggle('collapse');
-    containerEl.classList.toggle('fullscreen');
-  });
-};
-
+// MOVE TO MODEL REMINDER
 const persistTasks = function () {
-  sessionStorage.setItem('tasks', JSON.stringify(state));
+  localStorage.setItem('tasks', JSON.stringify(state));
 };
 
-const sessionStorageInit = function () {
-  const storage = sessionStorage.getItem('tasks');
+const localStorageInit = function () {
+  const storage = localStorage.getItem('tasks');
   if (storage) state = JSON.parse(storage);
 };
 
 export default {
-  handleMenuBtn,
+  // handleMenuBtn,
   handleMenuChange,
   handleTaskAddBtn,
   handlePopupClose,
   handlePopupSubmit,
   handleContainerNav,
   handleTaskCompletion,
-  sessionStorageInit,
+  localStorageInit
 };
 
 // class TaskView extends View {
