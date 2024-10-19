@@ -1,4 +1,4 @@
-import view from '/js/view.js';
+import view from '/js/views/view.js';
 
 let state = {
   completed: [

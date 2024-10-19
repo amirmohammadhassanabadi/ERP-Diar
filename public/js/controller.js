@@ -1,7 +1,7 @@
-import containerView from '/js/containerView.js';
-import navView from '/js/navView.js';
-import menuView from '/js/menuView.js';
-import * as model from '/js/tempModel.js';
+import containerView from '/js/views/containerView.js';
+import navView from '/js/views/navView.js';
+import menuView from '/js/views/menuView.js';
+import * as model from '/js/model.js';
 
 // const controlAddNewTask = function () {
 // };
