@@ -2,8 +2,8 @@ const renderHTML = function (generateMarkup, parentEl) {
   parentEl.insertAdjacentHTML('afterbegin', generateMarkup());
 };
 
-// const clearElement = function (el) {
-//   el.innerHTML = '';
-// };
+const clear = function (el) {
+  el.innerHTML = '';
+};
 
-export default { renderHTML };
+export default { renderHTML, clear };

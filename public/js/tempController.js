@@ -6,7 +6,27 @@ import * as model from '/js/tempModel.js';
 // const controlAddNewTask = function () {
 // };
 
-const controlTaskContainer = function () {};
+const controlMenuChange = function (menu) {
+  switch (menu) {
+    // dashboard
+    case 1:
+      containerView.loadContainerDashboard();
+
+      break;
+
+    // tasks
+    case 2:
+      containerView.loadContainerTasks();
+      containerView.handleTaskAddBtn();
+      containerView.handleContainerNav();
+      containerView.handleTaskCompletion();
+
+      break;
+
+    default:
+      break;
+  }
+};
 
 const controlMenuBtn = function () {
   // to collapse and expand menu
@@ -15,12 +35,12 @@ const controlMenuBtn = function () {
 
 const init = function () {
   navView.handleMenuBtn(controlMenuBtn);
-  containerView.handleMenuChange();
+  menuView.handleMenuChange(controlMenuChange);
   containerView.localStorageInit();
-  containerView.handleTaskAddBtn();
+  // containerView.handleTaskAddBtn();
   containerView.handlePopupClose();
   containerView.handlePopupSubmit();
-  containerView.handleContainerNav();
+  // containerView.handleContainerNav();
 };
 
 init();

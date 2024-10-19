@@ -28,8 +28,8 @@ app.use(cookieParser());
 // Routers
 app.use('/auth', authRouter);
 
+// mongoose.connect("mongodb://127.0.0.1:27017/Diar-ERP").then(() => {
 app.listen(port, () => {
   console.log(`server running on port ${port}`);
 });
-// mongoose.connect("mongodb://127.0.0.1:27017/Diar-ERP").then(() => {
 // });

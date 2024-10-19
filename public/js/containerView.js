@@ -21,39 +21,33 @@ let state = {
   ]
 };
 let taskCounter = 5;
+const parentEl = document.querySelector('.container');
 
-// menu event handler
+const loadContainerTasks = function () {
+  console.log('going to tasks');
 
-const handleMenuChange = function () {
-  const parentEl = document.querySelector('.menu');
-  parentEl.addEventListener('click', function (e) {
-    const menu = e.target.closest('.menu__item');
-    if (!menu || menu.classList.contains('menu-active')) return;
+  // clear container
+  view.clear(parentEl);
 
-    // 1. empty container
-    const containerEl = document.querySelector('.container');
-    containerEl.innerHTML = '';
+  // render task container
+  view.renderHTML(generateMarkupTasks, parentEl);
 
-    // 2. take away active class
-    parentEl.querySelector('.menu-active')?.classList.remove('menu-active');
-    console.log(parentEl);
+  // add handlers for newly made container elements
+  handleTaskAddBtn();
+  handleContainerNav();
+  handleTaskCompletion();
+};
 
-    // 3. generate menu markup
-    if (menu.classList.contains('menu__tasks')) {
-      console.log('going to tasks');
-      view.renderHTML(generateMarkupTasks, containerEl);
-      handleTaskAddBtn();
-      handleContainerNav();
-      handleTaskCompletion();
-    } else if (menu.classList.contains('menu__dashboard')) {
-      console.log('going to dashboard');
-      view.renderHTML(generateMarkupDashboard, containerEl);
-      // initialize dashboard event handlers
-    }
+const loadContainerDashboard = function () {
+  console.log('going to dashboard');
 
-    // 4. add active class to selected menu
-    menu.classList.add('menu-active');
-  });
+  // clear container
+  view.clear(parentEl);
+
+  // render task container
+  view.renderHTML(generateMarkupDashboard, parentEl);
+
+  // initialize dashboard event handlers REMINDER
 };
 
 const generateMarkupTasks = function () {
@@ -363,14 +357,14 @@ const localStorageInit = function () {
 };
 
 export default {
-  // handleMenuBtn,
-  handleMenuChange,
+  loadContainerDashboard,
   handleTaskAddBtn,
   handlePopupClose,
   handlePopupSubmit,
   handleContainerNav,
   handleTaskCompletion,
-  localStorageInit
+  localStorageInit,
+  loadContainerTasks
 };
 
 // class TaskView extends View {
