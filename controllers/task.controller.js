@@ -18,3 +18,8 @@ exports.getVerifiedAgents = async (req, res) => {
     return res.status(401).json({ statusCode: 401, message: "unauthorized" });
   res.json(users);
 };
+
+exports.addTask = async (req, res) => {
+    const {title, description,  deadline, agents} = req.body;
+    
+};
