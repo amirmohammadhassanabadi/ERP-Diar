@@ -14,7 +14,6 @@ exports.validateToken = (req, res, next) => {
         try {
             const decoded = verify(accessToken, process.env.JWT_SECRET_KEY);
             if (decoded) {
-                req.auth = true;
                 req.user = decoded;
                 return next();
             }else{

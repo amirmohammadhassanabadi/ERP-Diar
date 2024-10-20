@@ -4,7 +4,7 @@ const JWT = require("../middleware/JWT")
 
 const taskRouter = express.Router();
 
-taskRouter.get("/gettasks", taskController.getTasks);
+taskRouter.get("/gettasks", JWT.validateToken ,taskController.getTasks);
 
 module.exports = {
     taskRouter
