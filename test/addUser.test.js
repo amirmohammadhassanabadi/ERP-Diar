@@ -5,9 +5,9 @@ async function addUser() {
 const password = await bcrypt.hash("123", 12);
 
     let  user = new User({
-        username: "admin",
+        username: "user",
         password: password,
-        department: "it"
+        department: "eng"
     })
 
     user = await user.save();

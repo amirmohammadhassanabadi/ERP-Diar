@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   department: {
     type: String,
     required: true,
-    enum: ["it"],
+    enum: ["it", "eng"],
   },
 });
 
