@@ -1,12 +1,16 @@
-const express = require('express');
-require('dotenv').config();
-const path = require('path');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
+const express = require("express");
+require("dotenv").config();
+const path = require("path");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
+
+// Testing Imports
+const { addUser } = require("./test/addUser.test");
 
 // importing routers
-const { authRouter } = require('./routers/auth');
+const { authRouter } = require("./routers/auth");
+const { taskRouter } = require("./routers/task.router");
 
 // creating app - server
 const app = express();
@@ -14,9 +18,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // static files - public
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
 // Request Body handling
 app.use(express.json());
@@ -26,10 +30,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routers
-app.use('/auth', authRouter);
+app.use("/auth", authRouter);
+app.use("/tasks", taskRouter);
 
-// mongoose.connect("mongodb://127.0.0.1:27017/Diar-ERP").then(() => {
-app.listen(port, () => {
-  console.log(`server running on port ${port}`);
+mongoose.connect("mongodb://127.0.0.1:27017/Diar-ERP").then(() => {
+  app.listen(port, () => {
+    console.log(`server running on port ${port}`);
+  });
 });
-// });
