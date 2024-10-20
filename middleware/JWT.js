@@ -9,7 +9,7 @@ exports.createToken = (user) => {
 exports.validateToken = (req, res, next) => {
     const accessToken = req.cookies["access-token"];
 
-    if(!accessToken) return res.status(401).json({status: 401, message: "user not authentificated!"})
+    if(!accessToken) return res.redirect("/auth/login")
     
         try {
             const decoded = verify(accessToken, process.env.JWT_SECRET_KEY);
@@ -18,7 +18,7 @@ exports.validateToken = (req, res, next) => {
                 req.user = decoded;
                 return next();
             }else{
-                return res.status(401).json({status: 401, message: "user not authentificated!"})
+                return res.redirect("/auth/login")
             }
         } catch (err) {
             res.status(500).json({status: 500, message: "internal error"});
