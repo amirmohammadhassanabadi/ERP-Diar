@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Profile</title>
   <link rel="shortcut icon" href="/img/logo/logo-low.png" />
+  <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+  <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
   <link rel="stylesheet" href="/css/config/variables.css" />
   <link rel="stylesheet" href="/css/includes/top-line.css" />
   <link rel="stylesheet" href="/css/profile.css" />
@@ -50,23 +52,12 @@
         <div class="task__title">
           <p class="title-text">عنوان فعالیت جدید</p>
           <input class="title-input" type="text" placeholder="عنوان فعالیت جدید..." />
+          <p class="title-text">توضیحات</p>
+          <textarea name="descInput" id="descInput" placeholder="توضیحات"></textarea>
         </div>
         <ul class="options__list">
-          <!-- <li class="option__item description__item">test</li> -->
-          <input class="option__item description__item" type="text" placeholder="تعداد روز" />
-          <button class="option__item tag__item">
-            <i class="fa-solid fa-tag fa-rotate-by fa-xl" style="--fa-rotate-angle: 315deg; color: #888888"></i>
-          </button>
-          <button class="option__item todo__item">
-            <i class="fa-solid fa-list fa-flip-horizontal fa-xl" style="color: #888888"></i>
-          </button>
-          <button class="option__item attach__item">
-            <i class="fa-solid fa-paperclip fa-rotate-by fa-xl" style="--fa-rotate-angle: 315deg; color: #888888"></i>
-          </button>
-          <button class="option__item remind__item">
-            <i class="fa-regular fa-clock fa-xl" style="color: #888888"></i>
-          </button>
-          <button class="option__item assign__item">
+          <input type="text" data-jdp data-jdp-only-date id="dateInput">
+
             <i class="fa-solid fa-user fa-xl" style="color: #888888"></i>
             مسئول انجام
           </button>
@@ -83,6 +74,7 @@
 
   <script src="https://kit.fontawesome.com/7a20fd358e.js" crossorigin="anonymous"></script>
   <script type="module" src="/js/controller.js"></script>
+  <script src="/js/addTask.js"></script>
 </body>
 
 </html>
