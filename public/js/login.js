@@ -3,11 +3,13 @@ const loginWrapper = document.querySelector(".login-wrapper");
 const errorContent = document.querySelector(".main-alert>h3");
 
 function errorHandler(message) {
-  document.querySelector(".alert-wrapper").style.animation = "showAlert 1s ease forwards";
-  errorContent.innerText = message
+  document.querySelector(".alert-wrapper").style.animation =
+    "showAlert 1s ease forwards";
+  errorContent.innerText = message;
   setTimeout(() => {
-    document.querySelector(".alert-wrapper").style.animation = "hideAlert 1s ease forwards"
-  }, 5000)
+    document.querySelector(".alert-wrapper").style.animation =
+      "hideAlert 1s ease forwards";
+  }, 5000);
 }
 
 loginWrapper.addEventListener("click", (e) => {
@@ -19,7 +21,7 @@ loginWrapper.addEventListener("click", (e) => {
       e.target.parentElement.nextElementSibling.type = "text";
       e.target.classList = "fa-solid fa-eye-slash";
     }
-  } else if (e.target.id == "logInBtn") { 
+  } else if (e.target.id == "logInBtn") {
     fetch("/auth/postlogin", {
       method: "POST",
       headers: {
@@ -33,13 +35,12 @@ loginWrapper.addEventListener("click", (e) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
-          location.href = `user/profile`
-        }else if(data.status === 404){
-          errorHandler("نام کاربری یا رمز عبور نادرست است")
-        }else if(data.status === 500){
-          errorHandler("مشکلی پیش آمده لطفا لحظاتی دیگر دوباره تلاش کنید")
+          location.href = `user/profile`;
+        } else if (data.status === 404) {
+          errorHandler("نام کاربری یا رمز عبور نادرست است");
+        } else if (data.status === 500) {
+          errorHandler("مشکلی پیش آمده لطفا لحظاتی دیگر دوباره تلاش کنید");
         }
       });
   }
 });
-
