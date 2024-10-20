@@ -4,9 +4,9 @@ jalaliDatepicker.startWatch({
     time: true,
 });
 const popup__container = document.querySelector(".popup__container");
-// popup__container.addEventListener("click", (e) => {
-//   if(e.target.classList[0] == "submit__btn"){
+popup__container.addEventListener("click", (e) => {
+  if(e.target.classList[0] == "submit__btn"){
     
-//   }
-// });
+  }
+});
 
