@@ -24,7 +24,6 @@ let taskCounter = 5;
 const parentEl = document.querySelector('.container');
 
 const loadContainerTasks = function () {
-  console.log('going to tasks');
 
   // clear container
   view.clear(parentEl);
@@ -39,7 +38,6 @@ const loadContainerTasks = function () {
 };
 
 const loadContainerDashboard = function () {
-  console.log('going to dashboard');
 
   // clear container
   view.clear(parentEl);
@@ -133,27 +131,23 @@ const handleContainerNav = function () {
   const containerBodyEl = document.querySelector('.container__body');
   parentEl.addEventListener('click', function (e) {
     const navItem = e.target.closest('.nav__item');
-    console.log(navItem);
     if (!navItem || navItem.classList.contains('nav__item-active')) return;
 
     // empty container
     containerBodyEl.innerHTML = '';
 
     // remove active class
-    console.log(parentEl);
     parentEl
       .querySelector('.nav__item-active')
       ?.classList.remove('nav__item-active');
 
     // generate menu markup
     if (navItem.classList.contains('my__tasks')) {
-      console.log('going to my tasks');
       view.renderHTML(generateMarkupCompletedTasks, containerBodyEl);
       document.querySelector('.task__btn-add').classList?.remove('hidden');
       // handleCheckbox
       handleTaskCompletion();
     } else if (navItem.classList.contains('completed__tasks')) {
-      console.log('going to completed tasks');
       view.renderHTML(
         generateMarkupCompletedTasks.bind(null, 1),
         containerBodyEl
@@ -175,7 +169,6 @@ const handleTaskAddBtn = function () {
     parentEl.addEventListener('click', function (e) {
       const btn = e.target.closest('.task__btn-add');
       if (!btn) return;
-      console.log('add btn pressed');
       overlayEl.classList.remove('hidden');
     });
   } catch (err) {
@@ -193,7 +186,6 @@ const handleTaskCompletion = function () {
       return task.taskId === checkboxId ? i : acc;
     }, -1);
 
-    console.log(taskIndex);
     state.completed.push(state.ongoing[taskIndex]);
     state.ongoing.splice(taskIndex, 1);
 
@@ -216,7 +208,6 @@ const handlePopupClose = function () {
   parentEl.addEventListener('click', function (e) {
     const btn = e.target.closest('.cancel__btn');
     if (!btn) return;
-    console.log('cancel btn pressed');
     overlayEl.classList.add('hidden');
   });
 };
@@ -233,10 +224,8 @@ const handlePopupSubmit = function () {
     if (!btn) return;
     // func to check conditions
     if (!inputEl.value) {
-      console.log('no input');
       return;
     }
-    console.log(inputEl.value);
 
     // default day is set to 1
     let daysInput = Number(timeInputEl.value) ? Number(timeInputEl.value) : 1;
@@ -253,12 +242,6 @@ const handlePopupSubmit = function () {
     overlayEl.classList.remove('hidden');
 
     // show success message
-    console.log(
-      `successfully added task with title "${
-        state.ongoing[state.ongoing.length - 1].taskTitle
-      }" .`
-    );
-    console.log(state);
 
     // re-render tasks list
     const taskContainerEl = document.querySelector('.task__container');
