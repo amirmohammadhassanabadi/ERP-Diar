@@ -1,35 +1,44 @@
 import view from '/js/views/view.js';
 
-let state = {
-  completed: [
-    {
-      taskId: 4,
-      taskTitle: 'task title 4',
-      assignedTo: ['SE', 'AB', 'CD'],
-      days: 5
-    }
-  ],
-  ongoing: [
-    {
-      taskId: 1,
-      taskTitle: 'task title 1',
-      assignedTo: ['SE', 'AB', 'CD'],
-      days: 3
-    },
-    { taskId: 2, taskTitle: 'task title 2', assignedTo: ['SE', 'AB'], days: 4 },
-    { taskId: 3, taskTitle: 'task title 3', assignedTo: ['SE'], days: 5 }
-  ]
-};
+const state = [
+  {
+    taskId: 4,
+    taskTitle: 'task title 4',
+    taskState: 'completed',
+    assignedTo: ['SE', 'AB', 'CD'],
+    days: 5
+  },
+  {
+    taskId: 1,
+    taskTitle: 'task title 1',
+    taskState: 'completed',
+    assignedTo: ['SE', 'AB', 'CD'],
+    days: 3
+  },
+  {
+    taskId: 2,
+    taskTitle: 'task title 2',
+    taskState: 'ongoing',
+    assignedTo: ['SE', 'AB'],
+    days: 4
+  },
+  {
+    taskId: 3,
+    taskTitle: 'task title 3',
+    taskState: 'ongoing',
+    assignedTo: ['SE'],
+    days: 5
+  }
+];
 let taskCounter = 5;
 const parentEl = document.querySelector('.container');
 
-const loadContainerTasks = function () {
-
+const renderContainerTasks = function () {
   // clear container
   view.clear(parentEl);
 
   // render task container
-  view.renderHTML(generateMarkupTasks, parentEl);
+  view.renderHTML(generateMarkupTasks.bind(null, 'my__tasks'), parentEl);
 
   // add handlers for newly made container elements
   handleTaskAddBtn();
@@ -37,8 +46,7 @@ const loadContainerTasks = function () {
   handleTaskCompletion();
 };
 
-const loadContainerDashboard = function () {
-
+const renderContainerDashboard = function () {
   // clear container
   view.clear(parentEl);
 
@@ -48,14 +56,20 @@ const loadContainerDashboard = function () {
   // initialize dashboard event handlers REMINDER
 };
 
-const generateMarkupTasks = function () {
+const generateMarkupTasks = function (nav) {
   return `
-        <nav class="container__header">
+      <nav class="container__header">
         <span class="c_header-text">وظایف</span>
         <ul class="c_header__nav">
-          <li class="nav__item nav__item-active my__tasks">کارهای من</li>
-          <li class="nav__item completed__tasks">انجام شده</li>
-          <li class="nav__item">تقویم</li>
+          <li class="nav__item ${
+            nav === 'my__tasks' ? 'nav__item-active' : ''
+          } my__tasks">کارهای من</li>
+          <li class="nav__item ${
+            nav === 'completed__tasks' ? 'nav__item-active' : ''
+          } completed__tasks">انجام شده</li>
+          <li class="nav__item ${
+            nav === 'assigned__tasks' ? 'nav__item-active' : ''
+          } assigned__tasks ">تقویم</li>
         </ul>
       </nav>
       <div class="container__body">
@@ -77,7 +91,7 @@ const generateMarkupTasks = function () {
             </button> -->
         </div>
         <div class="task__container">
-        ${generateTaskItems(0)}
+        ${generateTaskItems()}
         </div>
       </div>
   `;
@@ -117,7 +131,7 @@ const generateMarkupCompletedTasks = function (stat) {
             </button> -->
         </div>
         <div class="task__container">
-        ${generateTaskItems(stat)}
+        ${generateTaskItems(0)}
         </div>
       </div>
 
@@ -254,23 +268,20 @@ const handlePopupSubmit = function () {
   });
 };
 
-const generateTaskItems = function (taskState = 0) {
+const generateTaskItems = function () {
+  console.log(state);
   return `
-            <span class="hint-text">وظایف امروز (${
-              taskState ? state.completed.length : state.ongoing.length
-            } مورد)</span>
+            <span class="hint-text">وظایف امروز (${state.reduce((acc, task) => {
+              if (task.taskState === 'ongoing') acc++;
+            }, 0)} مورد)</span>
           <ul class="task__list">
-          ${
-            taskState
-              ? state.completed.map(generateSingleTaskCompleted).join('')
-              : state.ongoing.map(generateSingleTask).join('')
-          }
+          ${state.map(generateSingleOngTask).join('')}
           </ul>
 
   `;
 };
 
-const generateSingleTask = function (task) {
+const generateSingleOngTask = function (task) {
   let i = 0;
 
   let markup = `
@@ -330,24 +341,24 @@ const generateSingleTaskCompleted = function (task) {
 };
 
 // MOVE TO MODEL REMINDER
-const persistTasks = function () {
-  localStorage.setItem('tasks', JSON.stringify(state));
-};
+// const persistTasks = function () {
+//   localStorage.setItem('tasks', JSON.stringify(state));
+// };
 
-const localStorageInit = function () {
-  const storage = localStorage.getItem('tasks');
-  if (storage) state = JSON.parse(storage);
-};
+// const localStorageInit = function () {
+//   const storage = localStorage.getItem('tasks');
+//   if (storage) state = JSON.parse(storage);
+// };
 
 export default {
-  loadContainerDashboard,
+  renderContainerDashboard,
   handleTaskAddBtn,
   handlePopupClose,
   handlePopupSubmit,
   handleContainerNav,
   handleTaskCompletion,
-  localStorageInit,
-  loadContainerTasks
+  // localStorageInit,
+  renderContainerTasks
 };
 
 // class TaskView extends View {
