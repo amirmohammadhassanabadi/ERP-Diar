@@ -21,19 +21,19 @@
         </div>
 
         <div class="input-wrapper">
-          <input type="text" placeholder="username" />
+          <input type="text" placeholder="username" id="usernameInput" />
           <div class="password-input-wrapper">
             <div class="icon-wrapper">
               <i class="fa-solid fa-eye" id="showIcon"></i>
             </div>
-            <input type="password" placeholder="password" />
+            <input type="password" placeholder="password" id="passwordInput" />
           </div>
 
           <div class="password-input-wrapper">
             <div class="icon-wrapper">
               <i class="fa-solid fa-eye" id="showIcon"></i>
             </div>
-            <input type="password" placeholder="confirm password" />
+            <input type="password" placeholder="confirm password" id="confirmPasswordInput"/>
           </div>
 
           <label for="#department">
@@ -54,7 +54,7 @@
             <option value="4">4</option>
             <option value="5">5</option>
           </select>
-          <button id="logInBtn">Sign Up</button>
+          <button id="signUpBtn">Sign Up</button>
         </div>
       </div>
       <!-- ---------------------------- -->
@@ -68,5 +68,6 @@
     </div>
 
     <script src="/js/packages/fa.min.js" crossorigin="anonymous"></script>
+    <script src="/js/auth/signup.js"></script>
   </body>
 </html>
