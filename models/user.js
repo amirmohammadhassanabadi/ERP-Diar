@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     ref: "Task",
   },
   macaddress: String,
+  level: {type: String, enum: ["1", "2", "3", "4", "5"]},
   department: {
     type: String,
     required: true,
