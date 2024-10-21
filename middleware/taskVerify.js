@@ -24,7 +24,7 @@ try {
       return res.status(409).json({ statusCode: 409 });
     }
     splited.forEach((item, index) => {
-      if (isNaN(Number(item))) return res.status(409).json({ statusCode: 409 });
+      if (isNaN(Number(item))) return res.status(409).json({ statusCode: 409});
     });
     if (Number(splited[0]) < 1403) {
       return res.status(409).json({ statusCode: 409 });
