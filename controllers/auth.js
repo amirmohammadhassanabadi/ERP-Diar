@@ -25,3 +25,7 @@ try {
 exports.renderProfilePage = (req, res) => {
   res.render("panel/profile")
 }
+
+exports.renderSignupPage = (req, res) => {
+  res.render("auth/signup")
+}

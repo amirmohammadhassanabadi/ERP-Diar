@@ -1,0 +1,202 @@
+body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .page-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .page-container > .top {
+    width: 100%;
+    height: 50vh;
+    background-color: var(--navy);
+  }
+  
+  .page-container > .bottom {
+    width: 100%;
+    height: 50vh;
+    background-color: var(--white-bg);
+  }
+  
+  .page-container > .login-wrapper {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    width: 30%;
+    background-color: var(--navy);
+    border-radius: 0.5rem;
+    box-shadow: #000 0px 5px 15px;
+    border: 3px solid var(--gold);
+  }
+  
+  .page-container > .login-wrapper > .logo-wrapper {
+    width: 100%;
+    padding: 1rem 0;
+    text-align: center;
+  }
+  
+  .page-container > .login-wrapper > .logo-wrapper > img {
+    width: 20%;
+  }
+  
+  .page-container > .login-wrapper > .input-wrapper {
+    padding: 1.5rem;
+  }
+  
+  .page-container > .login-wrapper > .input-wrapper input {
+    width: 100%;
+    border: 0;
+    padding: 0.7rem 0;
+    /* margin-bottom: 1rem; */
+    background-color: transparent;
+    border-bottom: 1px solid var(--gold);
+    color: #fff;
+  }
+  
+  .page-container > .login-wrapper > .input-wrapper input:nth-child(1), .page-container > .login-wrapper > .input-wrapper input:nth-child(2) {
+    margin-bottom: 1rem;
+  }
+  
+  .page-container > .login-wrapper > .input-wrapper input:focus {
+    outline: 0;
+    border-bottom: 1px solid var(--gold-shadow);
+  }
+  
+  ::placeholder{
+      color: var(--gray);
+  }
+  
+  .page-container > .login-wrapper > .input-wrapper > .password-input-wrapper {
+    position: relative;
+    display: flex; /* Enable flexbox */
+    align-items: center; /* Vertically center the contents */
+    width: 100%;
+  }
+  
+  .page-container
+    > .login-wrapper
+    > .input-wrapper
+    > .password-input-wrapper
+    > .icon-wrapper {
+    position: absolute;
+    right: 10px; /* Distance from the left edge */
+    top: 0;
+    height: 100%;
+    color: var(--gray); /* Icon color */
+    display: flex;
+    align-items: center;
+  }
+  
+  .page-container
+    > .login-wrapper
+    > .input-wrapper
+    > .password-input-wrapper
+    > .icon-wrapper
+    > i {
+    cursor: pointer;
+  }
+  
+  .page-container > .login-wrapper > .input-wrapper > button {
+    width: 100%;
+    padding: 0.7rem 0;
+    text-align: center;
+    background-color: var(--gold);
+    border: 0;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--white);
+    margin-top: 2rem;
+    transition: var(--transition);
+    cursor: pointer;
+  }
+  
+  .page-container > .login-wrapper > .input-wrapper > button:hover {
+    background-color: var(--gold-shadow);
+  }
+
+  label{
+    color: var(--gold);
+  }
+
+  select{
+    width: 100%;
+    padding: .5rem 0;
+    text-align: center;
+    background-color: transparent;
+    color: #fff;
+    border: 0;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  select:focus{
+    border: 1px solid var(--gold);
+    outline: 0;
+  }
+
+  #department{
+    margin-bottom: 1rem;
+  }
+  
+option{
+    background-color: var(--navy);
+  }
+
+  .alert-wrapper{
+    width: 100%;
+    position: fixed;
+    top: -100%;
+    left: 0;
+  }
+  
+  .alert-wrapper > .main-alert{
+    width: 30%;
+    margin: 0 auto;
+    padding: 1rem 0;
+    color: var(--red);
+    background-color: var(--light-red);
+    text-align: center;
+    border-radius: .3rem;
+    border: 2px solid var(--red);
+  }
+  
+  .alert-wrapper > .main-alert > h3{
+    padding: 0;
+    margin: 0;
+  }
+  /* ------------------------------------------------------------------------------ */
+  /* Animation */
+  @keyframes showAlert {
+    0%{top: -100%}
+    100%{top: 10px;}
+  }
+  
+  @keyframes hideAlert {
+    0%{top: 10px;}
+    100%{top: -100%}
+  }
+  /* ------------------------------------------------------------------------------ */
+  /* Media Query */
+  @media screen and (max-width: 1200px) {
+    .page-container > .login-wrapper {
+      width: 40%;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .page-container > .login-wrapper {
+      width: 60%;
+    }
+  }
+  
+  @media screen and (max-width: 576px) {
+    .page-container > .login-wrapper {
+      width: 90%;
+    }
+  }
