@@ -15,14 +15,7 @@ const handleMenuChange = function (handler) {
     const menu = e.target.closest('.menu__item');
     if (!menu || menu.classList.contains('menu-active')) return;
 
-    // 1. switch active class
-    switchActiveEl(menu);
-
-    // 2. render placeholder data REMINDER
-
-    // 3. render desired menu
-    if (menu.classList.contains('menu__dashboard')) handler(1);
-    else if (menu.classList.contains('menu__tasks')) handler(2);
+    handler(menu);
   });
 };
 
