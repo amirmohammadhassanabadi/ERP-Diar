@@ -40,7 +40,18 @@ exports.renderSignupPage = (req, res) => {
 };
 
 exports.addUser = async (req, res) => {
+try {
   const { username, password, confirmPassword, department, level } = req.body;
+
+  const userTargeted = await User.findOne({username: username})
+
+  if (userTargeted) {
+    return res
+    .status(409)
+    .json({
+      statusCode: 409
+    });
+  }
 
   if (password !== confirmPassword) {
     return res
@@ -59,8 +70,16 @@ exports.addUser = async (req, res) => {
     department: department,
     level: level,
   });
-
-  await user.save();
   
+  await user.save();
+
   res.status(200).json({ statusCode: 200 });
+} catch (error) {
+  return res
+  .status(500)
+  .json({
+    statusCode: 500,
+  });
+}
+  
 };
