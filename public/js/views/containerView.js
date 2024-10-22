@@ -30,6 +30,37 @@ const state = [
     days: 5
   }
 ];
+
+const user = [
+  {
+    userName: 'sepehrebrahimi',
+    fullName: 'سپهر ابراهیمی',
+    tasks: [],
+    level: 2,
+    department: 'IT'
+  },
+  {
+    userName: 'amirmohammadhasanabadi',
+    fullName: 'امیر محمد حسن آبادی',
+    tasks: [],
+    level: 2,
+    department: 'IT'
+  },
+  {
+    userName: 'mostafahosseini',
+    fullName: 'مصطفی حسینی',
+    tasks: [],
+    level: 3,
+    department: 'IT'
+  },
+  {
+    userName: 'kasragolirad',
+    fullName: 'کسری گلی راد',
+    tasks: [],
+    level: 2,
+    department: 'IT'
+  }
+];
 let taskCounter = 5;
 const parentEl = document.querySelector('.container');
 
@@ -158,10 +189,46 @@ const handleTaskAddBtn = function () {
       const btn = e.target.closest('.task__btn-add');
       if (!btn) return;
       overlayEl.classList.remove('hidden');
+
+      // ASYNC => GET USERS REMINDER
+
+      // Add referrals btn event listener
+      handleReferralsBtn();
     });
   } catch (err) {
     console.log(err);
   }
+};
+
+const handleReferralsBtn = function () {
+  const popupContainer = document.querySelector('.popup__container');
+  popupContainer.addEventListener('click', function (e) {
+    const agentBtn = e.target.closest('.agent-btn');
+
+    const markup = `
+      <div class="popup__overlay">
+            <div class="popup">
+                <ul class="user__list">
+                ${user.map(generateUsersListMarkup).join('')}
+                </ul>
+            </div>
+        </div>
+  `;
+    agentBtn.insertAdjacentHTML('afterend', markup);
+  });
+};
+
+const generateUsersListMarkup = function (user) {
+  return `
+    <li>
+      <div class="user__name"> ${user.fullName} </div>
+      <div class="initial"> ${user.fullName
+        .split(' ')
+        .slice(0, 2)
+        .map(word => word[0].toUpperCase())
+        .join(' ')} </div>
+    </li>
+  `;
 };
 
 const handleCheckbox = function (handler) {

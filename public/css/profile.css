@@ -308,9 +308,9 @@ input[type='checkbox'] {
   margin-bottom: 1rem;
 }
 
-#descInput{
-  margin-top: .5rem;
-  padding: .5rem;
+#descInput {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
   width: 100%;
   height: 30%;
   resize: none;
@@ -348,6 +348,39 @@ input[type='checkbox'] {
   margin-right: 2rem;
 }
 
+.popup__overlay {
+  width: 100%;
+  margin-right: 15rem;
+  position: fixed;
+  background: var(--color-white);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.user__list {
+  list-style: none;
+  padding: 0;
+}
+
+.user__list li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  justify-content: space-between;
+  display: flex;
+  /* align-items: center; */
+  cursor: pointer;
+}
+
+.user__list li:hover {
+  background: #f0f0f0;
+}
+
+.user__name {
+  display: flex;
+}
+
 /* .option__item:hover {
   border: 1px solid var(--color-grad-3);
   border-radius: 0.5rem;
@@ -359,12 +392,12 @@ input[type='checkbox'] {
   gap: 1rem;
 }
 
-#dateInput{
-  padding: .5rem 1rem;
+#dateInput {
+  padding: 0.5rem 1rem;
 }
 
-.agent-btn{
-  padding: .5rem 1rem;
+.agent-btn {
+  padding: 0.5rem 1rem;
 }
 
 .cancel__btn,
