@@ -5,6 +5,9 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 
+// Create Admin
+const admin = require("./config/database/create-admin")
+
 // Testing Imports
 const { addUser } = require("./test/addUser.test");
 
@@ -37,4 +40,5 @@ mongoose.connect("mongodb://127.0.0.1:27017/Diar-ERP").then(() => {
   app.listen(port, () => {
     console.log(`server running on port ${port}`);
   });
-});
+  return admin.createAdmin();
+})
