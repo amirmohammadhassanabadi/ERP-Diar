@@ -2,6 +2,10 @@ body {
     margin: 0;
     padding: 0;
   }
+
+  *:not(i){
+    font-family: "IransSans";
+  }
   
   .page-container {
     width: 100%;
