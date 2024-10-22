@@ -2,28 +2,28 @@ import view from '/js/views/view.js';
 
 const state = [
   {
-    taskId: 4,
+    taskId: '4',
     taskTitle: 'task title 4',
     taskStatus: 1,
     referrals: ['SE', 'AB', 'CD'],
     days: 5
   },
   {
-    taskId: 1,
+    taskId: '1',
     taskTitle: 'task title 1',
     taskStatus: 1,
     referrals: ['SE', 'AB', 'CD'],
     days: 3
   },
   {
-    taskId: 2,
+    taskId: '2',
     taskTitle: 'task title 2',
     taskStatus: 1,
     referrals: ['SE', 'AB'],
     days: 4
   },
   {
-    taskId: 3,
+    taskId: '3',
     taskTitle: 'task title 3',
     taskStatus: 0,
     referrals: ['SE'],
@@ -164,25 +164,44 @@ const handleTaskAddBtn = function () {
   }
 };
 
-const handleTaskCompletion = function () {
+const handleCheckbox = function (handler) {
   const parentEl = document.querySelector('.task__container');
   parentEl.addEventListener('click', function (e) {
     const checkbox = e.target.closest('.checkbox');
     if (!checkbox) return;
-    const checkboxId = Number(checkbox.dataset.id);
-    const taskIndex = state.ongoing.reduce((acc, task, i) => {
-      return task.taskId === checkboxId ? i : acc;
-    }, -1);
 
-    state.completed.push(state.ongoing[taskIndex]);
-    state.ongoing.splice(taskIndex, 1);
+    const targetTaskId = e.target.closest('.task').dataset.taskId;
+    handler(targetTaskId);
+
+    // console.log('target task id: ', targetTaskId);
+
+    // const targetTask = state.find(tsk => tsk.taskId === targetTaskId);
+
+    // targetTask.taskStatus
+    //   ? (targetTask.taskStatus = 0)
+    //   : (targetTask.taskStatus = 1);
+
+    // console.log(targetTask.taskStatus);
+
+    // view.clear(parentEl);
+    // view.renderHTML(
+    //   generateTaskContainer.bind(null, targetTask.taskStatus ? 0 : 1),
+    //   parentEl
+    // );
+
+    // const taskIndex = state.ongoing.reduce((acc, task, i) => {
+    //   return task.taskId === checkboxId ? i : acc;
+    // }, -1);
+
+    // state.completed.push(state.ongoing[taskIndex]);
+    // state.ongoing.splice(taskIndex, 1);
 
     // re-render task list
-    const containerBodyEl = document.querySelector('.container__body');
-    containerBodyEl.innerHTML = '';
-    view.renderHTML(generateMarkupCompletedTasks, containerBodyEl);
-    persistTasks();
-    handleTaskCompletion();
+    // const containerBodyEl = document.querySelector('.container__body');
+    // containerBodyEl.innerHTML = '';
+    // view.renderHTML(generateMarkupCompletedTasks, containerBodyEl);
+    // persistTasks();
+    // handleCheckbox();
   });
 };
 
@@ -261,7 +280,7 @@ const generateSingleTask = function (status, task) {
 
   if (task.taskStatus === status) {
     markup = `
-    <li class="task">
+    <li class="task" data-task-id="${task.taskId}">
     <div class="task__right">
       <input class="checkbox" type="checkbox" ${
         status ? 'checked' : ''
@@ -291,6 +310,7 @@ const generateSingleTask = function (status, task) {
 };
 
 export default {
+  state,
   renderContainerDashboard,
   handleTaskAddBtn,
   handlePopupClose,
@@ -299,6 +319,6 @@ export default {
   navChangeTaskReload,
   navChangeAsignedTasks,
   switchActiveNav,
-  handleTaskCompletion,
+  handleCheckbox,
   renderContainerTasks
 };

@@ -17,9 +17,20 @@ const controlMenuChange = function (menu) {
   else if (menu.classList.contains('menu__tasks')) {
     containerView.renderContainerTasks();
     containerView.handleTaskAddBtn();
-    containerView.handleTaskCompletion();
+    containerView.handleCheckbox(controlCheckbox);
     containerView.handleContainerNav(controlContainerNav);
   } else console.error('cannot find menu');
+};
+
+const controlCheckbox = function (taskId) {
+  // SHOULD GO TO MODEL REMINDER
+  const targetTask = containerView.state.find(tsk => tsk.taskId === taskId);
+
+  targetTask.taskStatus
+    ? (targetTask.taskStatus = 0)
+    : (targetTask.taskStatus = 1);
+
+  containerView.navChangeTaskReload(targetTask.taskStatus ? 0 : 1);
 };
 
 const controlContainerNav = function (navItem) {
