@@ -48,7 +48,7 @@ exports.renderSignupPage = async (req, res) => {
     dprmt.shift();
   }
 
-  for (let i = 5; i > Number(level); i--) {
+  for (let i = 4; i > Number(level); i--) {
     authLevel.push(i)
   }
   
@@ -60,31 +60,37 @@ exports.renderSignupPage = async (req, res) => {
 
 exports.addUser = async (req, res) => {
   try {
-    const { username, department, level } = req.body;
-
+    
+    const { fullName, username, department, level } = req.body;
+    
     const userTargeted = await User.findOne({ username: username });
-
+    
     if (userTargeted) {
       return res.status(409).json({
         statusCode: 409,
       });
     }
-
-    const hashed = await bcrypt.hash(process.env.DEFAULT_PASSWORD, 24);
-    console.log(hashed);
     
-
+    const defaultPass =  process.env.DEFAULT_PASSWORD;
+    
+    const hashed = await bcrypt.hash(defaultPass , 12);
+    
     let user = new User({
+      fullName: fullName,
       username: username,
       password: hashed,
       department: department,
       level: level,
     });
+    
+    console.log(user);
 
     await user.save();
 
     res.status(200).json({ statusCode: 200 });
   } catch (error) {
+    console.log(error.message);
+    
     return res.status(500).json({
       statusCode: 500,
     });

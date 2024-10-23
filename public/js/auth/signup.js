@@ -7,6 +7,7 @@ document.getElementById("signUpBtn").addEventListener("click", (e) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      fullName: document.getElementById("nameInput").value,
       username: document.getElementById("usernameInput").value,
       department: document.getElementById("department").value,
       level: document.getElementById("level").value,

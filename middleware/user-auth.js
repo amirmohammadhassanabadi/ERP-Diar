@@ -8,7 +8,7 @@ function signUpAccess(req, res, next) {
     if (!accessUsers.includes(level)) {
         return res.redirect("/auth/login");
     }
-
+    
     next();
 }
 
