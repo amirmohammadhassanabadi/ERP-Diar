@@ -2,7 +2,7 @@ exports.taskVerify = (req, res, next) => {
 try {
     let { title, deadline, agent } = req.body;
 
-    if (!title || title == " " || title == "  " || title == null) {
+    if (!title) {
       res.json({
         statusCode: 408,
       });
@@ -15,7 +15,6 @@ try {
     
     if (
       !deadline ||
-      deadline == "" ||
       deadline.length != 10 ||
       deadline[4] != "/" ||
       deadline[7] != "/" ||
@@ -23,7 +22,7 @@ try {
     ) {
       return res.status(409).json({ statusCode: 409 });
     }
-    splited.forEach((item, index) => {
+    splited.forEach((item) => {
       if (isNaN(Number(item))) return res.status(409).json({ statusCode: 409});
     });
     if (Number(splited[0]) < 1403) {
@@ -33,7 +32,8 @@ try {
     } else if (Number(splited[2]) < 1 || Number(splited[2]) > 31) {
       return res.status(409).json({ statusCode: 409 });
     }
-    res.json({ data: "ok" });
+    
+    next();
 } catch (err) {
     return res.status(500).json({statusCode: 500})
 }
