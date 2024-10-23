@@ -164,7 +164,6 @@ const navChangeAsignedTasks = function () {
         </div>
   `;
   view.renderHTML(tempAssignedToMarkup, taskContainer);
-  console.log('test');
 };
 
 const switchActiveNav = function (navItem) {
@@ -193,28 +192,52 @@ const handleTaskAddBtn = function () {
       // ASYNC => GET USERS REMINDER
 
       // Add referrals btn event listener
-      handleReferralsBtn();
     });
   } catch (err) {
     console.log(err);
   }
 };
 
+const handleOverlayLayer = function () {
+  const overlayEl = document.querySelector('.overlay');
+  overlayEl.addEventListener('click', function (e) {
+    const clicked = e.target;
+    if (!(clicked === overlayEl)) return;
+    overlayEl.classList.add('hidden');
+    const popupList = document.querySelector('.popup__overlay');
+    console.log(popupList);
+
+    if (popupList && !popupList.classList.contains('hidden'))
+      popupList.classList.add('hidden');
+  });
+};
+
 const handleReferralsBtn = function () {
   const popupContainer = document.querySelector('.popup__container');
   popupContainer.addEventListener('click', function (e) {
     const agentBtn = e.target.closest('.agent-btn');
+    if (!agentBtn) return;
 
-    const markup = `
-      <div class="popup__overlay">
-            <div class="popup">
-                <ul class="user__list">
-                ${user.map(generateUsersListMarkup).join('')}
-                </ul>
-            </div>
-        </div>
-  `;
-    agentBtn.insertAdjacentHTML('afterend', markup);
+    const popupUserList = document.querySelector('.popup__overlay');
+    if (!popupUserList?.classList.contains('hidden')) {
+      view.clear(popupUserList);
+      popupUserList.classList.add('hidden');
+    } else {
+      const markupGen = () => `
+      <div class="popup">
+      <ul class="user__list">
+      ${user.map(generateUsersListMarkup).join('')}
+      </ul>
+      </div>
+      `;
+
+      view.clear(popupUserList);
+      popupUserList.classList.remove('hidden');
+
+      // LOAD SPINNER ON DIV
+
+      view.renderHTML(markupGen, popupUserList);
+    }
   });
 };
 
@@ -387,5 +410,7 @@ export default {
   navChangeAsignedTasks,
   switchActiveNav,
   handleCheckbox,
-  renderContainerTasks
+  renderContainerTasks,
+  handleOverlayLayer,
+  handleReferralsBtn
 };

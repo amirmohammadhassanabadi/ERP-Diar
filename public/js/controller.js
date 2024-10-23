@@ -61,6 +61,8 @@ const init = function () {
   // containerView.handleTaskAddBtn();
   containerView.handlePopupClose();
   containerView.handlePopupSubmit();
+  containerView.handleReferralsBtn();
+  containerView.handleOverlayLayer();
   // containerView.handleContainerNav();
 };
 
