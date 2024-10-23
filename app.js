@@ -4,6 +4,16 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const morgan = require("morgan");
+const config = require("./config/src/main")[process.env.NODE_ENV];
+
+// creating app - server
+const app = express();
+
+// Requests Log
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"))
+}
 
 // Create Admin
 const admin = require("./config/database/create-admin")
@@ -15,8 +25,6 @@ const { addUser } = require("./test/addUser.test");
 const { authRouter } = require("./routers/auth");
 const { taskRouter } = require("./routers/task.router");
 
-// creating app - server
-const app = express();
 
 const port = process.env.PORT || 5000;
 
