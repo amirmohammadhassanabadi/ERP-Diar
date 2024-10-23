@@ -1,5 +1,5 @@
 const { User } = require("../models/user");
-const {Task} = require("../models/tasks");
+const {Task} = require("../models/tasks.model");
 
 exports.getTasks = async (req, res) => {
   if (req.user) {
@@ -23,7 +23,7 @@ exports.getVerifiedAgents = async (req, res) => {
 
 exports.addTask = async (req, res) => {
     const {title, description, deadline, agent} = req.body;
-    
+
 };
 
 exports.changeTaskStatus = async (req, res) => {
