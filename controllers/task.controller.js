@@ -1,5 +1,6 @@
 const { User } = require("../models/user");
-const {Task} = require("../models/tasks.model");
+const { Task } = require("../models/tasks.model");
+const dateConverter = require("farvardin");
 
 exports.getTasks = async (req, res) => {
   if (req.user) {
@@ -14,19 +15,23 @@ exports.getTasks = async (req, res) => {
 };
 
 exports.getVerifiedAgents = async (req, res) => {
-  const users = await User.find({ department: req.user.department });
-  
+  let users = await User.find({ department: req.user.department });
+
   if (!users)
     return res.status(401).json({ statusCode: 401, message: "unauthorized" });
-  res.json(users);
+
+  users = users.filter(member => {
+    return member.level <= req.user.level;
+  })
+
+  console.log(users);
+  
 };
 
 exports.addTask = async (req, res) => {
-    const {title, description, deadline, agent} = req.body;
-
+  const { title, description, deadline, agent } = req.body;
 };
 
 exports.changeTaskStatus = async (req, res) => {
   const taskId = req.params.taskid;
-
-}
+};

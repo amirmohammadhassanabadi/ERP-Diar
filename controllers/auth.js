@@ -70,8 +70,9 @@ exports.addUser = async (req, res) => {
       });
     }
 
-    const hashed = bcrypt.hash(process.env.DEFAULT_PASSWORD, 24);
-    console.log(req.body);
+    const hashed = await bcrypt.hash(process.env.DEFAULT_PASSWORD, 24);
+    console.log(hashed);
+    
 
     let user = new User({
       username: username,

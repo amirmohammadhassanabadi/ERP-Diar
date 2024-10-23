@@ -1,5 +1,5 @@
 const path = require("path");
-require("dotenv").config({path: path.join(__dirname, "..", ".env")});
+require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 const mongoose = require("mongoose");
 
 const userDepartmentEnum = JSON.parse(process.env.userDepartmentEnum);
@@ -8,12 +8,15 @@ const userLevelEnum = JSON.parse(process.env.userLevelEnum);
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
-  tasks: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Task",
-  },
+  fullName: { type: String, required: true },
+  tasks: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Task",
+    }
+  ],
   macaddress: String,
-  level: {type: String, enum: userLevelEnum},
+  level: { type: String, enum: userLevelEnum },
   department: {
     type: String,
     required: true,
