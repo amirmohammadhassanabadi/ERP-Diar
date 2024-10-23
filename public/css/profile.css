@@ -359,7 +359,7 @@ input[type='checkbox'] {
   width: 300px;
 }
 
-popup__overlay .user__list {
+.user__list {
   list-style: none;
   padding: 0;
 }

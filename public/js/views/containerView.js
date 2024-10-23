@@ -33,6 +33,7 @@ const state = [
 
 const user = [
   {
+    id: '123456789',
     userName: 'sepehrebrahimi',
     fullName: 'سپهر ابراهیمی',
     tasks: [],
@@ -40,6 +41,7 @@ const user = [
     department: 'IT'
   },
   {
+    id: '1123456789',
     userName: 'amirmohammadhasanabadi',
     fullName: 'امیر محمد حسن آبادی',
     tasks: [],
@@ -47,6 +49,7 @@ const user = [
     department: 'IT'
   },
   {
+    id: '11123456789',
     userName: 'mostafahosseini',
     fullName: 'مصطفی حسینی',
     tasks: [],
@@ -54,6 +57,7 @@ const user = [
     department: 'IT'
   },
   {
+    id: '111123456789',
     userName: 'kasragolirad',
     fullName: 'کسری گلی راد',
     tasks: [],
@@ -218,39 +222,84 @@ const handleReferralsBtn = function () {
     const agentBtn = e.target.closest('.agent-btn');
     if (!agentBtn) return;
 
-    const popupUserList = document.querySelector('.popup__overlay');
-    if (!popupUserList?.classList.contains('hidden')) {
-      view.clear(popupUserList);
-      popupUserList.classList.add('hidden');
-    } else {
-      const markupGen = () => `
-      <div class="popup">
-      <ul class="user__list">
-      ${user.map(generateUsersListMarkup).join('')}
-      </ul>
-      </div>
-      `;
-
-      view.clear(popupUserList);
-      popupUserList.classList.remove('hidden');
-
-      // LOAD SPINNER ON DIV
-
-      view.renderHTML(markupGen, popupUserList);
-    }
+    handlePopupUserList();
   });
+};
+
+const handlePopupUserList = function () {
+  const popupUserList = document.querySelector('.popup__overlay');
+  if (!popupUserList?.classList.contains('hidden')) {
+    view.clear(popupUserList);
+    popupUserList.classList.add('hidden');
+  } else {
+    const markupGen = () => `
+    <div class="popup">
+    <ul class="user__list">
+    ${user.map(generateUsersListMarkup).join('')}
+    </ul>
+    </div>
+    `;
+
+    view.clear(popupUserList);
+    popupUserList.classList.remove('hidden');
+
+    // LOAD SPINNER ON DIV
+
+    view.renderHTML(markupGen, popupUserList);
+
+    handleSelectedReferral();
+  }
 };
 
 const generateUsersListMarkup = function (user) {
   return `
     <li>
-      <div class="user__name"> ${user.fullName} </div>
+      <div class="user__name" data-user-id="${user.id}"> ${user.fullName} </div>
       <div class="initial"> ${user.fullName
         .split(' ')
         .slice(0, 2)
         .map(word => word[0].toUpperCase())
         .join(' ')} </div>
     </li>
+  `;
+};
+
+const handleSelectedReferral = function () {
+  const userList = document.querySelector('.user__list');
+  const agentBtn = document.querySelector('.agent-btn');
+  const userDisplay = document.querySelector('.user__display');
+
+  userList.addEventListener('click', function (e) {
+    const userEl = e.target.closest('li');
+    if (!userEl) return;
+    const userId = userEl.firstElementChild.dataset.userId;
+
+    // close users list
+    handlePopupUserList();
+
+    // render user to referral div
+
+    // 1. add hidden to referral btn
+    agentBtn.classList.toggle('hidden');
+
+    view.renderHTML(generateUserReferralMarkup.bind(null, userId), userDisplay);
+
+    // 2. add hidden to referral btn
+    userList.classList.toggle('hidden');
+  });
+};
+
+const generateUserReferralMarkup = function (id) {
+  const targetUsr = user.find(usr => usr.id === id);
+  return `
+   <div class="user__name" data-user-id="${targetUsr.id}"> ${
+    targetUsr.fullName
+  } </div>
+   <div class="initial"> ${targetUsr.fullName
+     .split(' ')
+     .slice(0, 2)
+     .map(word => word[0].toUpperCase())
+     .join(' ')} </div>
   `;
 };
 
