@@ -13,6 +13,15 @@ const taskSchema = new mongoose.Schema({
   },
   createdAt: { type: Date, default: Date.now() },
   deadline: { type: Date },
+  reports: [
+    {
+      description: {type: String},
+      writer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    }
+  ],
   files: [
     {
       type: mongoose.Schema.Types.Buffer,
