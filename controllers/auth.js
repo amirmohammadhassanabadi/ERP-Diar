@@ -1,6 +1,8 @@
 const { User } = require("../models/user");
 const bcrypt = require("bcrypt");
 const JWT = require("../middleware/JWT");
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 
 exports.renderLoginPage = (req, res) => {
   res.render("auth/login");
@@ -35,51 +37,55 @@ exports.renderProfilePage = (req, res) => {
   res.render("panel/profile");
 };
 
-exports.renderSignupPage = (req, res) => {
-  res.render("auth/signup");
+exports.renderSignupPage = async (req, res) => {
+  const { level, department } = req.user;
+  const authLevel = [];
+
+  let dprmt = department;
+
+  if (department === "administrator") {
+    dprmt = JSON.parse(process.env.userDepartmentEnum);
+    dprmt.shift();
+  }
+
+  for (let i = 5; i > Number(level); i--) {
+    authLevel.push(i)
+  }
+  
+  res.render("auth/signup", {
+    level: authLevel.sort(),
+    department: dprmt
+  });
 };
 
 exports.addUser = async (req, res) => {
-try {
-  const { username, password, confirmPassword, department, level } = req.body;
+  try {
+    const { username, department, level } = req.body;
 
-  const userTargeted = await User.findOne({username: username})
+    const userTargeted = await User.findOne({ username: username });
 
-  if (userTargeted) {
-    return res
-    .status(409)
-    .json({
-      statusCode: 409
+    if (userTargeted) {
+      return res.status(409).json({
+        statusCode: 409,
+      });
+    }
+
+    const hashed = bcrypt.hash(process.env.DEFAULT_PASSWORD, 24);
+    console.log(req.body);
+
+    let user = new User({
+      username: username,
+      password: hashed,
+      department: department,
+      level: level,
+    });
+
+    await user.save();
+
+    res.status(200).json({ statusCode: 200 });
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: 500,
     });
   }
-
-  if (password !== confirmPassword) {
-    return res
-      .status(400)
-      .json({
-        statusCode: 400,
-        message: "password & confirm password are not match",
-      });
-  }
-
-  const hashed = await bcrypt.hash(password, 12);
-  
-  let user = new User({
-    username: username,
-    password: hashed,
-    department: department,
-    level: level,
-  });
-  
-  await user.save();
-
-  res.status(200).json({ statusCode: 200 });
-} catch (error) {
-  return res
-  .status(500)
-  .json({
-    statusCode: 500,
-  });
-}
-  
 };

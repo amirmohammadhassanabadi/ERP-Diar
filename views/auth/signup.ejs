@@ -23,37 +23,26 @@
 
         <div class="input-wrapper">
           <input type="text" placeholder="username" id="usernameInput" />
-          <div class="password-input-wrapper">
-            <div class="icon-wrapper">
-              <i class="fa-solid fa-eye" id="showIcon"></i>
-            </div>
-            <input type="password" placeholder="password" id="passwordInput" />
-          </div>
-
-          <div class="password-input-wrapper">
-            <div class="icon-wrapper">
-              <i class="fa-solid fa-eye" id="showIcon"></i>
-            </div>
-            <input type="password" placeholder="confirm password" id="confirmPasswordInput"/>
-          </div>
 
           <label for="#department">
-            Department
           </label>
           <select name="department" id="department">
-            <option value="it">فناوری اطلاعات</option>
-            <option value="eng">فنی مهندسی</option>
+            <% if (level[0] - 1 == 1 ) { %>
+              <% for( let i = 0; i < department.length; i++ ) { %>
+              <option value="<%= department[i] %>"><%= department[i] %></option>
+              <% } %>
+            <% }else{ %>
+              <option value="<%= department %>"><%= department %></option>
+            <% } %>
           </select>
 
           <label for="#level">
             User Level
           </label>
           <select name="level" id="level">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            <% for( let i = 0; i < level.length; i++ ) { %>
+              <option value="<%= level[i] %>"><%= level[i] %></option>
+              <% } %>
           </select>
           <button id="signUpBtn">Sign Up</button>
         </div>
