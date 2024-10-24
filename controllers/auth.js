@@ -11,6 +11,7 @@ exports.renderLoginPage = (req, res) => {
 exports.postLogin = async (req, res) => {
   try {
     const { username, password } = req.body;
+    
     let user = await User.findOne({ username: username });
 
     if (!user)
@@ -18,6 +19,7 @@ exports.postLogin = async (req, res) => {
         .status(404)
         .json({ status: 404, message: "username or password is wrong" });
     const matched = await bcrypt.compare(password, user.password);
+
     if (!matched)
       return res
         .status(404)
@@ -49,32 +51,31 @@ exports.renderSignupPage = async (req, res) => {
   }
 
   for (let i = 4; i > Number(level); i--) {
-    authLevel.push(i)
+    authLevel.push(i);
   }
-  
+
   res.render("auth/signup", {
     level: authLevel.sort(),
-    department: dprmt
+    department: dprmt,
   });
 };
 
 exports.addUser = async (req, res) => {
   try {
-    
     const { fullName, username, department, level } = req.body;
-    
+
     const userTargeted = await User.findOne({ username: username });
-    
+
     if (userTargeted) {
       return res.status(409).json({
         statusCode: 409,
       });
     }
-    
-    const defaultPass =  process.env.DEFAULT_PASSWORD;
-    
-    const hashed = await bcrypt.hash(defaultPass , 12);
-    
+
+    const defaultPass = process.env.DEFAULT_PASSWORD;
+
+    const hashed = await bcrypt.hash(defaultPass, 12);
+
     let user = new User({
       fullName: fullName,
       username: username,
@@ -82,7 +83,7 @@ exports.addUser = async (req, res) => {
       department: department,
       level: level,
     });
-    
+
     console.log(user);
 
     await user.save();
@@ -90,7 +91,7 @@ exports.addUser = async (req, res) => {
     res.status(200).json({ statusCode: 200 });
   } catch (error) {
     console.log(error.message);
-    
+
     return res.status(500).json({
       statusCode: 500,
     });
