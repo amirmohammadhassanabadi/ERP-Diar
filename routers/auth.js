@@ -14,7 +14,7 @@ authRouter.post("/adduser", JWT.validateToken, signUpAccess, authController.addU
 
 // [Development]
 // authRouter.get("/signup", JWT.validateToken, signUpAccess, authController.renderSignupPage);
-authRouter.get("/signup", JWT.validateToken, authController.renderSignupPage);
+authRouter.get("/signup", JWT.validateToken, signUpAccess, authController.renderSignupPage);
 
 
 module.exports = { authRouter };
