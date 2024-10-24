@@ -1,4 +1,4 @@
-function requestTrimer(req, res, next) {
+function requestBodyTrimer(req, res, next) {
     for (const key in req.body) {
         req.body[key] = req.body[key].trim();
     }
@@ -7,5 +7,5 @@ function requestTrimer(req, res, next) {
 }
 
 module.exports = {
-    requestTrimer
+    requestBodyTrimer
 }
