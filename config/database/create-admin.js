@@ -13,13 +13,13 @@ exports.createAdmin = async () => {
     const hashedPassword = await bcrypt.hash(adminInfo.password, 10);
 
     const adminUser = new User({
+      fullName: adminInfo.fullName,
       username: adminInfo.username,
       password: hashedPassword,
       department: adminInfo.department,
       level: adminInfo.level,
     });
 
-    console.log("ok");
     const  savedAdmin = await adminUser.save();
 
     return savedAdmin
