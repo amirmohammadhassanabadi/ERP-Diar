@@ -35,6 +35,14 @@ try {
 
 exports.addTask = async (req, res) => {
   const { title, description, deadline, agent } = req.body;
+
+  deadline = deadline.split("/").map(item => {
+    return Number(item)
+  })
+
+  deadline = dateConverter.gregorianToSolar(item[0], item[1], item[2]);
+
+  const newTask = new Task()
 };
 
 exports.changeTaskStatus = async (req, res) => {

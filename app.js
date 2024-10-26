@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === "development") {
 const admin = require("./config/database/create-admin")
 
 // Testing Imports
-const { addUser } = require('./test/addUser.test');
+const { addTestUser } = require('./test/addUser.test');
 
 // importing routers
 const { authRouter } = require('./routers/auth');
@@ -51,4 +51,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/Diar-ERP").then(() => {
     console.log(`server running on port ${port}`);
   });
   return admin.createAdmin();
+})
+.then(() => {
+  return addTestUser();
 })
