@@ -5,10 +5,14 @@ const {neddedUserInfo, neededTasksInfo} = require("../utilities/dataInfoClient")
 
 exports.getTasks = async (req, res) => {
   if (req.user) {
-    const user = await User.findById(req.user.id).populate("tasks");
+    const tasks = await Task.find();
+    tasks = tasks.filter(task => {
+      const flag = task.agents.includes(req.user.id);
+      if (flag) return task;
+    })
     res.status(200).json({
       statusCode: 200,
-      data: neededTasksInfo(user.tasks),
+      data: neededTasksInfo(tasks),
     });
   } else {
     res.status(401).send({ statusCode: 401, message: "Unauthorized" });
