@@ -34,15 +34,27 @@ try {
 };
 
 exports.addTask = async (req, res) => {
-  const { title, description, deadline, agent } = req.body;
+  const { title, description, deadline, agents } = req.body;
 
   deadline = deadline.split("/").map(item => {
     return Number(item)
   })
 
   deadline = dateConverter.gregorianToSolar(item[0], item[1], item[2]);
+  deadline = new Date(`${deadline[0]}, ${deadline[1]}, ${deadline[2]}`)
 
-  const newTask = new Task()
+  const newTask = new Task({
+    title: title,
+    description: description,
+    status: false,
+    agent: agents,
+    creator: req.user.id,
+    createdAt: Date.now(),
+    deadline: deadline,
+  })
+
+  await newTask.save();
+  res.status(200).json({statusCode: 200, message: "task added"});
 };
 
 exports.changeTaskStatus = async (req, res) => {

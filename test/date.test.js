@@ -1,5 +1,9 @@
 const dateConverter = require("farvardin");
 
-console.log(dateConverter.solarToGregorian(1403, 8, 2, "string"));
+const d = dateConverter.solarToGregorian(1403, 8, 2, "array");
 
-console.log(dateConverter.gregorianToSolar(2024, 10, 23, "string"));
+let date = new Date(`${Number(d[0])}, ${Number(d[1]) - 1 }, ${Number(d[2])}`)
+console.log(typeof date);
+
+const time = new Date();
+console.log(typeof time);
