@@ -375,21 +375,24 @@ const handlePopupSubmit = function () {
 
     // POST task to DB REMINDER
     const postTask = await postAPI('/tasks/addtasks', payload);
+
+    if (postTask.statusCode !== 200) {
+      console.error(postTask.statusCode);
+      return;
+    }
+
+    // show success message (with a timer)
+
+    // hide overlay
+    overlayEl.classList.add('hidden');
+
+    // re-initialize popup input (remove user inputs)
+
+    // re-fetch & re-render tasks list
+
     // =====================================
     // /tasks/gettasks (route to get tasks)
     // =====================================
-
-    // store in state
-    // state.ongoing.push({
-    //   taskId: taskCounter,
-    //   taskTitle: inputEl.value,
-    //   referrals: ['SE'],
-    //   days: daysInput
-    // });
-    // taskCounter++;
-
-    // close popup
-    // overlayEl.classList.remove('hidden');
 
     // show success message
 
@@ -400,7 +403,6 @@ const handlePopupSubmit = function () {
     // inputEl.value = '';
     // timeInputEl.value = '';
     // persistTasks();
-    // overlayEl.classList.add('hidden');
   });
 };
 
