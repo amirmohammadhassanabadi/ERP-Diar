@@ -15,6 +15,7 @@ exports.getTasks = async (req, res) => {
 };
 
 exports.getVerifiedAgents = async (req, res) => {
+try {
   let users = await User.find({ department: req.user.department });
 
   if (!users)
@@ -23,9 +24,11 @@ exports.getVerifiedAgents = async (req, res) => {
   users = users.filter(member => {
     return member.level <= req.user.level;
   })
-
-  console.log(users);
   
+  return res.status(200).json({statusCode: 200, data: users})
+} catch (error) {
+  res.status(500).json({statusCode: 500, data: "error"})
+}
 };
 
 exports.addTask = async (req, res) => {

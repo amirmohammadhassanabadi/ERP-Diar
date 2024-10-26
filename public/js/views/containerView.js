@@ -1,4 +1,5 @@
 import view from '/js/views/view.js';
+import {getAPI} from "/js/API/fetch.js"
 
 const state = [
   {
@@ -216,12 +217,15 @@ const handleOverlayLayer = function () {
   });
 };
 
-const handleReferralsBtn = function () {
+const handleReferralsBtn = async function () {
   const popupContainer = document.querySelector('.popup__container');
-  popupContainer.addEventListener('click', function (e) {
+  popupContainer.addEventListener('click', async function (e) {
     const agentBtn = e.target.closest('.agent-btn');
     if (!agentBtn) return;
 
+    // Fetch Agents Data
+    const data = await getAPI("/tasks/agent");
+    
     handlePopupUserList();
   });
 };
@@ -251,7 +255,7 @@ const handlePopupUserList = function () {
   }
 };
 
-const generateUsersListMarkup = function (user) {
+const generateUsersListMarkup = async function (user) {
   return `
     <li>
       <div class="user__name" data-user-id="${user.id}"> ${user.fullName} </div>
