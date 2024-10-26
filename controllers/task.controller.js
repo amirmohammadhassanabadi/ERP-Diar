@@ -1,6 +1,7 @@
 const { User } = require("../models/user");
 const { Task } = require("../models/tasks.model");
 const dateConverter = require("farvardin");
+const {neddedUserInfo} = require("../utilities/dataInfoClient");
 
 exports.getTasks = async (req, res) => {
   if (req.user) {
@@ -26,7 +27,7 @@ exports.getVerifiedAgents = async (req, res) => {
       return member.level >= req.user.level;
     });
 
-    return res.status(200).json({ statusCode: 200, data: users });
+    return res.status(200).json({ statusCode: 200, data: neddedUserInfo(users) });
   } catch (error) {
     res.status(500).json({ statusCode: 500, data: "error" });
   }
