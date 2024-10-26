@@ -10,6 +10,20 @@ function neddedUserInfo(users) {
     return users
 }
 
+function neededTasksInfo(tasks) {
+    tasks = tasks.map(task => {
+        return {
+            title: task.title,
+            description: task.description,
+            status: task.status,
+            agent: task.agent,
+            creator: task.creator,
+            createdAt: task.createdAt,
+            deadline: task.deadline
+        }
+    })
+}
+
 module.exports = {
-    neddedUserInfo
+    neddedUserInfo, neededTasksInfo
 }

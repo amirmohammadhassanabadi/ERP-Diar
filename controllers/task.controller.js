@@ -1,14 +1,14 @@
 const { User } = require("../models/user");
 const { Task } = require("../models/tasks.model");
 const dateConverter = require("farvardin");
-const {neddedUserInfo} = require("../utilities/dataInfoClient");
+const {neddedUserInfo, neededTasksInfo} = require("../utilities/dataInfoClient");
 
 exports.getTasks = async (req, res) => {
   if (req.user) {
     const user = await User.findById(req.user.id).populate("tasks");
     res.status(200).json({
       statusCode: 200,
-      data: user.tasks,
+      data: neededTasksInfo(user.tasks),
     });
   } else {
     res.status(401).send({ statusCode: 401, message: "Unauthorized" });
@@ -27,7 +27,7 @@ exports.getVerifiedAgents = async (req, res) => {
       return member.level >= req.user.level;
     });
 
-    return res.status(200).json({ statusCode: 200, data: neddedUserInfo(users) });
+    return res.status(200).json({ statusCode: 200, data: neddedUserInfo([users]) });
   } catch (error) {
     res.status(500).json({ statusCode: 500, data: "error" });
   }
