@@ -6,6 +6,7 @@ const JWT = require('../middleware/JWT');
 
 authRouter.get('/login', authController.renderLoginPage);
 authRouter.post('/postlogin', authController.postLogin);
+
 authRouter.get("/user/profile", JWT.validateToken, authController.renderProfilePage);
 authRouter.post("/adduser", JWT.validateToken, signUpAccess, authController.addUser);
 // authRouter.get("/signup", JWT.validateToken, authController.renderSignupPage);
@@ -15,6 +16,5 @@ authRouter.post("/adduser", JWT.validateToken, signUpAccess, authController.addU
 // [Development]
 // authRouter.get("/signup", JWT.validateToken, signUpAccess, authController.renderSignupPage);
 authRouter.get("/signup", JWT.validateToken, signUpAccess, authController.renderSignupPage);
-
 
 module.exports = { authRouter };

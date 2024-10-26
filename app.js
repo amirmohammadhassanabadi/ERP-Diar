@@ -1,3 +1,4 @@
+
 const express = require("express");
 require("dotenv").config();
 const path = require("path");
@@ -19,19 +20,19 @@ if (process.env.NODE_ENV === "development") {
 const admin = require("./config/database/create-admin")
 
 // Testing Imports
-const { addUser } = require("./test/addUser.test");
+const { addUser } = require('./test/addUser.test');
 
 // importing routers
-const { authRouter } = require("./routers/auth");
-const { taskRouter } = require("./routers/task.router");
+const { authRouter } = require('./routers/auth');
+const { taskRouter } = require('./routers/task.router');
 
 
 const port = process.env.PORT || 5000;
 
 // static files - public
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 
 // Request Body handling
 app.use(express.json());
@@ -41,8 +42,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routers
-app.use("/auth", authRouter);
-app.use("/tasks", taskRouter);
+app.use('/auth', authRouter);
+app.use('/tasks', taskRouter);
+
 
 mongoose.connect("mongodb://127.0.0.1:27017/Diar-ERP").then(() => {
   app.listen(port, () => {

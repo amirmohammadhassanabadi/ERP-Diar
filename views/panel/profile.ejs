@@ -7,7 +7,8 @@
   <title>Profile</title>
   <link rel="shortcut icon" href="/img/logo/logo-low.png" />
   <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
-  <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+  <script type="text/javascript"
+    src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
   <link rel="stylesheet" href="/css/config/variables.css" />
   <link rel="stylesheet" href="/css/includes/top-line.css" />
   <link rel="stylesheet" href="/css/profile.css" />
@@ -57,10 +58,14 @@
         </div>
         <ul class="options__list">
           <input type="text" data-jdp data-jdp-only-date id="dateInput" placeholder="زمان اتمام وظیفه">
-          <button class="agent-btn">
-            <i class="fa-solid fa-user fa-xl" style="color: #888888"></i>
-            مسئول انجام
-          </button>
+          <div style="display: inline-block;">
+            <button class="agent-btn" tabindex="0">
+              <i class="fa-solid fa-user fa-xl" style="color: #888888"></i>
+              مسئول انجام
+            </button>
+            <div class="user__display"></div>
+          </div>
+          <div class="popup__overlay hidden"></div>
         </ul>
       </div>
       <div class="popup__downside">

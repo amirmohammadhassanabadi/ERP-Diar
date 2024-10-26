@@ -1,44 +1,82 @@
 import view from '/js/views/view.js';
 
-let state = {
-  completed: [
-    {
-      taskId: 4,
-      taskTitle: 'task title 4',
-      assignedTo: ['SE', 'AB', 'CD'],
-      days: 5
-    }
-  ],
-  ongoing: [
-    {
-      taskId: 1,
-      taskTitle: 'task title 1',
-      assignedTo: ['SE', 'AB', 'CD'],
-      days: 3
-    },
-    { taskId: 2, taskTitle: 'task title 2', assignedTo: ['SE', 'AB'], days: 4 },
-    { taskId: 3, taskTitle: 'task title 3', assignedTo: ['SE'], days: 5 }
-  ]
-};
+const state = [
+  {
+    taskId: '4',
+    taskTitle: 'task title 4',
+    taskStatus: 1,
+    referrals: ['SE', 'AB', 'CD'],
+    days: 5
+  },
+  {
+    taskId: '1',
+    taskTitle: 'task title 1',
+    taskStatus: 1,
+    referrals: ['SE', 'AB', 'CD'],
+    days: 3
+  },
+  {
+    taskId: '2',
+    taskTitle: 'task title 2',
+    taskStatus: 1,
+    referrals: ['SE', 'AB'],
+    days: 4
+  },
+  {
+    taskId: '3',
+    taskTitle: 'task title 3',
+    taskStatus: 0,
+    referrals: ['SE'],
+    days: 5
+  }
+];
+
+const user = [
+  {
+    id: '123456789',
+    userName: 'sepehrebrahimi',
+    fullName: 'سپهر ابراهیمی',
+    tasks: [],
+    level: 2,
+    department: 'IT'
+  },
+  {
+    id: '1123456789',
+    userName: 'amirmohammadhasanabadi',
+    fullName: 'امیر محمد حسن آبادی',
+    tasks: [],
+    level: 2,
+    department: 'IT'
+  },
+  {
+    id: '11123456789',
+    userName: 'mostafahosseini',
+    fullName: 'مصطفی حسینی',
+    tasks: [],
+    level: 3,
+    department: 'IT'
+  },
+  {
+    id: '111123456789',
+    userName: 'kasragolirad',
+    fullName: 'کسری گلی راد',
+    tasks: [],
+    level: 2,
+    department: 'IT'
+  }
+];
 let taskCounter = 5;
 const parentEl = document.querySelector('.container');
 
-const loadContainerTasks = function () {
-
+const renderContainerTasks = function () {
   // clear container
   view.clear(parentEl);
 
   // render task container
   view.renderHTML(generateMarkupTasks, parentEl);
-
-  // add handlers for newly made container elements
-  handleTaskAddBtn();
-  handleContainerNav();
-  handleTaskCompletion();
 };
 
-const loadContainerDashboard = function () {
-
+const renderContainerDashboard = function () {
   // clear container
   view.clear(parentEl);
 
@@ -50,12 +88,12 @@ const loadContainerDashboard = function () {
 
 const generateMarkupTasks = function () {
   return `
-        <nav class="container__header">
+      <nav class="container__header">
         <span class="c_header-text">وظایف</span>
         <ul class="c_header__nav">
           <li class="nav__item nav__item-active my__tasks">کارهای من</li>
           <li class="nav__item completed__tasks">انجام شده</li>
-          <li class="nav__item">تقویم</li>
+          <li class="nav__item assigned__tasks ">ارجاع داده شده</li>
         </ul>
       </nav>
       <div class="container__body">
@@ -77,7 +115,7 @@ const generateMarkupTasks = function () {
             </button> -->
         </div>
         <div class="task__container">
-        ${generateTaskItems(0)}
+        ${generateTaskContainer(0)}
         </div>
       </div>
   `;
@@ -96,68 +134,52 @@ const generateMarkupDashboard = function () {
   `;
 };
 
-const generateMarkupCompletedTasks = function (stat) {
-  return `
-        <div class="container__body">
-        <div class="c_body__head">
-          <button class="task__btn-add task__btn">
-            <i class="fa-solid fa-plus fa-2xs" style="color: #ffffff"></i>
-            ایجاد وظیفه
-          </button>
-          <button class="task__btn task__btn-filter">
-            <img src="/img/icons/sort-icon.png" alt="sort-icon" />
-            فیلتر نمایش وظایف
-          </button>
-          <!-- <button class="task__btn task__btn-sort">
-              <i
-                class="fa-regular fa-bars-sort fa-flip-horizontal"
-                style="color: #979797"
-              ></i>
-              مرتب سازی: پیش فرض
-            </button> -->
-        </div>
-        <div class="task__container">
-        ${generateTaskItems(stat)}
-        </div>
-      </div>
-
-  `;
-};
-
 // container event handlers
 
-const handleContainerNav = function () {
+const handleContainerNav = function (handler) {
   const parentEl = document.querySelector('.c_header__nav');
-  const containerBodyEl = document.querySelector('.container__body');
   parentEl.addEventListener('click', function (e) {
     const navItem = e.target.closest('.nav__item');
     if (!navItem || navItem.classList.contains('nav__item-active')) return;
 
-    // empty container
-    containerBodyEl.innerHTML = '';
-
-    // remove active class
-    parentEl
-      .querySelector('.nav__item-active')
-      ?.classList.remove('nav__item-active');
-
-    // generate menu markup
-    if (navItem.classList.contains('my__tasks')) {
-      view.renderHTML(generateMarkupCompletedTasks, containerBodyEl);
-      document.querySelector('.task__btn-add').classList?.remove('hidden');
-      // handleCheckbox
-      handleTaskCompletion();
-    } else if (navItem.classList.contains('completed__tasks')) {
-      view.renderHTML(
-        generateMarkupCompletedTasks.bind(null, 1),
-        containerBodyEl
-      );
-      document.querySelector('.task__btn-add').classList?.add('hidden');
-      // handleCheckbox
-      handleTaskCompletion();
-    }
-    navItem.classList.add('nav__item-active');
+    // 1. send appropriate task body to handler
+    handler(navItem);
   });
+};
+
+const navChangeTaskReload = function (status) {
+  const taskContainer = parentEl.querySelector('.task__container');
+
+  // clear container body
+  view.clear(taskContainer);
+
+  view.renderHTML(generateTaskContainer.bind(null, status), taskContainer);
+};
+
+const navChangeAsignedTasks = function () {
+  const taskContainer = parentEl.querySelector('.task__container');
+
+  view.clear(taskContainer);
+
+  const tempAssignedToMarkup = () => `
+        <div class="container__body">
+        <div class="c_body__head" style="font-size: 150%; margin-right: 40%; margin-top: 20%;">
+          این بخش در حال توسعه است...
+        </div>
+  `;
+  view.renderHTML(tempAssignedToMarkup, taskContainer);
+};
+
+const switchActiveNav = function (navItem) {
+  const parentEl = document.querySelector('.c_header__nav');
+
+  // remove current active nav class
+  parentEl
+    .querySelector('.nav__item-active')
+    ?.classList.remove('nav__item-active');
+
+  // add active to target nav item
+  navItem.classList.add('nav__item-active');
 };
 
 // gets called while no container child on screen BUG
@@ -170,31 +192,165 @@ const handleTaskAddBtn = function () {
       const btn = e.target.closest('.task__btn-add');
       if (!btn) return;
       overlayEl.classList.remove('hidden');
+
+      // ASYNC => GET USERS REMINDER
+
+      // Add referrals btn event listener
     });
   } catch (err) {
     console.log(err);
   }
 };
 
-const handleTaskCompletion = function () {
+const handleOverlayLayer = function () {
+  const overlayEl = document.querySelector('.overlay');
+  overlayEl.addEventListener('click', function (e) {
+    const clicked = e.target;
+    if (!(clicked === overlayEl)) return;
+    overlayEl.classList.add('hidden');
+    const popupList = document.querySelector('.popup__overlay');
+    console.log(popupList);
+
+    if (popupList && !popupList.classList.contains('hidden'))
+      popupList.classList.add('hidden');
+  });
+};
+
+const handleReferralsBtn = function () {
+  const popupContainer = document.querySelector('.popup__container');
+  popupContainer.addEventListener('click', function (e) {
+    const agentBtn = e.target.closest('.agent-btn');
+    if (!agentBtn) return;
+
+    handlePopupUserList();
+  });
+};
+
+const handlePopupUserList = function () {
+  const popupUserList = document.querySelector('.popup__overlay');
+  if (!popupUserList?.classList.contains('hidden')) {
+    view.clear(popupUserList);
+    popupUserList.classList.add('hidden');
+  } else {
+    const markupGen = () => `
+    <div class="popup">
+    <ul class="user__list">
+    ${user.map(generateUsersListMarkup).join('')}
+    </ul>
+    </div>
+    `;
+
+    view.clear(popupUserList);
+    popupUserList.classList.remove('hidden');
+
+    // LOAD SPINNER ON DIV
+
+    view.renderHTML(markupGen, popupUserList);
+
+    handleSelectedReferral();
+  }
+};
+
+const generateUsersListMarkup = function (user) {
+  return `
+    <li>
+      <div class="user__name" data-user-id="${user.id}"> ${user.fullName} </div>
+      <div class="initial"> ${user.fullName
+        .split(' ')
+        .slice(0, 2)
+        .map(word => word[0].toUpperCase())
+        .join(' ')} </div>
+    </li>
+  `;
+};
+
+const handleSelectedReferral = function () {
+  const userList = document.querySelector('.user__list');
+  const agentBtn = document.querySelector('.agent-btn');
+  const userDisplay = document.querySelector('.user__display');
+
+  userList.addEventListener('click', function (e) {
+    const userEl = e.target.closest('li');
+    if (!userEl) return;
+    const userId = userEl.firstElementChild.dataset.userId;
+
+    // close users list
+    handlePopupUserList();
+
+    // render user to referral div
+
+    // 1. add hidden to referral btn
+    agentBtn.classList.toggle('hidden');
+
+    view.renderHTML(generateUserReferralMarkup.bind(null, userId), userDisplay);
+
+    // 2. add ev listener for close btn
+
+    // 3. add hidden to referral btn
+    userList.classList.toggle('hidden');
+
+    // 4. add border to user display
+    userDisplay.classList.add('user__border');
+  });
+};
+
+const handleUserCloseBtn = function () {
+  const userDisplay = document.querySelector('.user__display');
+  const closeBtn = document.querySelector('.user__close__btn');
+};
+
+const generateUserReferralMarkup = function (id) {
+  const targetUsr = user.find(usr => usr.id === id);
+  return `
+   <div class="user__name" data-user-id="${targetUsr.id}"> ${
+    targetUsr.fullName
+  } </div>
+   <div class="initial"> ${targetUsr.fullName
+     .split(' ')
+     .slice(0, 2)
+     .map(word => word[0].toUpperCase())
+     .join(' ')} </div>
+  `;
+};
+
+const handleCheckbox = function (handler) {
   const parentEl = document.querySelector('.task__container');
   parentEl.addEventListener('click', function (e) {
     const checkbox = e.target.closest('.checkbox');
     if (!checkbox) return;
-    const checkboxId = Number(checkbox.dataset.id);
-    const taskIndex = state.ongoing.reduce((acc, task, i) => {
-      return task.taskId === checkboxId ? i : acc;
-    }, -1);
 
-    state.completed.push(state.ongoing[taskIndex]);
-    state.ongoing.splice(taskIndex, 1);
+    const targetTaskId = e.target.closest('.task').dataset.taskId;
+    handler(targetTaskId);
+
+    // console.log('target task id: ', targetTaskId);
+
+    // const targetTask = state.find(tsk => tsk.taskId === targetTaskId);
+
+    // targetTask.taskStatus
+    //   ? (targetTask.taskStatus = 0)
+    //   : (targetTask.taskStatus = 1);
+
+    // console.log(targetTask.taskStatus);
+
+    // view.clear(parentEl);
+    // view.renderHTML(
+    //   generateTaskContainer.bind(null, targetTask.taskStatus ? 0 : 1),
+    //   parentEl
+    // );
+
+    // const taskIndex = state.ongoing.reduce((acc, task, i) => {
+    //   return task.taskId === checkboxId ? i : acc;
+    // }, -1);
+
+    // state.completed.push(state.ongoing[taskIndex]);
+    // state.ongoing.splice(taskIndex, 1);
 
     // re-render task list
-    const containerBodyEl = document.querySelector('.container__body');
-    containerBodyEl.innerHTML = '';
-    view.renderHTML(generateMarkupCompletedTasks, containerBodyEl);
-    persistTasks();
-    handleTaskCompletion();
+    // const containerBodyEl = document.querySelector('.container__body');
+    // containerBodyEl.innerHTML = '';
+    // view.renderHTML(generateMarkupCompletedTasks, containerBodyEl);
+    // persistTasks();
+    // handleCheckbox();
   });
 };
 
@@ -233,7 +389,7 @@ const handlePopupSubmit = function () {
     state.ongoing.push({
       taskId: taskCounter,
       taskTitle: inputEl.value,
-      assignedTo: ['SE'],
+      referrals: ['SE'],
       days: daysInput
     });
     taskCounter++;
@@ -246,7 +402,7 @@ const handlePopupSubmit = function () {
     // re-render tasks list
     const taskContainerEl = document.querySelector('.task__container');
     taskContainerEl.innerHTML = '';
-    view.renderHTML(generateTaskItems, taskContainerEl);
+    view.renderHTML(generateTaskContainer, taskContainerEl);
     inputEl.value = '';
     timeInputEl.value = '';
     persistTasks();
@@ -254,138 +410,66 @@ const handlePopupSubmit = function () {
   });
 };
 
-const generateTaskItems = function (taskState = 0) {
+const generateTaskContainer = function (status) {
   return `
-            <span class="hint-text">وظایف امروز (${
-              taskState ? state.completed.length : state.ongoing.length
-            } مورد)</span>
+            <span class="hint-text">وظایف امروز (${state.reduce((acc, task) => {
+              if (task.taskStatus === status) acc++;
+              return acc;
+            }, 0)} مورد)</span>
           <ul class="task__list">
-          ${
-            taskState
-              ? state.completed.map(generateSingleTaskCompleted).join('')
-              : state.ongoing.map(generateSingleTask).join('')
-          }
+          ${state.map(generateSingleTask.bind(null, status)).join('')}
           </ul>
 
   `;
 };
 
-const generateSingleTask = function (task) {
+const generateSingleTask = function (status, task) {
   let i = 0;
+  let markup;
 
-  let markup = `
-              <li class="task">
-              <div class="task__right">
-                <input class="checkbox" data-id=${
-                  task.taskId
-                } type="checkbox" />
-                <span class="task-text">${task.taskTitle}</span>
-              </div>
-              <div class="task__left">
-                <div class="assignedto">
-                  ${task.assignedTo
-                    .map(person => {
-                      i++;
+  if (task.taskStatus === status) {
+    markup = `
+    <li class="task" data-task-id="${task.taskId}">
+    <div class="task__right">
+      <input class="checkbox" type="checkbox" ${
+        status ? 'checked' : ''
+      } data-id=${task.taskId} />
+      <span class="task-text">${task.taskTitle}</span>
+    </div>
+    <div class="task__left">
+      <div class="assignedto">
+        ${task.referrals
+          .map(person => {
+            i++;
 
-                      return `<div class="initial ${
-                        i == 1 ? '' : `initial-${i}`
-                      }">${person}</div>`;
-                    })
-                    .join('')}
-                </div>
-                <span class="deadline">${task.days} روز مانده</span>
-              </div>
-            </li>
-  `;
+            return `<div class="initial ${
+              i == 1 ? '' : `initial-${i}`
+            }">${person}</div>`;
+          })
+          .join('')}
+      </div>
+      <span class="deadline">${task.days} روز مانده</span>
+    </div>
+  </li>
+`;
+  }
+
   i = 0;
   return markup;
-};
-
-const generateSingleTaskCompleted = function (task) {
-  let i = 0;
-
-  let markup = `
-              <li class="task">
-              <div class="task__right">
-                <span class="task-text">${task.taskTitle}</span>
-              </div>
-              <div class="task__left">
-                <div class="assignedto">
-                  ${task.assignedTo
-                    .map(person => {
-                      i++;
-
-                      return `<div class="initial ${
-                        i == 1 ? '' : `initial-${i}`
-                      }">${person}</div>`;
-                    })
-                    .join('')}
-                </div>
-                <span class="deadline">${task.days} روز مانده</span>
-              </div>
-            </li>
-  `;
-  i = 0;
-  return markup;
-};
-
-// MOVE TO MODEL REMINDER
-const persistTasks = function () {
-  localStorage.setItem('tasks', JSON.stringify(state));
-};
-
-const localStorageInit = function () {
-  const storage = localStorage.getItem('tasks');
-  if (storage) state = JSON.parse(storage);
 };
 
 export default {
-  loadContainerDashboard,
+  state,
+  renderContainerDashboard,
   handleTaskAddBtn,
   handlePopupClose,
   handlePopupSubmit,
   handleContainerNav,
-  handleTaskCompletion,
-  localStorageInit,
-  loadContainerTasks
+  navChangeTaskReload,
+  navChangeAsignedTasks,
+  switchActiveNav,
+  handleCheckbox,
+  renderContainerTasks,
+  handleOverlayLayer,
+  handleReferralsBtn
 };
-
-// class TaskView extends View {
-//   _overlayEl = document.querySelector('.overlay');
-//   _errMessage;
-//   _message;
-
-// addHandlerTaskPopupOpen() {
-//   const overlayElement = this._overlayEl;
-//   const parentEl = document.querySelector('.c_body__head');
-//   parentEl.addEventListener('click', function (e) {
-//     const btn = e.target.closest('.task__btn-add');
-//     if (!btn) return;
-//     overlayElement.classList.remove('hidden');
-//   });
-// }
-
-// addHandlerTaskPopupClose() {
-//   const overlayElement = this._overlayEl;
-//   const parentElTask = document.querySelector('.cancel__btn');
-//   parentElTask.addEventListener('click', function (e) {
-//     overlayElement.classList.add('hidden');
-//     console.log('test');
-//   });
-// }
-
-// addHandlerTaskPopupSubmit() {
-//   const submitBtnEl = document.querySelector('.submit__btn');
-//   const parentElTask = document.querySelector('.title-input');
-//   submitBtnEl.addEventListener('click', function (e) {
-//     console.log(parentElTask.value);
-//     // check input to be less than 50 char AND not empty
-//     // save input in var & return
-//     this._data = parentElTask.value;
-//     return this._data;
-//   });
-// }
-
-//mtd: save to local
-// }
-// export default new TaskView();
