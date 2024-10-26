@@ -1,21 +1,35 @@
 const { User } = require("../models/user");
 const { Task } = require("../models/tasks.model");
 const dateConverter = require("farvardin");
-const {neddedUserInfo, neededTasksInfo} = require("../utilities/dataInfoClient");
+const {
+  neddedUserInfo,
+  neededTasksInfo,
+} = require("../utilities/dataInfoClient");
 
 exports.getTasks = async (req, res) => {
   if (req.user) {
     const tasks = await Task.find();
-    tasks = tasks.filter(task => {
+    tasks = tasks.filter((task) => {
       const flag = task.agents.includes(req.user.id);
       if (flag) return task;
-    })
+    });
     res.status(200).json({
       statusCode: 200,
       data: neededTasksInfo(tasks),
     });
   } else {
     res.status(401).send({ statusCode: 401, message: "Unauthorized" });
+  }
+};
+
+exports.getReferredTasks = async (req, res) => {
+  try {
+    const tasks = Task.find({ creator: req.user.id });
+    return res
+      .status(200)
+      .json({ statusCode: 200, data: neededTasksInfo(tasks) });
+  } catch (error) {
+    res.status(500).json({ statusCode: 500, message: "internal error" });
   }
 };
 
@@ -31,7 +45,9 @@ exports.getVerifiedAgents = async (req, res) => {
       return member.level >= req.user.level;
     });
 
-    return res.status(200).json({ statusCode: 200, data: neddedUserInfo([users]) });
+    return res
+      .status(200)
+      .json({ statusCode: 200, data: neddedUserInfo([users]) });
   } catch (error) {
     res.status(500).json({ statusCode: 500, data: "error" });
   }
