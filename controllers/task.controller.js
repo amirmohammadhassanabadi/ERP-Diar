@@ -15,33 +15,32 @@ exports.getTasks = async (req, res) => {
 };
 
 exports.getVerifiedAgents = async (req, res) => {
-try {
-  let users = await User.find({ department: req.user.department });
+  try {
+    let users = await User.find({ department: req.user.department });
 
-  if (!users)
-    return res.status(401).json({ statusCode: 401, message: "unauthorized" });
-  console.log(users);
+    if (!users)
+      return res.status(401).json({ statusCode: 401, message: "unauthorized" });
+    console.log(users);
 
-  users = users.filter(member => {
-    return member.level >= req.user.level;
-  })
-  
-  
-  return res.status(200).json({statusCode: 200, data: users})
-} catch (error) {
-  res.status(500).json({statusCode: 500, data: "error"})
-}
+    users = users.filter((member) => {
+      return member.level >= req.user.level;
+    });
+
+    return res.status(200).json({ statusCode: 200, data: users });
+  } catch (error) {
+    res.status(500).json({ statusCode: 500, data: "error" });
+  }
 };
 
 exports.addTask = async (req, res) => {
   const { title, description, deadline, agents } = req.body;
 
-  deadline = deadline.split("/").map(item => {
-    return Number(item)
-  })
+  deadline = deadline.split("/").map((item) => {
+    return Number(item);
+  });
 
   deadline = dateConverter.gregorianToSolar(item[0], item[1], item[2]);
-  deadline = new Date(`${deadline[0]}, ${deadline[1]}, ${deadline[2]}`)
+  deadline = new Date(`${deadline[0]}, ${deadline[1]}, ${deadline[2]}`);
 
   const newTask = new Task({
     title: title,
@@ -51,12 +50,37 @@ exports.addTask = async (req, res) => {
     creator: req.user.id,
     createdAt: Date.now(),
     deadline: deadline,
-  })
+  });
 
   await newTask.save();
-  res.status(200).json({statusCode: 200, message: "task added"});
+  res.status(200).json({ statusCode: 200, message: "task added" });
 };
 
 exports.changeTaskStatus = async (req, res) => {
-  const taskId = req.params.taskid;
+  try {
+    const { taskId, taskStatus } = req.body.status;
+    const task = await Task.findById(taskId);
+    if (!task) {
+      return res
+        .status(404)
+        .json({ statusCode: 404, message: "task not found" });
+    }
+
+    if (task.status != taskStatus) {
+      return res
+        .status(404)
+        .json({ statusCode: 409, message: "status is not right" });
+    }
+
+    if (taskStatus == "false") {
+      task.status = true;
+    } else {
+      task.status = true;
+    }
+
+    taskStatus = await task.save();
+    return res.status(200).json({ statusCode: 200, message: "status changed" });
+  } catch (err) {
+    return res.status(500).json({ statusCode: 500, message: "server error" });
+  }
 };
