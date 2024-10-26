@@ -22,6 +22,7 @@ function neededTasksInfo(tasks) {
             deadline: task.deadline
         }
     })
+    return tasks
 }
 
 module.exports = {
