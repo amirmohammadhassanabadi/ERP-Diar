@@ -1,9 +1,23 @@
-const express = require('express');
-require('dotenv').config();
-const path = require('path');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
+
+const express = require("express");
+require("dotenv").config();
+const path = require("path");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
+const morgan = require("morgan");
+const config = require("./config/src/main")[process.env.NODE_ENV];
+
+// creating app - server
+const app = express();
+
+// Requests Log
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"))
+}
+
+// Create Admin
+const admin = require("./config/database/create-admin")
 
 // Testing Imports
 const { addUser } = require('./test/addUser.test');
@@ -12,8 +26,6 @@ const { addUser } = require('./test/addUser.test');
 const { authRouter } = require('./routers/auth');
 const { taskRouter } = require('./routers/task.router');
 
-// creating app - server
-const app = express();
 
 const port = process.env.PORT || 5000;
 
@@ -33,8 +45,10 @@ app.use(cookieParser());
 app.use('/auth', authRouter);
 app.use('/tasks', taskRouter);
 
-// mongoose.connect("mongodb://127.0.0.1:27017/Diar-ERP").then(() => {
-app.listen(port, () => {
-  console.log(`server running on port ${port}`);
-});
-// });
+
+mongoose.connect("mongodb://127.0.0.1:27017/Diar-ERP").then(() => {
+  app.listen(port, () => {
+    console.log(`server running on port ${port}`);
+  });
+  return admin.createAdmin();
+})
