@@ -32,40 +32,6 @@ const state = [
   }
 ];
 
-const user = [
-  {
-    id: '123456789',
-    userName: 'sepehrebrahimi',
-    fullName: 'سپهر ابراهیمی',
-    tasks: [],
-    level: 2,
-    department: 'IT'
-  },
-  {
-    id: '1123456789',
-    userName: 'amirmohammadhasanabadi',
-    fullName: 'امیر محمد حسن آبادی',
-    tasks: [],
-    level: 2,
-    department: 'IT'
-  },
-  {
-    id: '11123456789',
-    userName: 'mostafahosseini',
-    fullName: 'مصطفی حسینی',
-    tasks: [],
-    level: 3,
-    department: 'IT'
-  },
-  {
-    id: '111123456789',
-    userName: 'kasragolirad',
-    fullName: 'کسری گلی راد',
-    tasks: [],
-    level: 2,
-    department: 'IT'
-  }
-];
 let taskCounter = 5;
 const parentEl = document.querySelector('.container');
 
@@ -317,7 +283,7 @@ const generateUserReferralMarkup = function (id, users) {
   console.log(targetUsr);
 
   return `
-   <div class="user__name" data-user-id="${targetUsr.id}"> ${
+   <div class="user__name" data-user-id="${targetUsr._id}"> ${
     targetUsr.fullName
   } </div>
    <div class="initial"> ${targetUsr.fullName
@@ -391,43 +357,50 @@ const handlePopupSubmit = function () {
     }
 
     // default day is set to 1
-    let daysInput = Number(timeInputEl.value) ? Number(timeInputEl.value) : 1;
+    // let daysInput = Number(timeInputEl.value) ? Number(timeInputEl.value) : 1;
 
     // =====================================
-    // payload: {
-    //   title: ,
-    //   description: ,
-    //   agents: ,
-    //   deadline:
-    // }
+    const newTitle = document.querySelector('.title-input').value;
+    const newDesc = document.getElementById('descInput').value;
+    const newAgents = document.querySelector('.user__name').dataset.userId;
+    const newDeadline = document.getElementById('dateInput').value;
+
+    const payload = {
+      title: newTitle,
+      description: newDesc,
+      agents: [newAgents],
+      deadline: newDeadline
+    };
+    console.log(payload);
+
     // POST task to DB REMINDER
-    // const postTask = await postAPI("/tasks/addtasks", {})
+    const postTask = await postAPI('/tasks/addtasks', payload);
     // =====================================
     // /tasks/gettasks (route to get tasks)
     // =====================================
 
     // store in state
-    state.ongoing.push({
-      taskId: taskCounter,
-      taskTitle: inputEl.value,
-      referrals: ['SE'],
-      days: daysInput
-    });
-    taskCounter++;
+    // state.ongoing.push({
+    //   taskId: taskCounter,
+    //   taskTitle: inputEl.value,
+    //   referrals: ['SE'],
+    //   days: daysInput
+    // });
+    // taskCounter++;
 
     // close popup
-    overlayEl.classList.remove('hidden');
+    // overlayEl.classList.remove('hidden');
 
     // show success message
 
     // re-render tasks list
-    const taskContainerEl = document.querySelector('.task__container');
-    taskContainerEl.innerHTML = '';
-    view.renderHTML(generateTaskContainer, taskContainerEl);
-    inputEl.value = '';
-    timeInputEl.value = '';
-    persistTasks();
-    overlayEl.classList.add('hidden');
+    // const taskContainerEl = document.querySelector('.task__container');
+    // taskContainerEl.innerHTML = '';
+    // view.renderHTML(generateTaskContainer, taskContainerEl);
+    // inputEl.value = '';
+    // timeInputEl.value = '';
+    // persistTasks();
+    // overlayEl.classList.add('hidden');
   });
 };
 
