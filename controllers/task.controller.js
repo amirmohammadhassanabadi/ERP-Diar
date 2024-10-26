@@ -20,10 +20,12 @@ try {
 
   if (!users)
     return res.status(401).json({ statusCode: 401, message: "unauthorized" });
+  console.log(users);
 
   users = users.filter(member => {
-    return member.level <= req.user.level;
+    return member.level >= req.user.level;
   })
+  
   
   return res.status(200).json({statusCode: 200, data: users})
 } catch (error) {
