@@ -3,24 +3,28 @@ const taskSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   status: { type: Boolean, required: true },
-  agent: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
+  agent: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  ],
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    require: true,
   },
   createdAt: { type: Date, default: Date.now() },
   deadline: { type: Date },
   reports: [
     {
-      description: {type: String},
+      description: { type: String },
       writer: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-      }
-    }
+        ref: "User",
+      },
+    },
   ],
   files: [
     {
