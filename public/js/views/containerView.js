@@ -284,9 +284,19 @@ const handleSelectedReferral = function () {
 
     view.renderHTML(generateUserReferralMarkup.bind(null, userId), userDisplay);
 
-    // 2. add hidden to referral btn
+    // 2. add ev listener for close btn
+
+    // 3. add hidden to referral btn
     userList.classList.toggle('hidden');
+
+    // 4. add border to user display
+    userDisplay.classList.add('user__border');
   });
+};
+
+const handleUserCloseBtn = function () {
+  const userDisplay = document.querySelector('.user__display');
+  const closeBtn = document.querySelector('.user__close__btn');
 };
 
 const generateUserReferralMarkup = function (id) {

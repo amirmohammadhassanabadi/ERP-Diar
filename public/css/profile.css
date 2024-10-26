@@ -381,6 +381,25 @@ input[type='checkbox'] {
   display: flex;
 }
 
+.user__display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 3rem;
+}
+
+.user__border {
+  border: 2px solid var(--color-gray-light-3);
+  transition: 0.2s ease;
+}
+.user__border:hover {
+  border: 2px solid var(--color-grad-3);
+}
+
+.user__display > * {
+  margin: 0.3rem;
+}
+
 /* .option__item:hover {
   border: 1px solid var(--color-grad-3);
   border-radius: 0.5rem;
@@ -407,7 +426,7 @@ input[type='checkbox'] {
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: 0.3s ease-in-out;
 }
 
 .cancel__btn {
