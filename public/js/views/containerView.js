@@ -255,7 +255,7 @@ const handlePopupUserList = async function () {
 
     view.renderHTML(markupGen, popupUserList);
 
-    handleSelectedReferral();
+    handleSelectedReferral(response.data);
   }
 };
 
@@ -276,7 +276,7 @@ const generateUsersListMarkup = function (user) {
   `;
 };
 
-const handleSelectedReferral = function () {
+const handleSelectedReferral = function (users) {
   const userList = document.querySelector('.user__list');
   const agentBtn = document.querySelector('.agent-btn');
   const userDisplay = document.querySelector('.user__display');
@@ -294,7 +294,10 @@ const handleSelectedReferral = function () {
     // 1. add hidden to referral btn
     agentBtn.classList.toggle('hidden');
 
-    view.renderHTML(generateUserReferralMarkup.bind(null, userId), userDisplay);
+    view.renderHTML(
+      generateUserReferralMarkup.bind(null, userId, users),
+      userDisplay
+    );
 
     // 2. add ev listener for close btn
 
@@ -303,16 +306,16 @@ const handleSelectedReferral = function () {
 
     // 4. add border to user display
     userDisplay.classList.add('user__border');
+
+    // 5. add close btn event listener
+    handleUserCloseBtn();
   });
 };
 
-const handleUserCloseBtn = function () {
-  const userDisplay = document.querySelector('.user__display');
-  const closeBtn = document.querySelector('.user__close__btn');
-};
+const generateUserReferralMarkup = function (id, users) {
+  const targetUsr = users.find(usr => usr._id === id);
+  console.log(targetUsr);
 
-const generateUserReferralMarkup = function (id) {
-  const targetUsr = user.find(usr => usr.id === id);
   return `
    <div class="user__name" data-user-id="${targetUsr.id}"> ${
     targetUsr.fullName
@@ -322,7 +325,29 @@ const generateUserReferralMarkup = function (id) {
      .slice(0, 2)
      .map(word => word[0].toUpperCase())
      .join(' ')} </div>
+    <i class="user__close__btn hidden fa-duotone fa-solid fa-xmark fa-s"></i>
+
   `;
+};
+
+const handleUserCloseBtn = function () {
+  const userDisplay = document.querySelector('.user__display');
+  const closeBtn = document.querySelector('.user__close__btn');
+  const agentBtn = document.querySelector('.agent-btn');
+
+  userDisplay.addEventListener('mouseenter', function (e) {
+    closeBtn.classList.remove('hidden');
+  });
+
+  userDisplay.addEventListener('mouseleave', function (e) {
+    closeBtn.classList.add('hidden');
+  });
+
+  closeBtn.addEventListener('click', function (e) {
+    userDisplay.classList.remove('user__border');
+    view.clear(userDisplay);
+    agentBtn.classList.remove('hidden');
+  });
 };
 
 const handleCheckbox = function (handler) {
