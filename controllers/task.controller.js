@@ -133,7 +133,7 @@ exports.deleteTask = async (req, res) => {
   }
 };
 
-exports.referTask = async (req, res) => {
+exports.referTaskAgent = async (req, res) => {
   try {
     let { taskId, agent } = req.body;
     if (!taskId) {
