@@ -7,6 +7,7 @@ const {
 } = require("../utilities/dataInfoClient");
 
 exports.getTasks = async (req, res) => {
+try {
   if (req.user) {
     const tasks = await Task.find();
     tasks = tasks.filter((task) => {
@@ -18,8 +19,11 @@ exports.getTasks = async (req, res) => {
       data: neededTasksInfo(tasks),
     });
   } else {
-    res.status(401).send({ statusCode: 401, message: "Unauthorized" });
+    res.status(401).json({ statusCode: 401, message: "Unauthorized" });
   }
+} catch (error) {
+  res.status(500).json({ statusCode: 500, message: "internal error" });
+}
 };
 
 exports.getReferredTasks = async (req, res) => {
