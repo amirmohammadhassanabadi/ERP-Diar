@@ -132,3 +132,29 @@ exports.deleteTask = async (req, res) => {
       .json({ statusCode: 500, message: `internal error - ${error.message}` });
   }
 };
+
+exports.referTask = async (req, res) => {
+  try {
+    let { taskId, agent } = req.body;
+    if (!taskId) {
+      return res
+        .status(417)
+        .json({ statusCode: 417, message: "taskId is not valid" });
+    }
+
+    if (!agent) {
+       return res.status(417).json({ statusCode: 417, message: "agent is not"});
+    }
+
+    const task = await Task.findById(taskId);
+    if (!task) {
+      return res.status(404).json({ statusCode: 404, message: "task not found"});
+    }
+
+    if (task.agents[0] != agent) {
+      return res.status(403).json({ statusCode: 404, message: "task is not related to this user"});
+    }
+  } catch (error) {
+    return res.status(500).json({ statusCode: 404, message: "task not found"});
+  }
+};
