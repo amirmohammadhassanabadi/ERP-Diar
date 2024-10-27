@@ -307,16 +307,16 @@ const handleUserCloseBtn = function () {
     closeBtn.classList.add('hidden');
   });
 
-  closeBtn.addEventListener('click', function () {
-    userDisplay.classList.remove('user__border');
-    view.clear(userDisplay);
-    agentBtn.classList.remove('hidden');
-  });
+  closeBtn.addEventListener('click', removePopupUsers);
 };
 
 const removePopupUsers = function () {
   const userDisplay = document.querySelector('.user__display');
   const agentBtn = document.querySelector('.agent-btn');
+
+  userDisplay.classList.remove('user__border');
+  view.clear(userDisplay);
+  agentBtn.classList.remove('hidden');
 };
 
 const handleCheckbox = function (handler) {
@@ -367,6 +367,7 @@ const handlePopupSubmit = function () {
     const newDesc = document.getElementById('descInput');
     const newAgents = document.querySelector('.user__name');
     const newDeadline = document.getElementById('dateInput');
+    const taskContainerEl = document.querySelector('.task__container');
 
     const payload = {
       title: newTitle.value,
@@ -393,8 +394,14 @@ const handlePopupSubmit = function () {
     newTitle.value = '';
     newDesc.value = '';
     newDeadline.value = '';
+    removePopupUsers();
 
     // re-fetch & re-render tasks list
+    taskContainerEl.innerHTML = '';
+
+    // in addition to this we need to change nav to ongoing tasks BUG
+    // doesn't work yet BUG
+    view.renderHTML(generateTaskContainer.bind(null, 0), taskContainerEl);
 
     // =====================================
     // /tasks/gettasks (route to get tasks)
@@ -413,16 +420,20 @@ const handlePopupSubmit = function () {
 };
 
 const generateTaskContainer = async function (status) {
-  const tasksData = await getAPI('/tasks/gettasks');
-  if (tasksData) console.log(tasksData);
+  const taskRes = await getAPI('/tasks/gettasks');
+  if (taskRes.statusCode !== 200 || !taskRes) console.error(taskRes.statusCode);
 
+  const taskData = taskRes.data;
   return `
-            <span class="hint-text">وظایف امروز (${state.reduce((acc, task) => {
-              if (task.taskStatus === status) acc++;
-              return acc;
-            }, 0)} مورد)</span>
+            <span class="hint-text">وظایف امروز (${taskData.reduce(
+              (acc, task) => {
+                if (task.taskStatus === status) acc++;
+                return acc;
+              },
+              0
+            )} مورد)</span>
           <ul class="task__list">
-          ${state.map(generateSingleTask.bind(null, status)).join('')}
+          ${taskData.map(generateSingleTask.bind(null, status)).join('')}
           </ul>
 
   `;
