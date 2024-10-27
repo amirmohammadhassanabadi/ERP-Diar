@@ -1,5 +1,5 @@
 function neddedUserInfo(users) {
-    users = users.map(user => {
+    let usersArr = users.map(user => {
         return {
             id: user._id,
             fullName: user.fullName,
@@ -7,11 +7,11 @@ function neddedUserInfo(users) {
             department: user.department      
         }
     })
-    return users
+    return usersArr
 }
 
 function neededTasksInfo(tasks) {
-    tasks = tasks.map(task => {
+    let tasksArr = tasks.map(task => {
         return {
             title: task.title,
             description: task.description,
@@ -22,7 +22,7 @@ function neededTasksInfo(tasks) {
             deadline: task.deadline
         }
     })
-    return tasks
+    return tasksArr
 }
 
 module.exports = {

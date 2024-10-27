@@ -9,9 +9,9 @@ const postAPI = async (url, payload) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
+    body: JSON.stringify(
       payload
-    })
+    )
   });
   return await response.json();
 };
