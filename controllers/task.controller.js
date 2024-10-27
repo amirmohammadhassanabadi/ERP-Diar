@@ -7,24 +7,26 @@ const {
 } = require("../utilities/dataInfoClient");
 
 exports.getTasks = async (req, res) => {
-try {
-  if (req.user) {
-    let tasks = await Task.find();
-    tasks = tasks.filter((task) => {
-      const flag = task.agents.includes(req.user.id);
-      if (flag) return task;
-    });
+  try {
+    if (req.user) {
+      let tasks = await Task.find();
+      tasks = tasks.filter((task) => {
+        const flag = task.agents.includes(req.user.id);
+        if (flag) return task;
+      });
 
-    res.status(200).json({
-      statusCode: 200,
-      data: neededTasksInfo(tasks),
-    });
-  } else {
-    res.status(401).json({ statusCode: 401, message: "Unauthorized" });
+      res.status(200).json({
+        statusCode: 200,
+        data: neededTasksInfo(tasks),
+      });
+    } else {
+      res.status(401).json({ statusCode: 401, message: "Unauthorized" });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ statusCode: 500, message: `internal error - ${error.message}` });
   }
-} catch (error) {
-  res.status(500).json({ statusCode: 500, message: `internal error - ${error.message}` });
-}
 };
 
 exports.getReferredTasks = async (req, res) => {
@@ -41,11 +43,10 @@ exports.getReferredTasks = async (req, res) => {
 exports.getVerifiedAgents = async (req, res) => {
   try {
     let users = await User.find({ department: req.user.department });
-    
-    
+
     if (!users)
       return res.status(401).json({ statusCode: 401, message: "unauthorized" });
-    
+
     users = users.filter((member) => {
       return member.level >= req.user.level;
     });
@@ -65,7 +66,11 @@ exports.addTask = async (req, res) => {
     return Number(item);
   });
 
-  deadline = dateConverter.gregorianToSolar(deadline[0], deadline[1], deadline[2]);
+  deadline = dateConverter.gregorianToSolar(
+    deadline[0],
+    deadline[1],
+    deadline[2]
+  );
   deadline = new Date(`${deadline[0]}, ${deadline[1]}, ${deadline[2]}`);
 
   const newTask = new Task({
@@ -108,5 +113,22 @@ exports.changeTaskStatus = async (req, res) => {
     return res.status(200).json({ statusCode: 200, message: "status changed" });
   } catch (err) {
     return res.status(500).json({ statusCode: 500, message: "server error" });
+  }
+};
+
+exports.deleteTask = async (req, res) => {
+  try {
+    const taskId = req.params.id;
+    if (!taskId) {
+      return res
+        .status(400)
+        .json({ statusCode: 400, message: `id is not valid` });
+    }
+    await Task.findByIdAndDelete(taskId);
+    return res.status(200).json({ statusCode: 200, message: "task deleted" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ statusCode: 500, message: `internal error - ${error.message}` });
   }
 };

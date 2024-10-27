@@ -11,6 +11,7 @@ taskRouter.get("getreferredtasks", )
 taskRouter.get("/agent", JWT.validateToken, taskController.getVerifiedAgents);
 taskRouter.post("/addtasks", JWT.validateToken, taskMiddleWare.taskVerify, taskController.addTask); // Not Tested
 taskRouter.post("/changestatus/", JWT.validateToken, taskController.changeTaskStatus);
+taskRouter.delete("deletetask/:id", JWT.validateToken, taskController.deleteTask)
 
 module.exports = {
   taskRouter,
