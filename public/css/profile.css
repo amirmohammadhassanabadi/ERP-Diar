@@ -276,7 +276,7 @@ input[type='checkbox'] {
   align-items: center;
 }
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .popup__container {
@@ -394,6 +394,15 @@ input[type='checkbox'] {
 }
 .user__border:hover {
   border: 2px solid var(--color-grad-3);
+}
+
+.user__close__btn {
+  cursor: pointer;
+  margin: 0;
+  color: var(--color-red-2);
+}
+.user__close__btn:hover {
+  color: var(--color-red);
 }
 
 .user__display > * {
