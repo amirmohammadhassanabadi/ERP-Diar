@@ -406,7 +406,10 @@ const handlePopupSubmit = function () {
   });
 };
 
-const generateTaskContainer = function (status) {
+const generateTaskContainer = async function (status) {
+  const tasksData = await getAPI('/tasks/gettasks');
+  if (tasksData) console.log(tasksData);
+
   return `
             <span class="hint-text">وظایف امروز (${state.reduce((acc, task) => {
               if (task.taskStatus === status) acc++;
