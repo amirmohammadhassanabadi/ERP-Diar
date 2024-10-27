@@ -9,8 +9,9 @@ const taskRouter = express.Router();
 taskRouter.get("/gettasks", JWT.validateToken, taskController.getTasks);
 taskRouter.get("getreferredtasks", )
 taskRouter.get("/agent", JWT.validateToken, taskController.getVerifiedAgents);
-taskRouter.post("/addtasks", requestBodyTrimer, JWT.validateToken, taskMiddleWare.taskVerify, taskController.addTask); // Not Tested
-taskRouter.post("/changestatus/", requestBodyTrimer, JWT.validateToken, taskController.changeTaskStatus);
+taskRouter.post("/addtasks", JWT.validateToken, taskMiddleWare.taskVerify, taskController.addTask); // Not Tested
+taskRouter.post("/changestatus/", JWT.validateToken, taskController.changeTaskStatus);
+taskRouter.delete("deletetask/:id", JWT.validateToken, taskController.deleteTask)
 
 module.exports = {
   taskRouter,

@@ -1,15 +1,14 @@
 exports.taskVerify = (req, res, next) => {
 try {
-    let { title, deadline, agent } = req.body;
+    let { title, deadline, agents } = req.body;
 
     if (!title) {
-      res.json({
+      return res.status(408).json({
         statusCode: 408,
       });
     }
-    if (!agent || agent == "" || (typeof agent == "array" && agent.length == 0)) {
-      // agent = [req.user.id];
-      agent = ["23uigr8gr43ubf84y93gf98"];
+    if (!agents || agents == "" || (typeof agents == "array" && agents.length == 0)) {
+      agents = [req.user.id];
     }
     let splited = deadline.split("/");
     

@@ -230,7 +230,7 @@ const generateUsersListMarkup = function (user) {
 
   return `
     <li>
-      <div class="user__name" data-user-id="${user._id}"> ${
+      <div class="user__name" data-user-id="${user.id}"> ${
     user.fullName
   } </div>
       <div class="initial"> ${user.fullName
@@ -279,11 +279,11 @@ const handleSelectedReferral = function (users) {
 };
 
 const generateUserReferralMarkup = function (id, users) {
-  const targetUsr = users.find(usr => usr._id === id);
+  const targetUsr = users.find(usr => usr.id === id);
   console.log(targetUsr);
 
   return `
-   <div class="user__name" data-user-id="${targetUsr._id}"> ${
+   <div class="user__name" data-user-id="${targetUsr.id}"> ${
     targetUsr.fullName
   } </div>
    <div class="initial"> ${targetUsr.fullName
