@@ -230,9 +230,7 @@ const generateUsersListMarkup = function (user) {
 
   return `
     <li>
-      <div class="user__name" data-user-id="${user.id}"> ${
-    user.fullName
-  } </div>
+      <div class="user__name" data-user-id="${user.id}"> ${user.fullName} </div>
       <div class="initial"> ${user.fullName
         .split(' ')
         .slice(0, 2)
@@ -298,22 +296,27 @@ const generateUserReferralMarkup = function (id, users) {
 
 const handleUserCloseBtn = function () {
   const userDisplay = document.querySelector('.user__display');
-  const closeBtn = document.querySelector('.user__close__btn');
   const agentBtn = document.querySelector('.agent-btn');
+  const closeBtn = document.querySelector('.user__close__btn');
 
-  userDisplay.addEventListener('mouseenter', function (e) {
+  userDisplay.addEventListener('mouseenter', function () {
     closeBtn.classList.remove('hidden');
   });
 
-  userDisplay.addEventListener('mouseleave', function (e) {
+  userDisplay.addEventListener('mouseleave', function () {
     closeBtn.classList.add('hidden');
   });
 
-  closeBtn.addEventListener('click', function (e) {
+  closeBtn.addEventListener('click', function () {
     userDisplay.classList.remove('user__border');
     view.clear(userDisplay);
     agentBtn.classList.remove('hidden');
   });
+};
+
+const removePopupUsers = function () {
+  const userDisplay = document.querySelector('.user__display');
+  const agentBtn = document.querySelector('.agent-btn');
 };
 
 const handleCheckbox = function (handler) {
@@ -360,20 +363,20 @@ const handlePopupSubmit = function () {
     // let daysInput = Number(timeInputEl.value) ? Number(timeInputEl.value) : 1;
 
     // =====================================
-    const newTitle = document.querySelector('.title-input').value;
-    const newDesc = document.getElementById('descInput').value;
-    const newAgents = document.querySelector('.user__name').dataset.userId;
-    const newDeadline = document.getElementById('dateInput').value;
+    const newTitle = document.querySelector('.title-input');
+    const newDesc = document.getElementById('descInput');
+    const newAgents = document.querySelector('.user__name');
+    const newDeadline = document.getElementById('dateInput');
 
     const payload = {
-      title: newTitle,
-      description: newDesc,
-      agents: [newAgents],
-      deadline: newDeadline
+      title: newTitle.value,
+      description: newDesc.value,
+      agents: [newAgents.dataset.userId],
+      deadline: newDeadline.value
     };
     console.log(payload);
 
-    // POST task to DB REMINDER
+    // POST task to DB
     const postTask = await postAPI('/tasks/addtasks', payload);
 
     if (postTask.statusCode !== 200) {
@@ -387,6 +390,9 @@ const handlePopupSubmit = function () {
     overlayEl.classList.add('hidden');
 
     // re-initialize popup input (remove user inputs)
+    newTitle.value = '';
+    newDesc.value = '';
+    newDeadline.value = '';
 
     // re-fetch & re-render tasks list
 
