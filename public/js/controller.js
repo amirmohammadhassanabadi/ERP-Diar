@@ -5,17 +5,17 @@ import menuView from '/js/views/menuView.js';
 // const controlAddNewTask = function () {
 // };
 
-const controlMenuChange = function (menu) {
+const controlMenuChange = async function (menu) {
   // 1. switch active class
   menuView.switchActiveEl(menu);
 
-  // 2. (ASYNC) render placeholder data REMINDER
+  // 2. (ASYNC) render placeholder data (or spinner) REMINDER
 
   // 3. load menu according to function input
   if (menu.classList.contains('menu__dashboard'))
     containerView.renderContainerDashboard();
   else if (menu.classList.contains('menu__tasks')) {
-    containerView.renderContainerTasks();
+    await containerView.renderContainerTasks();
     containerView.handleTaskAddBtn();
     containerView.handleCheckbox(controlCheckbox);
     containerView.handleContainerNav(controlContainerNav);
@@ -41,9 +41,9 @@ const controlContainerNav = function (navItem) {
 
   // 3. load task body according to function input
   if (navItem.classList.contains('my__tasks'))
-    containerView.navChangeTaskReload(0);
+    containerView.navChangeTaskReload(false);
   else if (navItem.classList.contains('completed__tasks'))
-    containerView.navChangeTaskReload(1);
+    containerView.navChangeTaskReload(true);
   else if (navItem.classList.contains('assigned__tasks'))
     containerView.navChangeAsignedTasks();
   else console.error('cannot find nav item');
