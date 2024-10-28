@@ -33,6 +33,11 @@ const state = [
   }
 ];
 
+// Test API GET
+fetch("/tasks/gettasks").then(res => res.json()).then(data => {
+  console.log(data);
+  
+})
 
 // get user information
 document.addEventListener("DOMContentLoaded", async () => {
