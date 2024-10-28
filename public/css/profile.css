@@ -237,6 +237,7 @@ main {
   color: var(--color-white);
   border: 0;
   transition: all .3s ease;
+  border-radius: .3rem;
 }
 
 .referBtn:hover{
@@ -250,6 +251,7 @@ main {
   border: 0;
   margin-right: .5rem;
   transition: all .3s ease;
+  border-radius: .3rem;
 }
 
 .deleteTaskBtn:hover{
