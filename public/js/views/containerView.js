@@ -212,7 +212,7 @@ const handlePopupUserList = async function () {
 
     // LOAD SPINNER ON DIV
 
-    view.renderHTML(markupGen, popupUserList);
+    await view.renderHTML(markupGen, popupUserList);
 
     handleSelectedReferral(response.data);
   }
@@ -238,7 +238,7 @@ const handleSelectedReferral = function (users) {
   const agentBtn = document.querySelector('.agent-btn');
   const userDisplay = document.querySelector('.user__display');
 
-  userList.addEventListener('click', function (e) {
+  userList.addEventListener('click', async function (e) {
     const userEl = e.target.closest('li');
     if (!userEl) return;
     const userId = userEl.firstElementChild.dataset.userId;
@@ -251,7 +251,7 @@ const handleSelectedReferral = function (users) {
     // 1. add hidden to referral btn
     agentBtn.classList.toggle('hidden');
 
-    view.renderHTML(
+    await view.renderHTML(
       generateUserReferralMarkup.bind(null, userId, users),
       userDisplay
     );
@@ -289,7 +289,6 @@ const generateUserReferralMarkup = function (id, users) {
 
 const handleUserCloseBtn = function () {
   const userDisplay = document.querySelector('.user__display');
-  const agentBtn = document.querySelector('.agent-btn');
   const closeBtn = document.querySelector('.user__close__btn');
 
   userDisplay.addEventListener('mouseenter', function () {
