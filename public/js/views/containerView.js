@@ -25,6 +25,9 @@ document.querySelector(".container").addEventListener("click", async e => {
     }
     
     
+  }else if (e.target.classList.contains("referBtn")) {
+    const response = await getAPI("/tasks/referenceableusers");
+    console.log(response);
   }
 })
 

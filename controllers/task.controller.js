@@ -156,15 +156,20 @@ exports.deleteTask = async (req, res) => {
 
 exports.referTaskAgent = async (req, res) => {
   try {
-    let { taskId, agent } = req.body;
+    let { taskId, newAgent } = req.body;
+    
+    if (req.user.level >= 4) {
+      return res.status(403).json({statusCode: 403, message: "user can refer task"});
+    }
+    
     if (!taskId) {
       return res
         .status(417)
         .json({ statusCode: 417, message: "taskId is not valid" });
     }
 
-    if (!agent) {
-      return res.status(417).json({ statusCode: 417, message: "agent is not" });
+    if (!newAgent) {
+      return res.status(417).json({ statusCode: 417, message: "agent is not valid" });
     }
 
     let task = await Task.findById(taskId);
@@ -180,7 +185,7 @@ exports.referTaskAgent = async (req, res) => {
         .json({ statusCode: 404, message: "task is not related to this user" });
     }
 
-    const targetedAgent = await User.findById(agent);
+    const targetedAgent = await User.findById(newAgent);
     if (!targetedAgent) {
       return res
         .status(404)
@@ -188,11 +193,10 @@ exports.referTaskAgent = async (req, res) => {
     }
 
     if (
-      targetedAgent.level < 5 &&
       targetedAgent.department == req.user.department &&
-      agent.level > req.user.level
+      newAgent.level > req.user.level
     ) {
-      task.agent = [agent];
+      task.agent = [newAgent];
       await task.save();
       res
         .status(200)
@@ -202,6 +206,20 @@ exports.referTaskAgent = async (req, res) => {
     return res.status(500).json({ statusCode: 404, message: "task not found" });
   }
 };
+
+exports.getReferenceableUsers = async (req, res) => {
+  const level = req.user.level;
+  const department = req.user.department;
+
+  if (level >= 4) {
+    return res.status(403).json({statusCode: 403, message: "user can not refer task"});
+  }
+
+  let users = await User.find({department: department});
+  let filteredUsers = users.filter(user => user.level >= level);
+
+  res.status(200).json({statusCode: 200, data: neddedUserInfo(filteredUsers)});
+}
 
 exports.getSubordinateTask = async (req, res) => {
   try {
