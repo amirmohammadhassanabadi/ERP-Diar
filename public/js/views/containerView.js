@@ -1,6 +1,6 @@
 import view from '/js/views/view.js';
 import { getAPI, postAPI } from '/js/API/fetch.js';
-import {getUserInfo} from "/js/auth/user-info.js"
+import {getUserInfo} from "/js/data/user.data.js"
 
 const state = [
   {
@@ -36,7 +36,14 @@ const state = [
 // get user information
 document.addEventListener("DOMContentLoaded", async () => {
   const userInfo = await getUserInfo();
-  console.log(userInfo);
+  let fullName = ""
+  if (userInfo.fullName.split(" ").length > 1 ) {
+    fullName = userInfo.fullName.split(" ")[0][0] + userInfo.fullName.split(" ")[1][0] 
+  }else{
+    fullName = userInfo.fullName.split(" ")[0][0] + userInfo.fullName.split(" ")[0][1] 
+  }
+  document.getElementById("profile_img").innerText = fullName;
+  document.getElementById("profile_name").innerText = userInfo.username;
 })
 
 let taskCounter = 5;
