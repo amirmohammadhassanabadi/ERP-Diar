@@ -31,13 +31,16 @@ exports.getTasks = async (req, res) => {
 
 exports.getReferredTasks = async (req, res) => {
   try {
-    const tasks = Task.find({ creator: req.user.id });
+    let tasks = await Task.find().populate("creator");
+    tasks = tasks.filter(task => {
+      return task.creator[0] == req.user.id;
+    }) 
 
     return res
       .status(200)
       .json({ statusCode: 200, data: neededTasksInfo(tasks) });
   } catch (error) {
-    res.status(500).json({ statusCode: 500, message: "internal error" });
+    res.status(500).json({ statusCode: 500, message: `internal error - ${error.message}` });
   }
 };
 
