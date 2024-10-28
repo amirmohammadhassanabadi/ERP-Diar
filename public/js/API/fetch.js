@@ -24,4 +24,4 @@ const deleteAPI = async (url) => {
   return await response.json();
 }
 
-export { getAPI, postAPI };
+export { getAPI, postAPI, deleteAPI };
