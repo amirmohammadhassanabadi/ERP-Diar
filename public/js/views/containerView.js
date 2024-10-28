@@ -1,5 +1,6 @@
 import view from '/js/views/view.js';
 import { getAPI, postAPI } from '/js/API/fetch.js';
+import {getUserInfo} from "/js/auth/user-info.js"
 
 const state = [
   {
@@ -31,6 +32,12 @@ const state = [
     days: 5
   }
 ];
+
+// get user information
+document.addEventListener("DOMContentLoaded", async () => {
+  const userInfo = await getUserInfo();
+  console.log(userInfo);
+})
 
 let taskCounter = 5;
 const parentEl = document.querySelector('.container');

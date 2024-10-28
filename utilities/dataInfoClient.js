@@ -4,7 +4,7 @@ function neddedUserInfo(users) {
             id: user._id,
             fullName: user.fullName,
             username: user.username,
-            department: user.department      
+            department: user.department
         }
     })
     return usersArr
