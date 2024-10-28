@@ -1,5 +1,6 @@
 import view from '/js/views/view.js';
 import { getAPI, postAPI } from '/js/API/fetch.js';
+import {getUserInfo} from "/js/data/user.data.js"
 
 const state = [
   {
@@ -31,6 +32,20 @@ const state = [
     days: 5
   }
 ];
+
+
+// get user information
+document.addEventListener("DOMContentLoaded", async () => {
+  const userInfo = await getUserInfo();
+  let fullName = ""
+  if (userInfo.fullName.split(" ").length > 1 ) {
+    fullName = userInfo.fullName.split(" ")[0][0] + userInfo.fullName.split(" ")[1][0] 
+  }else{
+    fullName = userInfo.fullName.split(" ")[0][0] + userInfo.fullName.split(" ")[0][1] 
+  }
+  document.getElementById("profile_img").innerText = fullName;
+  document.getElementById("profile_name").innerText = userInfo.username;
+})
 
 const parentEl = document.querySelector('.container');
 
@@ -123,7 +138,9 @@ const navChangeTaskReload = function (status) {
   view.renderHTML(generateTaskContainer.bind(null, status), taskContainer);
 };
 
-const navChangeAsignedTasks = function () {
+const navChangeAsignedTasks = async function () {
+  const data = await getAPI("/tasks/getrefferedtasks");
+  
   const taskContainer = parentEl.querySelector('.task__container');
 
   view.clear(taskContainer);

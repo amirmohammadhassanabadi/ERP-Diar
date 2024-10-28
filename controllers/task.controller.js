@@ -31,12 +31,16 @@ exports.getTasks = async (req, res) => {
 
 exports.getReferredTasks = async (req, res) => {
   try {
-    const tasks = Task.find({ creator: req.user.id });
+    let tasks = await Task.find().populate("creator");
+    tasks = tasks.filter(task => {
+      return task.creator[0] == req.user.id;
+    }) 
+
     return res
       .status(200)
       .json({ statusCode: 200, data: neededTasksInfo(tasks) });
   } catch (error) {
-    res.status(500).json({ statusCode: 500, message: "internal error" });
+    res.status(500).json({ statusCode: 500, message: `internal error - ${error.message}` });
   }
 };
 
@@ -130,5 +134,69 @@ exports.deleteTask = async (req, res) => {
     return res
       .status(500)
       .json({ statusCode: 500, message: `internal error - ${error.message}` });
+  }
+};
+
+exports.referTaskAgent = async (req, res) => {
+  try {
+    let { taskId, agent } = req.body;
+    if (!taskId) {
+      return res
+        .status(417)
+        .json({ statusCode: 417, message: "taskId is not valid" });
+    }
+
+    if (!agent) {
+      return res.status(417).json({ statusCode: 417, message: "agent is not" });
+    }
+
+    let task = await Task.findById(taskId);
+    if (!task) {
+      return res
+        .status(404)
+        .json({ statusCode: 404, message: "task not found" });
+    }
+
+    if (task.agents[0] != req.user.id) {
+      return res
+        .status(403)
+        .json({ statusCode: 404, message: "task is not related to this user" });
+    }
+
+    const targetedAgent = await User.findById(agent);
+    if (!targetedAgent) {
+      return res
+        .status(404)
+        .json({ statusCode: 404, message: "targeted agent not found" });
+    }
+
+    if (
+      targetedAgent.level < 5 &&
+      targetedAgent.department == req.user.department &&
+      agent.level > req.user.level
+    ) {
+      task.agent = [agent];
+      await task.save();
+      res
+        .status(200)
+        .json({ statusCode: 200, message: "task referred to agent" });
+    }
+  } catch (error) {
+    return res.status(500).json({ statusCode: 404, message: "task not found" });
+  }
+};
+
+exports.getSubordinateTask = async (req, res) => {
+  try {
+    const tasks = await Task.find().populate();
+    tasks = tasks.filter((task) => {
+      return task.agent[0].level >= req.user.level;
+    });
+
+    return res
+      .status(200)
+      .json({ statusCode: 200, data: neededTasksInfo(tasks) });
+  } catch (error) {
+    return res.status(500).json({ statusCode: 500, message: "internal error" });
   }
 };

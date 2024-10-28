@@ -97,3 +97,12 @@ exports.addUser = async (req, res) => {
     });
   }
 };
+
+exports.getLoggedInUserInfo = (req, res) => {
+  try {
+    const userInfo = req.user;
+    return res.status(200).json({ statusCode: 200, data: userInfo });
+  } catch (error) { 
+    return res.status(500).json({ statusCode: 500, message: `internal error - ${error.message}`});
+  }
+};

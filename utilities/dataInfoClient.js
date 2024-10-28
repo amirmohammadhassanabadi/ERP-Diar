@@ -4,7 +4,7 @@ function neddedUserInfo(users) {
             id: user._id,
             fullName: user.fullName,
             username: user.username,
-            department: user.department      
+            department: user.department
         }
     })
     return usersArr
@@ -16,7 +16,7 @@ function neededTasksInfo(tasks) {
             title: task.title,
             description: task.description,
             status: task.status,
-            agent: task.agent,
+            agents: task.agents,
             creator: task.creator,
             createdAt: task.createdAt,
             deadline: task.deadline

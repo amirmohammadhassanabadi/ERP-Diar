@@ -23,10 +23,11 @@ header .header__logo {
 header .header__profile {
   display: flex;
   align-items: center;
+  flex-direction: row-reverse;
 }
 
 /* complete later with actual data */
-header .header__profile span {
+header .header__profile span:nth-child(1) {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -35,6 +36,11 @@ header .header__profile span {
   line-height: 2rem;
   color: var(--color-white);
   background-color: #e0cfaf; /* user profile color*/
+  margin-right: .5rem;
+}
+
+header .header__profile span:nth-child(2){
+  color: #ddd;
 }
 
 /* MAIN */

@@ -3,7 +3,9 @@ const path = require("path")
 require("dotenv").config({path: path.join(__dirname, "..", ".env")});
 
 exports.createToken = (user) => {
-    return sign({id: user._id, username: user.username, department: user.department, level: user.level}, process.env.JWT_SECRET_KEY);
+    console.log(user);
+    
+    return sign({id: user._id, username: user.username, department: user.department, fullName: user.fullName}, process.env.JWT_SECRET_KEY);
 }
 
 exports.validateToken = (req, res, next) => {
@@ -13,7 +15,7 @@ exports.validateToken = (req, res, next) => {
     
         try {
             const decoded = verify(accessToken, process.env.JWT_SECRET_KEY);
-            if (decoded) {
+            if (decoded) {                
                 req.user = decoded;
                 return next();
             }else{

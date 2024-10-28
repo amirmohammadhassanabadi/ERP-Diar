@@ -9,6 +9,7 @@ authRouter.post('/postlogin', authController.postLogin);
 
 authRouter.get("/user/profile", JWT.validateToken, authController.renderProfilePage);
 authRouter.post("/adduser", JWT.validateToken, signUpAccess, authController.addUser);
+authRouter.get("/user/info", JWT.validateToken, authController.getLoggedInUserInfo); // Not Tested
 // authRouter.get("/signup", JWT.validateToken, authController.renderSignupPage);
 
 // ------------------------------
