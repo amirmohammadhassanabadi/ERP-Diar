@@ -110,6 +110,7 @@ const navChangeTaskReload = function (status) {
 
 const navChangeAsignedTasks = async function () {
   const data = await getAPI('/tasks/getrefferedtasks');
+  console.log(data);
 
   const taskContainer = parentEl.querySelector('.task__container');
 
@@ -440,7 +441,7 @@ const generateSingleTask = function (status, task) {
 
   if (task.status === status) {
     markup = `
-    <li class="task" data-task-id="${task._id}">
+    <li class="task" data-task-id="${task.id}">
     <div class="task__right">
       <input class="checkbox" type="checkbox" ${
         status ? 'checked' : ''
