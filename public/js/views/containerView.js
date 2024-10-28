@@ -17,6 +17,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("profile_name").innerText = userInfo.username;
 });
 
+document.querySelector(".container").addEventListener("click", async e => {
+  if (e.target.classList.contains("deleteTaskBtn")) {
+    const response = await deleteAPI(`/tasks/deletetask/${e.target.parentElement.parentElement.dataset.taskId}`);
+    if (response.statusCode == 200) {
+      e.target.parentElement.parentElement.remove();
+    }
+    
+    
+  }
+})
+
 const parentEl = document.querySelector(".container");
 
 const renderContainerTasks = async function () {
@@ -461,7 +472,7 @@ const generateSingleTask = function (status, task) {
       </div>
       <span class="deadline">${task.deadline} روز مانده</span>
           <button class="referBtn">ارجاع</button>
-          <button class="deleteTaskBtn"><i class="fa fa-times"></i></button>
+          <button class="fa fa-times deleteTaskBtn"></button>
     </div>
   </li>
 `;
