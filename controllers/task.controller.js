@@ -31,7 +31,8 @@ exports.getTasks = async (req, res) => {
 
 exports.getReferredTasks = async (req, res) => {
   try {
-    const tasks = Task.find({ creator: req.user.id });
+    const tasks = Task.find({ creator: req.user.id }); 
+
     return res
       .status(200)
       .json({ statusCode: 200, data: neededTasksInfo(tasks) });
@@ -169,3 +170,17 @@ exports.referTaskAgent = async (req, res) => {
     return res.status(500).json({ statusCode: 404, message: "task not found"});
   }
 };
+
+exports.getSubordinateTask = async (req, res) => {
+try {
+  const tasks = await Task.find().populate();
+  tasks = tasks.filter(task => {
+    return task.agent[0].level >= req.user.level;
+  })
+
+  return res.status(200).json({ statusCode: 200, data: neededTasksInfo(tasks) });
+} catch (error) {
+  return res.status(500).json({ statusCode: 500, message: "internal error" });
+
+}
+}

@@ -12,6 +12,7 @@ taskRouter.post("/addtasks", JWT.validateToken, taskMiddleWare.taskVerify, taskC
 taskRouter.post("/changestatus/", JWT.validateToken, taskController.changeTaskStatus);
 taskRouter.delete("deletetask/:id", JWT.validateToken, taskController.deleteTask);  // Not Tested
 taskRouter.post("/changetaskagent", taskController.referTaskAgent);
+taskRouter.get("/subordinatetasks", JWT.validateToken, taskController.getSubordinateTask);
 
 module.exports = {
   taskRouter,
