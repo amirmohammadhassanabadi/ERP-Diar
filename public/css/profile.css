@@ -230,6 +230,33 @@ main {
   position: relative;
 }
 
+.referBtn{
+  margin-right: .5rem;
+  padding: .5rem 1rem;
+  background-color: var(--navy);
+  color: var(--color-white);
+  border: 0;
+  transition: all .3s ease;
+}
+
+.referBtn:hover{
+  background-color: #6aa7e9;
+}
+
+.deleteTaskBtn{
+  background-color: var(--light-red);
+  color: var(--red);
+  padding: .5rem 1rem;
+  border: 0;
+  margin-right: .5rem;
+  transition: all .3s ease;
+}
+
+.deleteTaskBtn:hover{
+  background-color: var(--red);
+  color: var(--white);
+}
+
 .initial {
   width: 2rem;
   height: 2rem;

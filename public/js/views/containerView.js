@@ -455,11 +455,13 @@ const generateSingleTask = function (status, task) {
 
             return `<div class="initial ${
               i == 1 ? '' : `initial-${i}`
-            }">${person}</div>`;
+            }">${person.username[0]}</div>`;
           })
           .join('')}
       </div>
       <span class="deadline">${task.deadline} روز مانده</span>
+          <button class="referBtn">ارجاع</button>
+          <button class="deleteTaskBtn"><i class="fa fa-times"></i></button>
     </div>
   </li>
 `;
