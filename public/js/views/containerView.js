@@ -137,7 +137,8 @@ const navChangeTaskReload = function (status) {
   view.renderHTML(generateTaskContainer.bind(null, status), taskContainer);
 };
 
-const navChangeAsignedTasks = function () {
+const navChangeAsignedTasks = async function () {
+  const data = await getAPI("")
   const taskContainer = parentEl.querySelector('.task__container');
 
   view.clear(taskContainer);

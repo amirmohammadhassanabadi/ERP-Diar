@@ -7,6 +7,7 @@ const {requestBodyTrimer} = require("../middleware/trimer");
 const taskRouter = express.Router();
 
 taskRouter.get("/gettasks", JWT.validateToken, taskController.getTasks);
+taskRouter.get("/getrefferedtasks", JWT.validateToken, taskController.getReferredTasks);
 taskRouter.get("/agent", JWT.validateToken, taskController.getVerifiedAgents);
 taskRouter.post("/addtasks", JWT.validateToken, taskMiddleWare.taskVerify, taskController.addTask); 
 taskRouter.post("/changestatus/", JWT.validateToken, taskController.changeTaskStatus);
