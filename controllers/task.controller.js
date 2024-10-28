@@ -67,7 +67,7 @@ exports.getVerifiedAgents = async (req, res) => {
 
     if (!users)
       return res.status(401).json({ statusCode: 401, message: "unauthorized" });
-
+    
     users = users.filter((member) => {
       return member.level >= req.user.level;
     });
