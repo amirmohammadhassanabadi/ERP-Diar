@@ -1,5 +1,6 @@
-const renderHTML = function (generateMarkup, parentEl) {
-  parentEl.insertAdjacentHTML('afterbegin', generateMarkup());
+const renderHTML = async function (generateMarkup, parentEl) {
+  const markup = await generateMarkup();
+  parentEl.insertAdjacentHTML('afterbegin', markup);
 };
 
 const clear = function (el) {

@@ -33,6 +33,7 @@ const state = [
   }
 ];
 
+
 // get user information
 document.addEventListener("DOMContentLoaded", async () => {
   const userInfo = await getUserInfo();
@@ -46,15 +47,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("profile_name").innerText = userInfo.username;
 })
 
-let taskCounter = 5;
 const parentEl = document.querySelector('.container');
 
-const renderContainerTasks = function () {
+const renderContainerTasks = async function () {
   // clear container
   view.clear(parentEl);
 
   // render task container
-  view.renderHTML(generateMarkupTasks, parentEl);
+  await view.renderHTML(generateMarkupTasks, parentEl);
 };
 
 const renderContainerDashboard = function () {
@@ -67,7 +67,8 @@ const renderContainerDashboard = function () {
   // initialize dashboard event handlers REMINDER
 };
 
-const generateMarkupTasks = function () {
+const generateMarkupTasks = async function () {
+  const taskContainerMarkup = await generateTaskContainer(false);
   return `
       <nav class="container__header">
         <span class="c_header-text">وظایف</span>
@@ -96,7 +97,7 @@ const generateMarkupTasks = function () {
             </button> -->
         </div>
         <div class="task__container">
-        ${generateTaskContainer(0)}
+        ${taskContainerMarkup}
         </div>
       </div>
   `;
@@ -246,9 +247,7 @@ const generateUsersListMarkup = function (user) {
 
   return `
     <li>
-      <div class="user__name" data-user-id="${user.id}"> ${
-    user.fullName
-  } </div>
+      <div class="user__name" data-user-id="${user.id}"> ${user.fullName} </div>
       <div class="initial"> ${user.fullName
         .split(' ')
         .slice(0, 2)
@@ -314,22 +313,27 @@ const generateUserReferralMarkup = function (id, users) {
 
 const handleUserCloseBtn = function () {
   const userDisplay = document.querySelector('.user__display');
-  const closeBtn = document.querySelector('.user__close__btn');
   const agentBtn = document.querySelector('.agent-btn');
+  const closeBtn = document.querySelector('.user__close__btn');
 
-  userDisplay.addEventListener('mouseenter', function (e) {
+  userDisplay.addEventListener('mouseenter', function () {
     closeBtn.classList.remove('hidden');
   });
 
-  userDisplay.addEventListener('mouseleave', function (e) {
+  userDisplay.addEventListener('mouseleave', function () {
     closeBtn.classList.add('hidden');
   });
 
-  closeBtn.addEventListener('click', function (e) {
-    userDisplay.classList.remove('user__border');
-    view.clear(userDisplay);
-    agentBtn.classList.remove('hidden');
-  });
+  closeBtn.addEventListener('click', removePopupUsers);
+};
+
+const removePopupUsers = function () {
+  const userDisplay = document.querySelector('.user__display');
+  const agentBtn = document.querySelector('.agent-btn');
+
+  userDisplay.classList.remove('user__border');
+  view.clear(userDisplay);
+  agentBtn.classList.remove('hidden');
 };
 
 const handleCheckbox = function (handler) {
@@ -376,20 +380,21 @@ const handlePopupSubmit = function () {
     // let daysInput = Number(timeInputEl.value) ? Number(timeInputEl.value) : 1;
 
     // =====================================
-    const newTitle = document.querySelector('.title-input').value;
-    const newDesc = document.getElementById('descInput').value;
-    const newAgents = document.querySelector('.user__name').dataset.userId;
-    const newDeadline = document.getElementById('dateInput').value;
+    const newTitle = document.querySelector('.title-input');
+    const newDesc = document.getElementById('descInput');
+    const newAgents = document.querySelector('.user__name');
+    const newDeadline = document.getElementById('dateInput');
+    const taskContainerEl = document.querySelector('.task__container');
 
     const payload = {
-      title: newTitle,
-      description: newDesc,
-      agents: [newAgents],
-      deadline: newDeadline
+      title: newTitle.value,
+      description: newDesc.value,
+      agents: [newAgents.dataset.userId],
+      deadline: newDeadline.value
     };
     console.log(payload);
 
-    // POST task to DB REMINDER
+    // POST task to DB
     const postTask = await postAPI('/tasks/addtasks', payload);
 
     if (postTask.statusCode !== 200) {
@@ -403,8 +408,17 @@ const handlePopupSubmit = function () {
     overlayEl.classList.add('hidden');
 
     // re-initialize popup input (remove user inputs)
+    newTitle.value = '';
+    newDesc.value = '';
+    newDeadline.value = '';
+    removePopupUsers();
 
     // re-fetch & re-render tasks list
+    taskContainerEl.innerHTML = '';
+
+    // in addition to this we need to change nav to ongoing tasks BUG
+    // doesn't work yet BUG
+    view.renderHTML(generateTaskContainer.bind(null, false), taskContainerEl);
 
     // =====================================
     // /tasks/gettasks (route to get tasks)
@@ -423,16 +437,23 @@ const handlePopupSubmit = function () {
 };
 
 const generateTaskContainer = async function (status) {
-  const tasksData = await getAPI('/tasks/gettasks');
-  if (tasksData) console.log(tasksData);
+  const taskRes = await getAPI('/tasks/gettasks');
+  if (taskRes.statusCode !== 200 || !taskRes) console.error(taskRes.statusCode);
+
+  const tasksData = taskRes.data;
+
+  console.log(tasksData);
 
   return `
-            <span class="hint-text">وظایف امروز (${state.reduce((acc, task) => {
-              if (task.taskStatus === status) acc++;
-              return acc;
-            }, 0)} مورد)</span>
+            <span class="hint-text">وظایف امروز (${tasksData.reduce(
+              (acc, task) => {
+                if (task.status === status) acc++;
+                return acc;
+              },
+              0
+            )} مورد)</span>
           <ul class="task__list">
-          ${state.map(generateSingleTask.bind(null, status)).join('')}
+          ${tasksData.map(generateSingleTask.bind(null, status)).join('')}
           </ul>
 
   `;
@@ -442,18 +463,18 @@ const generateSingleTask = function (status, task) {
   let i = 0;
   let markup;
 
-  if (task.taskStatus === status) {
+  if (task.status === status) {
     markup = `
-    <li class="task" data-task-id="${task.taskId}">
+    <li class="task" data-task-id="${task._id}">
     <div class="task__right">
       <input class="checkbox" type="checkbox" ${
         status ? 'checked' : ''
-      } data-id=${task.taskId} />
-      <span class="task-text">${task.taskTitle}</span>
+      } data-id=${task.id} />
+      <span class="task-text">${task.title}</span>
     </div>
     <div class="task__left">
       <div class="assignedto">
-        ${task.referrals
+        ${task.agents
           .map(person => {
             i++;
 
@@ -463,18 +484,18 @@ const generateSingleTask = function (status, task) {
           })
           .join('')}
       </div>
-      <span class="deadline">${task.days} روز مانده</span>
+      <span class="deadline">${task.deadline} روز مانده</span>
     </div>
   </li>
 `;
   }
 
   i = 0;
+
   return markup;
 };
 
 export default {
-  state,
   renderContainerDashboard,
   handleTaskAddBtn,
   handlePopupClose,
