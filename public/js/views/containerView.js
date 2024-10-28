@@ -1,56 +1,21 @@
 import view from '/js/views/view.js';
 import { getAPI, postAPI } from '/js/API/fetch.js';
-import {getUserInfo} from "/js/data/user.data.js"
-
-const state = [
-  {
-    taskId: '4',
-    taskTitle: 'task title 4',
-    taskStatus: 1,
-    referrals: ['SE', 'AB', 'CD'],
-    days: 5
-  },
-  {
-    taskId: '1',
-    taskTitle: 'task title 1',
-    taskStatus: 1,
-    referrals: ['SE', 'AB', 'CD'],
-    days: 3
-  },
-  {
-    taskId: '2',
-    taskTitle: 'task title 2',
-    taskStatus: 1,
-    referrals: ['SE', 'AB'],
-    days: 4
-  },
-  {
-    taskId: '3',
-    taskTitle: 'task title 3',
-    taskStatus: 0,
-    referrals: ['SE'],
-    days: 5
-  }
-];
-
-// Test API GET
-fetch("/tasks/gettasks").then(res => res.json()).then(data => {
-  console.log(data);
-  
-})
+import { getUserInfo } from '/js/data/user.data.js';
 
 // get user information
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const userInfo = await getUserInfo();
-  let fullName = ""
-  if (userInfo.fullName.split(" ").length > 1 ) {
-    fullName = userInfo.fullName.split(" ")[0][0] + userInfo.fullName.split(" ")[1][0] 
-  }else{
-    fullName = userInfo.fullName.split(" ")[0][0] + userInfo.fullName.split(" ")[0][1] 
+  let fullName = '';
+  if (userInfo.fullName.split(' ').length > 1) {
+    fullName =
+      userInfo.fullName.split(' ')[0][0] + userInfo.fullName.split(' ')[1][0];
+  } else {
+    fullName =
+      userInfo.fullName.split(' ')[0][0] + userInfo.fullName.split(' ')[0][1];
   }
-  document.getElementById("profile_img").innerText = fullName;
-  document.getElementById("profile_name").innerText = userInfo.username;
-})
+  document.getElementById('profile_img').innerText = fullName;
+  document.getElementById('profile_name').innerText = userInfo.username;
+});
 
 const parentEl = document.querySelector('.container');
 
@@ -144,8 +109,9 @@ const navChangeTaskReload = function (status) {
 };
 
 const navChangeAsignedTasks = async function () {
-  const data = await getAPI("/tasks/getrefferedtasks");
-  
+  const data = await getAPI('/tasks/getrefferedtasks');
+  console.log(data);
+
   const taskContainer = parentEl.querySelector('.task__container');
 
   view.clear(taskContainer);
@@ -219,7 +185,12 @@ const handleReferralsBtn = function () {
 
 const handlePopupUserList = async function () {
   const response = await getAPI('/tasks/agent');
-  if (response.statusCode !== 200) console.error(response.statusCode);
+  if (response.statusCode !== 200 || response.data.length === 0) {
+    console.log(response);
+
+    console.error('err code:', response.statusCode, 'OR empty data');
+    return;
+  }
   console.log(response.data);
   const users = await response.data;
 
@@ -470,7 +441,7 @@ const generateSingleTask = function (status, task) {
 
   if (task.status === status) {
     markup = `
-    <li class="task" data-task-id="${task._id}">
+    <li class="task" data-task-id="${task.id}">
     <div class="task__right">
       <input class="checkbox" type="checkbox" ${
         status ? 'checked' : ''
