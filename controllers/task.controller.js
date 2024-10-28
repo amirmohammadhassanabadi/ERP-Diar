@@ -9,15 +9,30 @@ const {
 exports.getTasks = async (req, res) => {
   try {
     if (req.user) {
-      let tasks = await Task.find();
-      tasks = tasks.filter((task) => {
-        const flag = task.agents.includes(req.user.id);
-        if (flag) return task;
-      });
+      let tasks = await Task.find()
+        .populate("agents", "_id username fullName department")
+        .populate("creator", "_id username fullName department");
+
+      tasks = tasks
+        .filter((task) => {
+          const flag = task.agents[0].id.includes(req.user.id);
+          if (flag) return task;
+        })
+        .map((task) => {
+          return {
+            id: task._id,
+            title: task.title,
+            description: task.description,
+            status: task.status,
+            deadline: task.deadline,
+            creator: task.creator,
+            agents: task.agents
+          };
+        });
 
       res.status(200).json({
         statusCode: 200,
-        data: neededTasksInfo(tasks),
+        data: tasks,
       });
     } else {
       res.status(401).json({ statusCode: 401, message: "Unauthorized" });
@@ -32,15 +47,17 @@ exports.getTasks = async (req, res) => {
 exports.getReferredTasks = async (req, res) => {
   try {
     let tasks = await Task.find().populate("creator");
-    tasks = tasks.filter(task => {
+    tasks = tasks.filter((task) => {
       return task.creator[0] == req.user.id;
-    }) 
+    });
 
     return res
       .status(200)
       .json({ statusCode: 200, data: neededTasksInfo(tasks) });
   } catch (error) {
-    res.status(500).json({ statusCode: 500, message: `internal error - ${error.message}` });
+    res
+      .status(500)
+      .json({ statusCode: 500, message: `internal error - ${error.message}` });
   }
 };
 
