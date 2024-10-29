@@ -453,7 +453,9 @@ const generateSingleTask = function (status, task) {
 
   if (task.status === status) {
     markup = `
-    <li class="task" data-task-id="${task.id}">
+    <li class="task" data-task-status="${task.status}" data-task-id="${
+      task.id
+    }">
     <div class="task__right">
       <input class="checkbox" type="checkbox" ${
         status ? 'checked' : ''
