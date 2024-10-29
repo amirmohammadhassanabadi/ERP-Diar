@@ -24,7 +24,7 @@ exports.getTasks = async (req, res) => {
             title: task.title,
             description: task.description,
             status: task.status,
-            deadline: task.deadline,
+            deadline: new Date(task.deadline).getDay() - new Date().getDay(),
             creator: task.creator,
             agents: task.agents
           };
@@ -87,13 +87,14 @@ exports.addTask = async (req, res) => {
     return Number(item);
   });
 
-  deadline = dateConverter.gregorianToSolar(
+  deadline = dateConverter.solarToGregorian(
     deadline[0],
     deadline[1],
     deadline[2]
   );
-  deadline = new Date(`${deadline[0]}, ${deadline[1]}, ${deadline[2]}`);
 
+  deadline = new Date(`${deadline[0]}, ${deadline[1]}, ${deadline[2]}`)
+  
   const newTask = new Task({
     title: title,
     description: description,
