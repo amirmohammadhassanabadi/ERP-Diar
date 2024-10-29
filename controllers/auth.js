@@ -11,7 +11,7 @@ exports.renderLoginPage = (req, res) => {
 exports.postLogin = async (req, res) => {
   try {
     const { username, password } = req.body;
-    
+
     let user = await User.findOne({ username: username });
 
     if (!user)
@@ -102,16 +102,20 @@ exports.getLoggedInUserInfo = (req, res) => {
   try {
     const userInfo = req.user;
     return res.status(200).json({ statusCode: 200, data: userInfo });
-  } catch (error) { 
-    return res.status(500).json({ statusCode: 500, message: `internal error - ${error.message}`});
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ statusCode: 500, message: `internal error - ${error.message}` });
   }
 };
 
 exports.logOut = (req, res) => {
-try {
-  res.clearCookie("access-token");
-  res.redirect("/auth/login");
-} catch (error) {
-  return res.status(500).json({statusCode: 500, message: `internal error - ${error.message}`});
-}
-}
+  try {
+    res.clearCookie("access-token");
+    res.redirect("/auth/login");
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ statusCode: 500, message: `internal error - ${error.message}` });
+  }
+};
