@@ -27,7 +27,7 @@ header .header__profile {
 }
 
 /* complete later with actual data */
-header .header__profile span:nth-child(1) {
+header .header__profile #profile_img {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -36,10 +36,21 @@ header .header__profile span:nth-child(1) {
   line-height: 2rem;
   color: var(--color-white);
   background-color: #e0cfaf; /* user profile color*/
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
-header .header__profile span:nth-child(2){
+.logout__btn {
+  margin-left: 2rem;
+  background-color: var(--color-primary);
+  border: none;
+  color: var(--color-white);
+}
+
+.logout__btn i {
+  color: var(--color-white);
+}
+
+header .header__profile span:nth-child(2) {
   color: #ddd;
 }
 
@@ -230,31 +241,31 @@ main {
   position: relative;
 }
 
-.referBtn{
-  margin-right: .5rem;
-  padding: .5rem 1rem;
+.referBtn {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
   background-color: var(--navy);
   color: var(--color-white);
   border: 0;
-  transition: all .3s ease;
-  border-radius: .3rem;
+  transition: all 0.3s ease;
+  border-radius: 0.3rem;
 }
 
-.referBtn:hover{
+.referBtn:hover {
   background-color: #6aa7e9;
 }
 
-.deleteTaskBtn{
+.deleteTaskBtn {
   background-color: var(--light-red);
   color: var(--red);
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   border: 0;
-  margin-right: .5rem;
-  transition: all .3s ease;
-  border-radius: .3rem;
+  margin-right: 0.5rem;
+  transition: all 0.3s ease;
+  border-radius: 0.3rem;
 }
 
-.deleteTaskBtn:hover{
+.deleteTaskBtn:hover {
   background-color: var(--red);
   color: var(--white);
 }
