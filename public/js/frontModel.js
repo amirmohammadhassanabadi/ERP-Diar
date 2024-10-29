@@ -27,4 +27,26 @@ const toggleTaskState = taskId => {
       : (targetTask.status = true);
 };
 
-export default { getTasks, giveTasks, toggleTaskState, findTaskStat };
+const addNewTask = async function (payload) {
+  const postTask = await postAPI('/tasks/addtasks', payload);
+  if (postTask.statusCode !== 200) {
+    console.error(postTask.statusCode);
+    return 0;
+    // throw new Error('could not post task (' + postTask.statusCode + ')');
+  }
+  if (taskData) {
+    taskData.push(payload);
+    console.log(taskData);
+  } else {
+    console.log('no task data');
+    return 0;
+  }
+};
+
+export default {
+  getTasks,
+  giveTasks,
+  toggleTaskState,
+  findTaskStat,
+  addNewTask
+};

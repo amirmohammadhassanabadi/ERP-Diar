@@ -24,8 +24,6 @@ const controlMenuChange = async function (menu) {
 };
 
 const controlCheckbox = async function (taskId) {
-  // const targetTask = tasksData.find(tsk => tsk.id === taskId);
-
   model.toggleTaskState(taskId);
 
   const taskStat = model.findTaskStat(taskId).status;

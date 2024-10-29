@@ -358,19 +358,12 @@ const handlePopupSubmit = function () {
   const btnParentEl = document.querySelector('.popup__downside');
   const inputEl = document.querySelector('.title-input');
   const overlayEl = document.querySelector('.overlay');
-  // temporary day input
-  const timeInputEl = document.querySelector('.description__item');
 
   btnParentEl.addEventListener('click', async function (e) {
     const btn = e.target.closest('.submit__btn');
-    if (!btn) return;
     // func to check conditions
-    if (!inputEl.value) {
-      return;
-    }
-
-    // default day is set to 1
-    // let daysInput = Number(timeInputEl.value) ? Number(timeInputEl.value) : 1;
+    if (!btn) return;
+    if (!inputEl.value) return;
 
     // =====================================
     const newTitle = document.querySelector('.title-input');
@@ -388,13 +381,9 @@ const handlePopupSubmit = function () {
     console.log(payload);
 
     // POST task to DB
-    const postTask = await postAPI('/tasks/addtasks', payload);
+    await model.addNewTask(payload);
 
-    if (postTask.statusCode !== 200) {
-      console.error(postTask.statusCode);
-      return;
-    }
-
+    // NO ERROR HANDLING APPLIED HERE BUG
     // show success message (with a timer)
 
     // hide overlay
@@ -411,7 +400,10 @@ const handlePopupSubmit = function () {
 
     // in addition to this we need to change nav to ongoing tasks BUG
     // doesn't work yet BUG
-    view.renderHTML(generateTaskContainer.bind(null, false), taskContainerEl);
+    await view.renderHTML(
+      generateTaskContainer.bind(null, false),
+      taskContainerEl
+    );
 
     // =====================================
     // /tasks/gettasks (route to get tasks)
@@ -431,17 +423,18 @@ const handlePopupSubmit = function () {
 
 const generateTaskContainer = async function (status) {
   const tasksData = await model.giveTasks();
+  console.log(tasksData);
 
   return `
-            <span class="hint-text">وظایف امروز (${tasksData.reduce(
-              (acc, task) => {
-                if (task.status === status) acc++;
-                return acc;
-              },
-              0
-            )} مورد)</span>
-          <ul class="task__list">
-          ${tasksData.map(generateSingleTask.bind(null, status)).join('')}
+              <span class="hint-text">وظایف امروز (${tasksData.reduce(
+                (acc, task) => {
+                  if (task.status === status) acc++;
+                  return acc;
+                },
+                0
+              )} مورد)</span>
+            <ul class="task__list">
+            ${tasksData.map(generateSingleTask.bind(null, status)).join('')}
           </ul>
 
   `;
