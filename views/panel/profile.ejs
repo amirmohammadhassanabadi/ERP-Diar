@@ -26,10 +26,12 @@
     <img class="header__logo" src="/img/logo/logo-low.png" alt="logo-png" />
     <div class="header__profile">
 
-      <button class="logout__btn">
-        <span>خروج</span>
-        <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
-      </button>
+      <form action="/auth/logout" method="get">
+        <button type="submit" class="logout__btn">
+          <span>خروج</span>
+          <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
+        </button>
+      </form>
 
       <span id="profile_img"></span>
       <span id="profile_name"></span>
@@ -98,7 +100,7 @@
         مسئول انجام
       </button>
 
-      <textarea name="report" id="reportTestarea"  placeholder="توضیحات"></textarea>
+      <textarea name="report" id="reportTestarea" placeholder="توضیحات"></textarea>
 
       <div class="btn-wrapper">
         <button class="cancelBtn">
@@ -111,11 +113,11 @@
     </div>
   </div>
 
-<%- include("../includes/alert.ejs") %>
+  <%- include("../includes/alert.ejs") %>
 
-  <script src="https://kit.fontawesome.com/7a20fd358e.js" crossorigin="anonymous"></script>
-  <script type="module" src="/js/controller.js"></script>
-  <script src="/js/tasks/addTask.js"></script>
+    <script src="https://kit.fontawesome.com/7a20fd358e.js" crossorigin="anonymous"></script>
+    <script type="module" src="/js/controller.js"></script>
+    <script src="/js/tasks/addTask.js"></script>
 </body>
 
 </html>
