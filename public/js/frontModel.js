@@ -15,4 +15,16 @@ async function getTasks() {
 
 const giveTasks = () => taskData;
 
-export default { getTasks, giveTasks };
+const findTaskStat = taskId => taskData.find(tsk => tsk.id === taskId);
+
+const toggleTaskState = taskId => {
+  // find index for the task obj that matches task ID
+  const targetTask = findTaskStat(taskId);
+
+  if (targetTask)
+    targetTask.status
+      ? (targetTask.status = false)
+      : (targetTask.status = true);
+};
+
+export default { getTasks, giveTasks, toggleTaskState, findTaskStat };

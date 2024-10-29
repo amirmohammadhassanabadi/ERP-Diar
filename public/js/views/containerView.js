@@ -52,8 +52,8 @@ const renderContainerDashboard = function () {
   // initialize dashboard event handlers REMINDER
 };
 
-const generateMarkupTasks = async function () {
-  const taskContainerMarkup = await generateTaskContainer(false);
+const generateMarkupTasks = async function (status = false) {
+  const taskContainerMarkup = await generateTaskContainer(status);
   return `
       <nav class="container__header">
         <span class="c_header-text">وظایف</span>
@@ -114,13 +114,16 @@ const handleContainerNav = function (handler) {
   });
 };
 
-const navChangeTaskReload = function (status) {
+const navChangeTaskReload = async function (status) {
   const taskContainer = parentEl.querySelector('.task__container');
 
   // clear container body
   view.clear(taskContainer);
 
-  view.renderHTML(generateTaskContainer.bind(null, status), taskContainer);
+  await view.renderHTML(
+    generateTaskContainer.bind(null, status),
+    taskContainer
+  );
 };
 
 const navChangeAsignedTasks = async function () {
@@ -328,12 +331,12 @@ const removePopupUsers = function () {
 
 const handleCheckbox = function (handler) {
   const parentEl = document.querySelector('.task__container');
-  parentEl.addEventListener('click', function (e) {
+  parentEl.addEventListener('click', async function (e) {
     const checkbox = e.target.closest('.checkbox');
     if (!checkbox) return;
 
     const targetTaskId = e.target.closest('.task').dataset.taskId;
-    handler(targetTaskId);
+    await handler(targetTaskId);
   });
 };
 

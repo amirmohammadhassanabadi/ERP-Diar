@@ -23,17 +23,13 @@ const controlMenuChange = async function (menu) {
   } else console.error('cannot find menu');
 };
 
-const controlCheckbox = function (taskId) {
-  // SHOULD GO TO MODEL REMINDER
-  console.log(containerView.tasksData);
+const controlCheckbox = async function (taskId) {
+  // const targetTask = tasksData.find(tsk => tsk.id === taskId);
 
-  const targetTask = containerView.tasksData.find(tsk => tsk.taskId === taskId);
+  model.toggleTaskState(taskId);
 
-  targetTask.taskStatus
-    ? (targetTask.taskStatus = 0)
-    : (targetTask.taskStatus = 1);
-
-  containerView.navChangeTaskReload(targetTask.taskStatus ? 0 : 1);
+  const taskStat = model.findTaskStat(taskId).status;
+  await containerView.navChangeTaskReload(taskStat ? false : true);
 };
 
 const controlContainerNav = function (navItem) {
