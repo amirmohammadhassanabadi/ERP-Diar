@@ -208,6 +208,7 @@ exports.referTaskAgent = async (req, res) => {
 };
 
 exports.getReferenceableUsers = async (req, res) => {
+try {
   const level = req.user.level;
   const department = req.user.department;
 
@@ -218,7 +219,10 @@ exports.getReferenceableUsers = async (req, res) => {
   let users = await User.find({department: department});
   let filteredUsers = users.filter(user => user.level >= level);
 
-  res.status(200).json({statusCode: 200, data: neddedUserInfo(filteredUsers)});
+  return res.status(200).json({statusCode: 200, data: neddedUserInfo(filteredUsers)});
+} catch (error) {
+  return res.status(200).json({statusCode: 500, message: "internal error - "});
+}
 }
 
 exports.getSubordinateTask = async (req, res) => {

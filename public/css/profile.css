@@ -504,14 +504,13 @@ input[type='checkbox'] {
   position: fixed;
   top: 0;
   right: 0;
-  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 3;
 }
 
 .referPopupWrapper > .referPopup{
-  width: 50%;
+  width: 40%;
   background-color: var(--white);
   padding: 1rem;
   text-align: center;

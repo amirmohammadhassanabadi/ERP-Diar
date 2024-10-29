@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("profile_name").innerText = userInfo.username;
 });
 
+const referPopupWrapper = document.querySelector(".referPopupWrapper");
 document.querySelector(".container").addEventListener("click", async (e) => {
   if (e.target.classList.contains("deleteTaskBtn")) {
     const response = await deleteAPI(
@@ -26,10 +27,26 @@ document.querySelector(".container").addEventListener("click", async (e) => {
       e.target.parentElement.parentElement.remove();
     }
   } else if (e.target.classList.contains("referBtn")) {
-    const response = await getAPI("/tasks/referenceableusers");
-    console.log(response);
+    referPopupWrapper.children[0].value = e.target.parentElement.parentElement.dataset.taskId
+    referPopupWrapper.classList.toggle("dis-none");
+    referPopupWrapper.classList.toggle("dis-flex");
+    // const response = await getAPI("/tasks/referenceableusers");
+    // console.log(response);
   }
 });
+
+referPopupWrapper.addEventListener("click", async e => {
+  if (e.target.classList.contains("agentBtn")) {
+    const data = getAPI("/tasks/referenceableusers");
+    if (data.statusCode == 200) {
+      
+    }else if(data.statusCode == 403){
+
+    }else if(data.statusCode == 500){
+      
+    }
+  }
+})
 
 const parentEl = document.querySelector(".container");
 
