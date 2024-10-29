@@ -530,7 +530,7 @@ const generateSingleTask = function (status, task) {
 const generateDeadlineTxt = days => {
   if (days > 0) return `${days} روز مانده`;
   else if (days === 0) return `<strong>امروز</strong>`;
-  else return `${days} روز گذشته`;
+  else return `${-days} روز گذشته`;
 };
 
 const handleDeleteTask = async function (taskId) {
