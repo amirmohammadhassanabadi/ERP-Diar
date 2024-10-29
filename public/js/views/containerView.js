@@ -438,7 +438,12 @@ const handlePopupSubmit = function () {
     // re-fetch & re-render tasks list
     taskContainerEl.innerHTML = '';
 
-    switchActiveNav(0);
+    const taskNavEl = document.querySelector('.my__tasks');
+    const activeNavEl = document.querySelector('.nav__item-active');
+    if (taskNavEl !== activeNavEl) {
+      taskNavEl.classList.add('nav__item-active');
+      activeNavEl.classList.remove('nav__item-active');
+    }
 
     // in addition to this we need to change nav to ongoing tasks BUG
     // doesn't work yet BUG
