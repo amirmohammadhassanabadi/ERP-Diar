@@ -1,7 +1,7 @@
 import containerView from '/js/views/containerView.js';
 import navView from '/js/views/navView.js';
 import menuView from '/js/views/menuView.js';
-
+import model from '/js/frontModel.js';
 // const controlAddNewTask = function () {
 // };
 
@@ -15,6 +15,7 @@ const controlMenuChange = async function (menu) {
   if (menu.classList.contains('menu__dashboard'))
     containerView.renderContainerDashboard();
   else if (menu.classList.contains('menu__tasks')) {
+    await model.getTasks();
     await containerView.renderContainerTasks();
     containerView.handleTaskAddBtn();
     containerView.handleCheckbox(controlCheckbox);
@@ -24,7 +25,9 @@ const controlMenuChange = async function (menu) {
 
 const controlCheckbox = function (taskId) {
   // SHOULD GO TO MODEL REMINDER
-  const targetTask = containerView.state.find(tsk => tsk.taskId === taskId);
+  console.log(containerView.tasksData);
+
+  const targetTask = containerView.tasksData.find(tsk => tsk.taskId === taskId);
 
   targetTask.taskStatus
     ? (targetTask.taskStatus = 0)

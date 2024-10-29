@@ -9,19 +9,17 @@ const postAPI = async (url, payload) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(
-      payload
-    )
+    body: JSON.stringify(payload)
   });
   return await response.json();
 };
 
-const deleteAPI = async (url) => {
+const deleteAPI = async url => {
   const response = await fetch(url, {
-    method: "DELETE"
-  })
+    method: 'DELETE'
+  });
 
   return await response.json();
-}
+};
 
 export { getAPI, postAPI, deleteAPI };
