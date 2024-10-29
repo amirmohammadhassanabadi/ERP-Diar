@@ -40,14 +40,14 @@ header .header__profile #profile_img {
 }
 
 .logout__btn {
-  margin-left: 2rem;
+  margin-left: 3rem;
   background-color: var(--color-primary);
   border: none;
-  color: var(--color-white);
+  color: var(--color-gray-light-2);
 }
 
 .logout__btn i {
-  color: var(--color-white);
+  color: var(--color-gray-light-2);
 }
 
 header .header__profile span:nth-child(2) {
