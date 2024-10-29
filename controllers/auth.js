@@ -106,3 +106,14 @@ exports.getLoggedInUserInfo = (req, res) => {
     return res.status(500).json({ statusCode: 500, message: `internal error - ${error.message}`});
   }
 };
+
+exports.logOut = (req, res) => {
+try {
+  delete req.user;
+  delete access-token["access-token"];
+  res.redirect("/auth/login");
+  console.log(req.cookies);
+} catch (error) {
+  return res.status(500).json({statusCode: 500, message: `internal error - ${error.message}`});
+}
+}

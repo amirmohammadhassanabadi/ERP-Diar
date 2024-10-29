@@ -59,6 +59,10 @@ referPopupWrapper.addEventListener("click", async e => {
   }
 });
 
+document.querySelector(".logout__btn").addEventListener("click", async () => {
+  await getAPI("/auth/logout");
+})
+
 const parentEl = document.querySelector('.container');
 
 const renderContainerTasks = async function () {
