@@ -31,7 +31,7 @@ header .header__profile #profile_img {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  margin-left: 1rem;
+  margin-left: 2rem;
   text-align: center;
   line-height: 2rem;
   color: var(--color-white);
@@ -40,17 +40,21 @@ header .header__profile #profile_img {
 }
 
 .logout__btn {
-  margin-left: 3rem;
+  margin-left: 1rem;
   background-color: var(--color-primary);
   border: none;
   color: var(--color-gray-light-2);
+  position: relative;
+  top: -0.2rem;
+  color: var(--color-red);
 }
 
 .logout__btn i {
-  color: var(--color-gray-light-2);
+  position: relative;
+  top: 0.2rem;
 }
 
-header .header__profile span:nth-child(2) {
+header .header__profile span:nth-child(3) {
   color: #ddd;
 }
 
