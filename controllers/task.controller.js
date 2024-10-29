@@ -159,6 +159,21 @@ exports.deleteTask = async (req, res) => {
         .status(400)
         .json({ statusCode: 400, message: `id is not valid` });
     }
+
+    const task = await Task.findById(taskId);
+    if (!task) {
+      return res
+      .status(404)
+      .json({ statusCode: 404, message: `task is not found` });
+    }
+
+    if (task.creator != req.user.id) {
+      if (!task) {
+        return res
+        .status(403)
+        .json({ statusCode: 403, message: `forbiden` });
+      } 
+    }
     await Task.findByIdAndDelete(taskId);
     return res.status(200).json({ statusCode: 200, message: "task deleted" });
   } catch (error) {
