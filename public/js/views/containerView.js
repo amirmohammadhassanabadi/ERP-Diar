@@ -1,6 +1,7 @@
 import view from "/js/views/view.js";
 import { getAPI, postAPI, deleteAPI } from "/js/API/fetch.js";
 import { getUserInfo } from "/js/data/user.data.js";
+import {popupHandler} from "/js/includes/popup.js";
 
 // get user information
 document.addEventListener("DOMContentLoaded", async () => {
@@ -37,12 +38,17 @@ document.querySelector(".container").addEventListener("click", async (e) => {
 
 referPopupWrapper.addEventListener("click", async e => {
   if (e.target.classList.contains("agentBtn")) {
-    const data = getAPI("/tasks/referenceableusers");
+    
+  }
+  if (e.target.classList.contains("agentBtn")) {
+    const data = await getAPI("/tasks/referenceableusers");
     if (data.statusCode == 200) {
-      
+      popupHandler(200, document.querySelector(".alert-wrapper"), document.querySelector(".main-alert"), document.querySelector(".main-alert > h3"), "تسک با موفقیت ارجاع داده شد");
     }else if(data.statusCode == 403){
-
+      console.log("ok");
+      popupHandler(403, document.querySelector(".alert-wrapper"), document.querySelector(".main-alert"), document.querySelector(".main-alert > h3"), "کاربر دسترسی ارجاع تسک را ندارد");
     }else if(data.statusCode == 500){
+      popupHandler(403, document.querySelector(".alert-wrapper"), document.querySelector(".main-alert"), document.querySelector(".main-alert > h3"), "مشکلی پیش آمده لطفا دوباره تلاش کنید");
       
     }
   }

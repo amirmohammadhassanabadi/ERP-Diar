@@ -1,0 +1,17 @@
+@keyframes showAlert {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 10px;
+  }
+}
+
+@keyframes hideAlert {
+  0% {
+    top: 10px;
+  }
+  100% {
+    top: -100%;
+  }
+}
