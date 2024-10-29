@@ -51,7 +51,7 @@ referPopupWrapper.addEventListener("click", async e => {
   }else if(e.target.classList.contains("cancelBtn")){
     referPopupWrapper.classList.toggle("dis-none");
     referPopupWrapper.classList.toggle("dis-flex");
-    e.target.parentElement.previousElementSibling.value = ""
+    e.target.parentElement.previousElementSibling.value = "";
   }
 })
 

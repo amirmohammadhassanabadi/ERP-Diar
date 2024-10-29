@@ -95,7 +95,7 @@ exports.addTask = async (req, res) => {
 
   deadline = new Date(`${deadline[0]}, ${deadline[1]}, ${deadline[2]}`)
   
-  const newTask = new Task({
+  let newTask = new Task({
     title: title,
     description: description,
     status: false,
@@ -105,8 +105,14 @@ exports.addTask = async (req, res) => {
     deadline: deadline,
   });
 
-  await newTask.save();
-  res.status(200).json({ statusCode: 200, message: "task added" });
+  newTask = await newTask.save();
+  res.status(200).json({ statusCode: 200, data: {
+    id: newTask.id,
+    title: newTask.id,
+    description: newTask.description,
+    agents: newTask.agents,
+    deadline: new Date(deadline).getDay() - new Date().getDay()
+  } });
 };
 
 exports.changeTaskStatus = async (req, res) => {
