@@ -1,10 +1,8 @@
-import {getAPI} from '../API/fetch.js';
+import { getAPI } from '../API/fetch.js';
 
 const getUserInfo = async () => {
-    const response = await getAPI("/auth/user/info");
-    return response.data;
-}
+  const response = await getAPI('/auth/user/info');
+  return response.data;
+};
 
-export {
-    getUserInfo
-}
+export { getUserInfo };

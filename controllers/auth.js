@@ -1,42 +1,42 @@
-const { User } = require("../models/user");
-const bcrypt = require("bcrypt");
-const JWT = require("../middleware/JWT");
-const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
+const { User } = require('../models/user');
+const bcrypt = require('bcrypt');
+const JWT = require('../middleware/JWT');
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 exports.renderLoginPage = (req, res) => {
-  res.render("auth/login");
+  res.render('auth/login');
 };
 
 exports.postLogin = async (req, res) => {
   try {
     const { username, password } = req.body;
-    
+
     let user = await User.findOne({ username: username });
 
     if (!user)
       return res
         .status(404)
-        .json({ status: 404, message: "username or password is wrong" });
+        .json({ status: 404, message: 'username or password is wrong' });
     const matched = await bcrypt.compare(password, user.password);
 
     if (!matched)
       return res
         .status(404)
-        .json({ status: 404, message: "username or password is wrong" });
+        .json({ status: 404, message: 'username or password is wrong' });
 
-    res.cookie("access-token", JWT.createToken(user), {
+    res.cookie('access-token', JWT.createToken(user), {
       maxAge: 60 * 60 * 24 * 1000,
-      httpOnly: true,
+      httpOnly: true
     });
-    res.status(200).json({ status: 200, message: "successful" });
+    res.status(200).json({ status: 200, message: 'successful' });
   } catch (err) {
-    return res.status(500).json({ status: 500, message: "internal error" });
+    return res.status(500).json({ status: 500, message: 'internal error' });
   }
 };
 
 exports.renderProfilePage = (req, res) => {
-  res.render("panel/profile");
+  res.render('panel/profile');
 };
 
 exports.renderSignupPage = async (req, res) => {
@@ -45,7 +45,7 @@ exports.renderSignupPage = async (req, res) => {
 
   let dprmt = department;
 
-  if (department === "administrator") {
+  if (department === 'administrator') {
     dprmt = JSON.parse(process.env.userDepartmentEnum);
     dprmt.shift();
   }
@@ -54,9 +54,9 @@ exports.renderSignupPage = async (req, res) => {
     authLevel.push(i);
   }
 
-  res.render("auth/signup", {
+  res.render('auth/signup', {
     level: authLevel.sort(),
-    department: dprmt,
+    department: dprmt
   });
 };
 
@@ -68,7 +68,7 @@ exports.addUser = async (req, res) => {
 
     if (userTargeted) {
       return res.status(409).json({
-        statusCode: 409,
+        statusCode: 409
       });
     }
 
@@ -81,7 +81,7 @@ exports.addUser = async (req, res) => {
       username: username,
       password: hashed,
       department: department,
-      level: level,
+      level: level
     });
 
     console.log(user);
@@ -93,7 +93,7 @@ exports.addUser = async (req, res) => {
     console.log(error.message);
 
     return res.status(500).json({
-      statusCode: 500,
+      statusCode: 500
     });
   }
 };
@@ -101,19 +101,31 @@ exports.addUser = async (req, res) => {
 exports.getLoggedInUserInfo = (req, res) => {
   try {
     const userInfo = req.user;
-    return res.status(200).json({ statusCode: 200, data: userInfo });
-  } catch (error) { 
-    return res.status(500).json({ statusCode: 500, message: `internal error - ${error.message}`});
+    return res.status(200).json({
+      statusCode: 200,
+      data: {
+        id: req.user.id,
+        fullName: req.user.fullName,
+        username: req.user.username,
+        department: req.user.department
+      }
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ statusCode: 500, message: `internal error - ${error.message}` });
   }
 };
 
 exports.logOut = (req, res) => {
-try {
-  delete req.user;
-  delete access-token["access-token"];
-  res.redirect("/auth/login");
-  console.log(req.cookies);
-} catch (error) {
-  return res.status(500).json({statusCode: 500, message: `internal error - ${error.message}`});
-}
-}
+  try {
+    delete req.user;
+    delete access - token['access-token'];
+    res.redirect('/auth/login');
+    console.log(req.cookies);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ statusCode: 500, message: `internal error - ${error.message}` });
+  }
+};

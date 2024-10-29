@@ -1,4 +1,5 @@
 import { getAPI, postAPI, deleteAPI } from '/js/API/fetch.js';
+import { getUserInfo } from '/js/data/user.data.js';
 
 let taskData;
 
@@ -34,13 +35,20 @@ const addNewTask = async function (payload) {
     return 0;
     // throw new Error('could not post task (' + postTask.statusCode + ')');
   }
-console.log("post: ");
-console.log(postTask);
+  // console.log('post: ');
+  // console.log(postTask);
 
+  postTask.data.status = false;
+  const temp = await getUserInfo();
+  postTask.data.creator = temp.id;
+  postTask.data.agents = [await getUserInfo()];
+  // console.log(postTask.data.creator);
 
   if (taskData) {
-    taskData.push(payload);
+    taskData.push(postTask.data);
     console.log(taskData);
+    // await getTasks();
+    // console.log(taskData);
   } else {
     console.log('no task data');
     return 0;

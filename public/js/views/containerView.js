@@ -1,9 +1,8 @@
-
 import view from '/js/views/view.js';
 import { getAPI, postAPI, deleteAPI } from '/js/API/fetch.js';
 import { getUserInfo } from '/js/data/user.data.js';
 import model from '/js/frontModel.js';
-import {popupHandler} from "/js/includes/popup.js";
+import { popupHandler } from '/js/includes/popup.js';
 
 // get user information
 document.addEventListener('DOMContentLoaded', async () => {
@@ -20,48 +19,58 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('profile_name').innerText = userInfo.username;
 });
 
-
-const referPopupWrapper = document.querySelector(".referPopupWrapper");
-document.querySelector(".container").addEventListener("click", async (e) => {
-  if (e.target.classList.contains("deleteTaskBtn")) {
+const referPopupWrapper = document.querySelector('.referPopupWrapper');
+document.querySelector('.container').addEventListener('click', async e => {
+  if (e.target.classList.contains('deleteTaskBtn')) {
     const response = await deleteAPI(
       `/tasks/deletetask/${e.target.parentElement.parentElement.dataset.taskId}`
     );
     if (response.statusCode == 200) {
       e.target.parentElement.parentElement.remove();
     }
-
-  } else if (e.target.classList.contains("referBtn")) {
-    referPopupWrapper.children[0].value = e.target.parentElement.parentElement.dataset.taskId
-    referPopupWrapper.classList.toggle("dis-none");
-    referPopupWrapper.classList.toggle("dis-flex");
+  } else if (e.target.classList.contains('referBtn')) {
+    referPopupWrapper.children[0].value =
+      e.target.parentElement.parentElement.dataset.taskId;
+    referPopupWrapper.classList.toggle('dis-none');
+    referPopupWrapper.classList.toggle('dis-flex');
     // const response = await getAPI("/tasks/referenceableusers");
     // console.log(response);
   }
 });
 
-referPopupWrapper.addEventListener("click", async e => {
-  if (e.target.classList.contains("agentBtn")) {
-    const data = await getAPI("/tasks/referenceableusers");
+referPopupWrapper.addEventListener('click', async e => {
+  if (e.target.classList.contains('agentBtn')) {
+    const data = await getAPI('/tasks/referenceableusers');
     if (data.statusCode == 200) {
       console.log(data.data);
-      
-    }else if(data.statusCode == 403){
-      console.log("ok");
-      popupHandler(403, document.querySelector(".alert-wrapper"), document.querySelector(".main-alert"), document.querySelector(".main-alert > h3"), "کاربر دسترسی ارجاع تسک را ندارد");
-    }else if(data.statusCode == 500){
-      popupHandler(403, document.querySelector(".alert-wrapper"), document.querySelector(".main-alert"), document.querySelector(".main-alert > h3"), "مشکلی پیش آمده لطفا دوباره تلاش کنید");
+    } else if (data.statusCode == 403) {
+      console.log('ok');
+      popupHandler(
+        403,
+        document.querySelector('.alert-wrapper'),
+        document.querySelector('.main-alert'),
+        document.querySelector('.main-alert > h3'),
+        'کاربر دسترسی ارجاع تسک را ندارد'
+      );
+    } else if (data.statusCode == 500) {
+      popupHandler(
+        403,
+        document.querySelector('.alert-wrapper'),
+        document.querySelector('.main-alert'),
+        document.querySelector('.main-alert > h3'),
+        'مشکلی پیش آمده لطفا دوباره تلاش کنید'
+      );
     }
-  }else if(e.target.classList.contains("cancelBtn")){
-    referPopupWrapper.classList.toggle("dis-none");
-    referPopupWrapper.classList.toggle("dis-flex");
-    e.target.parentElement.previousElementSibling.value = "";
+  } else if (e.target.classList.contains('cancelBtn')) {
+    referPopupWrapper.classList.toggle('dis-none');
+    referPopupWrapper.classList.toggle('dis-flex');
+    e.target.parentElement.previousElementSibling.value = '';
   }
 });
 
-document.querySelector(".logout__btn").addEventListener("click", async () => {
-  await getAPI("/auth/logout");
-})
+document.querySelector('.logout__btn').addEventListener('click', async () => {
+  await getAPI('/auth/logout');
+});
 
 const parentEl = document.querySelector('.container');
 
@@ -454,7 +463,6 @@ const handlePopupSubmit = function () {
 
 const generateTaskContainer = async function (status) {
   const tasksData = await model.giveTasks();
-  console.log(tasksData);
 
   return `
               <span class="hint-text">وظایف امروز (${tasksData.reduce(
@@ -474,6 +482,7 @@ const generateTaskContainer = async function (status) {
 const generateSingleTask = function (status, task) {
   let i = 0;
   let markup;
+  // console.log(task.agents);
 
   if (task.status === status) {
     markup = `
