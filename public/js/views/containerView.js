@@ -48,6 +48,10 @@ referPopupWrapper.addEventListener("click", async e => {
     }else if(data.statusCode == 500){
       popupHandler(403, document.querySelector(".alert-wrapper"), document.querySelector(".main-alert"), document.querySelector(".main-alert > h3"), "مشکلی پیش آمده لطفا دوباره تلاش کنید");
     }
+  }else if(e.target.classList.contains("cancelBtn")){
+    referPopupWrapper.classList.toggle("dis-none");
+    referPopupWrapper.classList.toggle("dis-flex");
+    e.target.parentElement.previousElementSibling.value = ""
   }
 })
 
