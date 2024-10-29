@@ -34,6 +34,10 @@ const addNewTask = async function (payload) {
     return 0;
     // throw new Error('could not post task (' + postTask.statusCode + ')');
   }
+console.log("post: ");
+console.log(postTask);
+
+
   if (taskData) {
     taskData.push(payload);
     console.log(taskData);

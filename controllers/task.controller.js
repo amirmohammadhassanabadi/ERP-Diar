@@ -106,11 +106,18 @@ exports.addTask = async (req, res) => {
   });
 
   newTask = await newTask.save();
+  const temp = await Task.findById(newTask._id).populate("agents");
+  console.log(temp);
+  
   res.status(200).json({ statusCode: 200, data: {
     id: newTask.id,
-    title: newTask.id,
+    title: newTask.title,
     description: newTask.description,
-    agents: newTask.agents,
+    agents: [{
+      username: temp.username,
+      fullName: temp.fullName,
+      department: temp.department
+    }],
     deadline: new Date(deadline).getDay() - new Date().getDay()
   } });
 };
