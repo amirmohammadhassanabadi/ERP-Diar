@@ -35,10 +35,6 @@ exports.postLogin = async (req, res) => {
   }
 };
 
-exports.renderProfilePage = (req, res) => {
-  res.render("panel/profile");
-};
-
 exports.renderSignupPage = async (req, res) => {
   const { level, department } = req.user;
   const authLevel = [];
