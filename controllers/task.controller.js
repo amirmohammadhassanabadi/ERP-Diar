@@ -218,7 +218,7 @@ try {
   }
 
   let users = await User.find({department: department});
-  let filteredUsers = users.filter(user => user.level >= level);
+  let filteredUsers = users.filter(user => user.level >= level && user.id != req.user.id);
 
   return res.status(200).json({statusCode: 200, data: neddedUserInfo(filteredUsers)});
 } catch (error) {
