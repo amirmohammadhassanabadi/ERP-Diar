@@ -17,19 +17,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("profile_name").innerText = userInfo.username;
 });
 
-document.querySelector(".container").addEventListener("click", async e => {
+document.querySelector(".container").addEventListener("click", async (e) => {
   if (e.target.classList.contains("deleteTaskBtn")) {
-    const response = await deleteAPI(`/tasks/deletetask/${e.target.parentElement.parentElement.dataset.taskId}`);
+    const response = await deleteAPI(
+      `/tasks/deletetask/${e.target.parentElement.parentElement.dataset.taskId}`
+    );
     if (response.statusCode == 200) {
       e.target.parentElement.parentElement.remove();
     }
-    
-    
-  }else if (e.target.classList.contains("referBtn")) {
+  } else if (e.target.classList.contains("referBtn")) {
     const response = await getAPI("/tasks/referenceableusers");
     console.log(response);
   }
-})
+});
 
 const parentEl = document.querySelector(".container");
 
