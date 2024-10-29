@@ -222,7 +222,7 @@ try {
 
   return res.status(200).json({statusCode: 200, data: neddedUserInfo(filteredUsers)});
 } catch (error) {
-  return res.status(200).json({statusCode: 500, message: "internal error - "});
+  return res.status(500).json({statusCode: 500, message: "internal error - "});
 }
 }
 
