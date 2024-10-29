@@ -323,6 +323,57 @@ input[type='checkbox'] {
   /* border: 20px solid var(--color-grad-3); */
 }
 
+/* give ID for each overlay and add overlay class to both REFACTOR */
+
+.confirm__overlay {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup__confirm__up p {
+  text-align: center;
+  margin-bottom: 6rem;
+}
+
+.noconfirm__btn,
+.confirm__btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.noconfirm__btn {
+  padding-right: 2rem;
+  padding-left: 2rem;
+  background-color: var(--color-white);
+  color: var(--color-grad-3);
+  font-weight: bolder;
+}
+
+.noconfirm__btn:hover {
+  background-color: var(--color-gray-light-2);
+}
+
+.confirm__btn {
+  padding-right: 2.5rem;
+  padding-left: 2.5rem;
+  background-color: var(--color-grad-2);
+  color: var(--color-white);
+  font-weight: bolder;
+}
+
+.confirm__btn:hover {
+  background-color: var(--color-grad-3);
+}
 .overlay {
   position: fixed;
   width: 100%;

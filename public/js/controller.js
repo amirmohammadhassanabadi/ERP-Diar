@@ -24,10 +24,19 @@ const controlMenuChange = async function (menu) {
 };
 
 const controlCheckbox = async function (taskId) {
+  containerView.addConfirmPopup();
+
+  // ev listener for overlay, submit, and cancel button
+  containerView.handleConfirmPopup(controlConfirmPopup);
+
   model.toggleTaskState(taskId);
 
   const taskStat = model.findTaskStat(taskId).status;
   await containerView.navChangeTaskReload(taskStat ? false : true);
+};
+
+const controlConfirmPopup = function () {
+  //
 };
 
 const controlContainerNav = function (navItem) {

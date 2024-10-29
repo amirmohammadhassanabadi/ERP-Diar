@@ -230,7 +230,7 @@ const handleOverlayLayer = function () {
 };
 
 const handleReferralsBtn = function () {
-  const popupContainer = document.querySelector('.popup__container');
+  const popupContainer = document.querySelector('.options__list');
   popupContainer.addEventListener('click', function (e) {
     const agentBtn = e.target.closest('.agent-btn');
     if (!agentBtn) return;
@@ -379,6 +379,15 @@ const handleCheckbox = function (handler) {
     await handler(targetTaskId);
   });
 };
+
+const addConfirmPopup = function () {
+  const overlayEl = document.querySelector('.confirm__overlay');
+  const popupConfirmEl = document.querySelector('.popup__confirm');
+
+  // remove hidden from overlay
+};
+
+const handleConfirmPopup = function (handler) {};
 
 // popup event handlers
 // close and submit share parentEl => one ev listener for each REFACTOR
