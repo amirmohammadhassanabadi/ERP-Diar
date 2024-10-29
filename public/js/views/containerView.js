@@ -438,6 +438,8 @@ const handlePopupSubmit = function () {
     // re-fetch & re-render tasks list
     taskContainerEl.innerHTML = '';
 
+    switchActiveNav(0);
+
     // in addition to this we need to change nav to ongoing tasks BUG
     // doesn't work yet BUG
     await view.renderHTML(
@@ -507,17 +509,23 @@ const generateSingleTask = function (status, task) {
           })
           .join('')}
       </div>
-      <span class="deadline">${task.deadline} روز مانده</span>
+      <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
           <button class="referBtn">ارجاع</button>
           <button class="fa fa-times deleteTaskBtn"></button>
     </div>
-  </li>
-`;
+    </li>
+    `;
   }
 
   i = 0;
 
   return markup;
+};
+
+const generateDeadlineTxt = days => {
+  if (days > 0) return `${days} روز مانده`;
+  else if (days === 0) return `<strong>امروز</strong>`;
+  else return `${days} روز گذشته`;
 };
 
 const handleDeleteTask = async function (taskId) {
