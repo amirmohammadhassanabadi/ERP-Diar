@@ -24,7 +24,7 @@ exports.getTasks = async (req, res) => {
             title: task.title,
             description: task.description,
             status: task.status,
-            deadline: task.deadline,
+            deadline: new Date(task.deadline).getDay() - new Date().getDay(),
             creator: task.creator,
             agents: task.agents
           };
@@ -87,14 +87,15 @@ exports.addTask = async (req, res) => {
     return Number(item);
   });
 
-  deadline = dateConverter.gregorianToSolar(
+  deadline = dateConverter.solarToGregorian(
     deadline[0],
     deadline[1],
     deadline[2]
   );
-  deadline = new Date(`${deadline[0]}, ${deadline[1]}, ${deadline[2]}`);
 
-  const newTask = new Task({
+  deadline = new Date(`${deadline[0]}, ${deadline[1]}, ${deadline[2]}`)
+  
+  let newTask = new Task({
     title: title,
     description: description,
     status: false,
@@ -104,8 +105,14 @@ exports.addTask = async (req, res) => {
     deadline: deadline,
   });
 
-  await newTask.save();
-  res.status(200).json({ statusCode: 200, message: "task added" });
+  newTask = await newTask.save();
+  res.status(200).json({ statusCode: 200, data: {
+    id: newTask.id,
+    title: newTask.id,
+    description: newTask.description,
+    agents: newTask.agents,
+    deadline: new Date(deadline).getDay() - new Date().getDay()
+  } });
 };
 
 exports.changeTaskStatus = async (req, res) => {
@@ -208,6 +215,7 @@ exports.referTaskAgent = async (req, res) => {
 };
 
 exports.getReferenceableUsers = async (req, res) => {
+try {
   const level = req.user.level;
   const department = req.user.department;
 
@@ -216,9 +224,12 @@ exports.getReferenceableUsers = async (req, res) => {
   }
 
   let users = await User.find({department: department});
-  let filteredUsers = users.filter(user => user.level >= level);
+  let filteredUsers = users.filter(user => user.level >= level && user.id != req.user.id);
 
-  res.status(200).json({statusCode: 200, data: neddedUserInfo(filteredUsers)});
+  return res.status(200).json({statusCode: 200, data: neddedUserInfo(filteredUsers)});
+} catch (error) {
+  return res.status(500).json({statusCode: 500, message: "internal error - "});
+}
 }
 
 exports.getSubordinateTask = async (req, res) => {

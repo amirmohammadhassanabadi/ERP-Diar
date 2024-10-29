@@ -11,8 +11,11 @@
     src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
   <link rel="stylesheet" href="/css/config/variables.css" />
   <link rel="stylesheet" href="/css/includes/top-line.css" />
-  <link rel="stylesheet" href="/css/profile.css" />
   <link rel="stylesheet" href="/css/config/reseter.css" />
+  <link rel="stylesheet" href="/css/config/animation.css">
+  <link rel="stylesheet" href="/css/includes/alert.css">
+  <link rel="stylesheet" href="/css/config/class.css">
+  <link rel="stylesheet" href="/css/profile.css" />
 </head>
 
 <body>
@@ -22,12 +25,14 @@
     </div>
     <img class="header__logo" src="/img/logo/logo-low.png" alt="logo-png" />
     <div class="header__profile">
+
       <button class="logout__btn">
         <span>خروج</span>
         <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
       </button>
-      <span id="profile_img">SE</span>
-      <span id="profile_name">amirrha</span>
+
+      <span id="profile_img"></span>
+      <span id="profile_name"></span>
     </div>
   </header>
   <main>
@@ -82,6 +87,31 @@
       <!-- </div> -->
     </div>
   </div>
+
+  <div class="referPopupWrapper dis-none">
+    <input type="hidden">
+    <div class="referPopup">
+      <h3>
+        ارجاع تسک
+      </h3>
+      <button class="agentBtn">
+        مسئول انجام
+      </button>
+
+      <textarea name="report" id="reportTestarea"  placeholder="توضیحات"></textarea>
+
+      <div class="btn-wrapper">
+        <button class="cancelBtn">
+          انصراف
+        </button>
+        <button class="submitBtn">
+          ثبت
+        </button>
+      </div>
+    </div>
+  </div>
+
+<%- include("../includes/alert.ejs") %>
 
   <script src="https://kit.fontawesome.com/7a20fd358e.js" crossorigin="anonymous"></script>
   <script type="module" src="/js/controller.js"></script>
