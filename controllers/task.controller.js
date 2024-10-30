@@ -12,12 +12,11 @@ exports.getTasks = async (req, res) => {
       let tasks = await Task.find()
         .populate("agents", "_id username fullName department")
         .populate("creator", "_id username fullName department");
+        
 
       tasks = tasks
         .filter((task) => {
-          const flag = task.agents[task.agents.length - 1].id.includes(
-            req.user.id
-          );
+          const flag = task.agents[task.agents.length - 1].id == req.user.id;
           if (flag) return task;
         })
         .map((task) => {
@@ -28,9 +27,11 @@ exports.getTasks = async (req, res) => {
             status: task.status,
             deadline: new Date(task.deadline).getDay() - new Date().getDay(),
             creator: task.creator,
-            agents: task.agents[task.agents.length - 1],
+            agents: [task.agents[task.agents.length - 1]],
           };
         });
+
+        console.log(tasks);
 
       res.status(200).json({
         statusCode: 200,
@@ -149,6 +150,12 @@ exports.changeTaskStatus = async (req, res) => {
       return res
         .status(404)
         .json({ statusCode: 409, message: "status is not right" });
+    }
+
+    if (task.agents[task.agents - 1] != req.user.id) {
+      return res
+      .status(404)
+      .json({ statusCode: 403, message: "user dont have access" });
     }
 
     if (taskStatus == "false") {

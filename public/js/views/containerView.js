@@ -571,7 +571,7 @@ const generateTaskContainer = async function (status) {
 const generateSingleTask = function (status, task) {
   let i = 0;
   let markup;
-  // console.log(task.agents);
+  console.log(task);
 
   if (task.status === status) {
     markup = `
