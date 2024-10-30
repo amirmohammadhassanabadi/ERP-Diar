@@ -12,4 +12,8 @@
 
 // console.log("!false");
 
-console.log(new Date().getTime());
+// console.log(new Date().getTime());
+
+console.log(JSON.parse("false"));
+console.log(JSON.parse("true"));
+

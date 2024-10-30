@@ -146,10 +146,13 @@ exports.changeTaskStatus = async (req, res) => {
         .json({ statusCode: 404, message: "task not found" });
     }
 
+    taskStatus = JSON.parse(taskStatus);
+    console.log(taskStatus);
+
     if (task.status != taskStatus) {
       return res
         .status(404)
-        .json({ statusCode: 409, message: "status is not right" });
+        .json({ statusCode: 404, message: "status is not right" });
     }
     
     if (task.agents[task.agents.length - 1] != req.user.id) {
@@ -158,7 +161,7 @@ exports.changeTaskStatus = async (req, res) => {
       .json({ statusCode: 403, message: "user dont have access" });
     }
     
-    if (taskStatus == false) {
+    if (taskStatus === false) {
       task.status = true;
     } else {
       task.status = false;

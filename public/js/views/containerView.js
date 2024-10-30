@@ -556,7 +556,7 @@ const generateTaskContainer = async function (status) {
   return `
               <span class="hint-text">وظایف امروز (${tasksData.reduce(
                 (acc, task) => {
-                  if (task.status === status) acc++;
+                  if (task.status == status) acc++;
                   return acc;
                 },
                 0
@@ -571,7 +571,7 @@ const generateTaskContainer = async function (status) {
 const generateSingleTask = function (status, task) {
   let i = 0;
   let markup;
-  console.log(task);
+  // console.log(task);
 
   if (task.status === status) {
     markup = `
