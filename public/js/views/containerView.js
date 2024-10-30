@@ -38,35 +38,26 @@ document.querySelector(".container").addEventListener("click", async (e) => {
   }
 });
 
-// ${user.username[0]}${users.username[1]}
-// ${user.username}
-
 function renderReffrencableUsers(users) {
-  return users.forEach((user) => {
+  return users.map(user => {
     return `
-
-    `;
-  });
+    <div>
+      <div class="nameInput">
+        ${user.username}
+      </div>
+        <span id="profile_img">
+          ${user.username[0]}${user.username[1]}
+        </span>
+    </div>
+`;
+  })
 }
 
 referPopupWrapper.addEventListener("click", async (e) => {
   if (e.target.classList.contains("agentBtn")) {
     const data = await getAPI("/tasks/referenceableusers");
     if (data.statusCode == 200) {
-      document.getElementById("referUserPoppup").innerHTML = "";
-      for (let i = 0; i < data.data.length; i++) {
-        console.log(data.data[i].username);
-        document.getElementById("referUserPoppup").innerHTML += `
-            <div>
-              <div class="nameInput">
-                test
-              </div>
-                <span id="profile_img">
-                  te
-                </span>
-            </div>
-        `;
-      }
+      document.getElementById("referUserPoppup").innerHTML = renderReffrencableUsers(data.data).join("");
       document.getElementById("referUserPoppup").classList.toggle("dis-none");
       document.getElementById("referUserPoppup").classList.toggle("dis-block");
     } else if (data.statusCode == 403) {
