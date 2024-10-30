@@ -503,7 +503,8 @@ const handlePopupSubmit = function () {
     console.log(payload);
 
     // POST task to DB
-    await model.addNewTask(payload);
+    const response = await model.addNewTask(payload);
+    console.log(response);
 
     // NO ERROR HANDLING APPLIED HERE BUG
     // show success message (with a timer)
@@ -517,8 +518,7 @@ const handlePopupSubmit = function () {
     newDeadline.value = '';
     removePopupUsers();
 
-    // re-fetch & re-render tasks list
-    taskContainerEl.innerHTML = '';
+    // taskContainerEl.innerHTML = '';
 
     const taskNavEl = document.querySelector('.my__tasks');
     const activeNavEl = document.querySelector('.nav__item-active');
@@ -528,9 +528,8 @@ const handlePopupSubmit = function () {
     }
 
     // in addition to this we need to change nav to ongoing tasks BUG
-    // doesn't work yet BUG
     await view.renderHTML(
-      generateTaskContainer.bind(null, false),
+      generateSingleTask.bind(null, false),
       taskContainerEl
     );
 
