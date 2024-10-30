@@ -551,7 +551,12 @@ const handlePopupSubmit = function () {
 };
 
 const generateTaskContainer = async function (status) {
-  const tasksData = await model.giveTasks();
+  const tasksData = await model.getTasks();
+  if (!tasksData) {
+    console.error('taskData returns nothing');
+
+    return;
+  }
 
   return `
               <span class="hint-text">وظایف امروز (${tasksData.reduce(
