@@ -39,7 +39,7 @@ document.querySelector(".container").addEventListener("click", async (e) => {
 });
 
 function renderReffrencableUsers(users) {
-  return users.map(user => {
+  return users.map((user) => {
     return `
     <div>
       <div class="nameInput">
@@ -50,14 +50,19 @@ function renderReffrencableUsers(users) {
         </span>
     </div>
 `;
-  })
+  });
 }
 
 referPopupWrapper.addEventListener("click", async (e) => {
-  if (e.target.classList.contains("agentBtn")) {
+  if (e.target.classList.contains("referPopupWrapper")) {
+    e.target.children[1].children[2].value = "";
+    referPopupWrapper.classList.toggle("dis-none");
+    referPopupWrapper.classList.toggle("dis-flex");
+  } else if (e.target.classList.contains("agentBtn")) {
     const data = await getAPI("/tasks/referenceableusers");
     if (data.statusCode == 200) {
-      document.getElementById("referUserPoppup").innerHTML = renderReffrencableUsers(data.data).join("");
+      document.getElementById("referUserPoppup").innerHTML =
+        renderReffrencableUsers(data.data).join("");
       document.getElementById("referUserPoppup").classList.toggle("dis-none");
       document.getElementById("referUserPoppup").classList.toggle("dis-block");
     } else if (data.statusCode == 403) {
@@ -82,6 +87,13 @@ referPopupWrapper.addEventListener("click", async (e) => {
     referPopupWrapper.classList.toggle("dis-none");
     referPopupWrapper.classList.toggle("dis-flex");
     e.target.parentElement.previousElementSibling.value = "";
+  } else if (e.target.classList.contains("submitBtn")) {
+    const payload = {
+      taskId: referPopupWrapper.children[0].value,
+      newAgent: ""
+    }
+    const response = await postAPI("/tasks//changetaskagent", payload);
+  
   }
 });
 
