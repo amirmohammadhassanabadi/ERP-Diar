@@ -126,8 +126,10 @@ exports.addTask = async (req, res) => {
 
 exports.changeTaskStatus = async (req, res) => {
   try {
-    const { taskId, taskStatus } = req.body.status;
+    let { taskId, taskStatus } = req.body;
+    
     const task = await Task.findById(taskId);
+    
     if (!task) {
       return res
         .status(404)
