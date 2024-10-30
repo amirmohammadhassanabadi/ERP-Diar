@@ -117,7 +117,7 @@ exports.getLoggedInUserInfo = (req, res) => {
 exports.logOut = (req, res) => {
   try {
     res.clearCookie("access-token");
-    res.redirect("/");
+    res.redirect("/auth/login");
   } catch (error) {
     return res
       .status(500)
