@@ -44,7 +44,7 @@ const controlConfirmPopup = async function (taskId, confirm) {
   }
 
   containerView.renderConfirmPopup(0);
-  model.toggleTaskState(taskId);
+  await model.toggleTaskState(taskId);
   const taskStat = model.findTaskStat(taskId).status;
   await containerView.navChangeTaskReload(taskStat ? false : true);
 };
