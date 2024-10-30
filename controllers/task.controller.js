@@ -12,7 +12,6 @@ exports.getTasks = async (req, res) => {
       let tasks = await Task.find()
         .populate("agents", "_id username fullName department")
         .populate("creator", "_id username fullName department");
-        
 
       tasks = tasks
         .filter((task) => {
@@ -31,7 +30,7 @@ exports.getTasks = async (req, res) => {
           };
         });
 
-        console.log(tasks);
+      console.log(tasks);
 
       res.status(200).json({
         statusCode: 200,
@@ -51,16 +50,27 @@ exports.getReferredTasks = async (req, res) => {
   try {
     let tasks = await Task.find().populate("creator");
 
-    let temp = tasks.agents.pop();
-    temp = temp.includes(req.user.id);
-
-    tasks = tasks.filter((task) => {
-      return ((task.creator.id == req.user.id && task.creator.id != task.agents[task.agents.length - 1]) || temp);
+    let temp = tasks;
+    let result = [];
+    for (let i = 0; i < temp.length; i++) {
+      temp[i].agents.pop();
+      for (let j = 0; j < temp[i].agents.length; j++) {
+        if (temp[i].agents[j] == req.user.id) {
+          result.push(temp[i]);
+          break;
+        }
+      }
+    }
+    
+    tasks = tasks.forEach((task) => {
+      if (task.creator.id == req.user.id && task.creator.id != task.agents[task.agents.length - 1]) {
+        result.push(task)
+      }
     });
 
-    return res
-      .status(200)
-      .json({ statusCode: 200, data: neededTasksInfo(tasks) });
+    // return res
+    //   .status(200)
+    //   .json({ statusCode: 200, data: neededTasksInfo(tasks) });
   } catch (error) {
     res
       .status(500)
@@ -154,13 +164,13 @@ exports.changeTaskStatus = async (req, res) => {
         .status(404)
         .json({ statusCode: 404, message: "status is not right" });
     }
-    
+
     if (task.agents[task.agents.length - 1] != req.user.id) {
       return res
-      .status(403)
-      .json({ statusCode: 403, message: "user dont have access" });
+        .status(403)
+        .json({ statusCode: 403, message: "user dont have access" });
     }
-    
+
     if (taskStatus === false) {
       task.status = true;
     } else {
