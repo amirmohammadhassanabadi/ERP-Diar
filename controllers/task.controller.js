@@ -15,7 +15,9 @@ exports.getTasks = async (req, res) => {
 
       tasks = tasks
         .filter((task) => {
-          const flag = task.agents[0].id.includes(req.user.id);
+          const flag = task.agents[task.agents.length - 1].id.includes(
+            req.user.id
+          );
           if (flag) return task;
         })
         .map((task) => {
@@ -26,7 +28,7 @@ exports.getTasks = async (req, res) => {
             status: task.status,
             deadline: new Date(task.deadline).getDay() - new Date().getDay(),
             creator: task.creator,
-            agents: task.agents
+            agents: task.agents[task.agents.length - 1],
           };
         });
 
@@ -48,9 +50,11 @@ exports.getReferredTasks = async (req, res) => {
   try {
     let tasks = await Task.find().populate("creator");
 
-    
+    let temp = tasks.agents.pop();
+    temp = temp.includes(req.user.id);
+
     tasks = tasks.filter((task) => {
-      return task.creator.id == req.user.id && task.creator.id != task.agents[0];
+      return ((task.creator.id == req.user.id && task.creator.id != task.agents[task.agents.length - 1]) || temp);
     });
 
     return res
@@ -69,7 +73,7 @@ exports.getVerifiedAgents = async (req, res) => {
 
     if (!users)
       return res.status(401).json({ statusCode: 401, message: "unauthorized" });
-    
+
     users = users.filter((member) => {
       return member.level >= req.user.level;
     });
@@ -95,8 +99,8 @@ exports.addTask = async (req, res) => {
     deadline[2]
   );
 
-  deadline = new Date(`${deadline[0]}, ${deadline[1]}, ${deadline[2]}`)
-  
+  deadline = new Date(`${deadline[0]}, ${deadline[1]}, ${deadline[2]}`);
+
   let newTask = new Task({
     title: title,
     description: description,
@@ -110,26 +114,31 @@ exports.addTask = async (req, res) => {
   newTask = await newTask.save();
   const temp = await Task.findById(newTask._id).populate("agents");
   console.log(temp);
-  
-  res.status(200).json({ statusCode: 200, data: {
-    id: newTask.id,
-    title: newTask.title,
-    description: newTask.description,
-    agents: [{
-      username: temp.username,
-      fullName: temp.fullName,
-      department: temp.department
-    }],
-    deadline: new Date(deadline).getDay() - new Date().getDay()
-  } });
+
+  res.status(200).json({
+    statusCode: 200,
+    data: {
+      id: newTask.id,
+      title: newTask.title,
+      description: newTask.description,
+      agents: [
+        {
+          username: temp.username,
+          fullName: temp.fullName,
+          department: temp.department,
+        },
+      ],
+      deadline: new Date(deadline).getDay() - new Date().getDay(),
+    },
+  });
 };
 
 exports.changeTaskStatus = async (req, res) => {
   try {
     let { taskId, taskStatus } = req.body;
-    
+
     const task = await Task.findById(taskId);
-    
+
     if (!task) {
       return res
         .status(404)
@@ -167,16 +176,14 @@ exports.deleteTask = async (req, res) => {
     const task = await Task.findById(taskId);
     if (!task) {
       return res
-      .status(404)
-      .json({ statusCode: 404, message: `task is not found` });
+        .status(404)
+        .json({ statusCode: 404, message: `task is not found` });
     }
 
     if (task.creator != req.user.id) {
       if (!task) {
-        return res
-        .status(403)
-        .json({ statusCode: 403, message: `forbiden` });
-      } 
+        return res.status(403).json({ statusCode: 403, message: `forbiden` });
+      }
     }
     await Task.findByIdAndDelete(taskId);
     return res.status(200).json({ statusCode: 200, message: "task deleted" });
@@ -190,11 +197,13 @@ exports.deleteTask = async (req, res) => {
 exports.referTaskAgent = async (req, res) => {
   try {
     let { taskId, newAgent } = req.body;
-    
+
     if (req.user.level >= 4) {
-      return res.status(403).json({statusCode: 403, message: "user can refer task"});
+      return res
+        .status(403)
+        .json({ statusCode: 403, message: "user can refer task" });
     }
-    
+
     if (!taskId) {
       return res
         .status(417)
@@ -202,7 +211,9 @@ exports.referTaskAgent = async (req, res) => {
     }
 
     if (!newAgent) {
-      return res.status(417).json({ statusCode: 417, message: "agent is not valid" });
+      return res
+        .status(417)
+        .json({ statusCode: 417, message: "agent is not valid" });
     }
 
     let task = await Task.findById(taskId);
@@ -229,7 +240,7 @@ exports.referTaskAgent = async (req, res) => {
       targetedAgent.department == req.user.department &&
       newAgent.level > req.user.level
     ) {
-      task.agent = [newAgent];
+      task.agent.push(newAgent);
       await task.save();
       res
         .status(200)
@@ -241,22 +252,30 @@ exports.referTaskAgent = async (req, res) => {
 };
 
 exports.getReferenceableUsers = async (req, res) => {
-try {
-  const level = req.user.level;
-  const department = req.user.department;
+  try {
+    const level = req.user.level;
+    const department = req.user.department;
 
-  if (level >= 4) {
-    return res.status(403).json({statusCode: 403, message: "user can not refer task"});
+    if (level >= 4) {
+      return res
+        .status(403)
+        .json({ statusCode: 403, message: "user can not refer task" });
+    }
+
+    let users = await User.find({ department: department });
+    let filteredUsers = users.filter(
+      (user) => user.level >= level && user.id != req.user.id
+    );
+
+    return res
+      .status(200)
+      .json({ statusCode: 200, data: neddedUserInfo(filteredUsers) });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ statusCode: 500, message: "internal error - " });
   }
-
-  let users = await User.find({department: department});
-  let filteredUsers = users.filter(user => user.level >= level && user.id != req.user.id);
-
-  return res.status(200).json({statusCode: 200, data: neddedUserInfo(filteredUsers)});
-} catch (error) {
-  return res.status(500).json({statusCode: 500, message: "internal error - "});
-}
-}
+};
 
 exports.getSubordinateTask = async (req, res) => {
   try {
