@@ -22,20 +22,22 @@ const toggleTaskState = async taskId => {
   // find index for the task obj that matches task ID
   const targetTask = findTaskStat(taskId);
 
-  if (targetTask){
-    const response = await postAPI("/tasks/changestatus", {
+  if (targetTask) {
+    const response = await postAPI('/tasks/changestatus', {
       taskId: taskId,
       taskStatus: targetTask.status
-    })
-  
+    });
+
     if (response.statusCode != 200) {
+      console.error(response.statusCode);
       return;
     }
-    
+
     targetTask.status
       ? (targetTask.status = false)
       : (targetTask.status = true);
   }
+  console.log(taskData);
 };
 
 const addNewTask = async function (payload) {
