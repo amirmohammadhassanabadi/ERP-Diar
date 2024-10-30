@@ -503,8 +503,8 @@ const handlePopupSubmit = function () {
     console.log(payload);
 
     // POST task to DB
-    const response = await model.addNewTask(payload);
-    console.log(response);
+    const tskData = await model.addNewTask(payload);
+    console.log(tskData);
 
     // NO ERROR HANDLING APPLIED HERE BUG
     // show success message (with a timer)
@@ -520,18 +520,33 @@ const handlePopupSubmit = function () {
 
     // taskContainerEl.innerHTML = '';
 
-    const taskNavEl = document.querySelector('.my__tasks');
-    const activeNavEl = document.querySelector('.nav__item-active');
-    if (taskNavEl !== activeNavEl) {
-      taskNavEl.classList.add('nav__item-active');
-      activeNavEl.classList.remove('nav__item-active');
-    }
+    // const taskNavEl = document.querySelector('.my__tasks');
+    // const activeNavEl = document.querySelector('.nav__item-active');
+    // if (taskNavEl !== activeNavEl) {
+    //   taskNavEl.classList.add('nav__item-active');
+    //   activeNavEl.classList.remove('nav__item-active');
+    // }
 
     // in addition to this we need to change nav to ongoing tasks BUG
-    await view.renderHTML(
-      generateSingleTask.bind(null, false),
-      taskContainerEl
+    // await view.renderHTML(
+    //   generateSingleTask.bind(null, false, tskData),
+    //   taskContainerEl
+    // );
+    console.log(
+      document
+        .querySelector('.nav__item-active')
+        .classList.contains('my__tasks')
     );
+
+    if (
+      document
+        .querySelector('.nav__item-active')
+        .classList.contains('my__tasks')
+    )
+      taskContainerEl.insertAdjacentHTML(
+        'beforeend',
+        generateSingleTask(false, tskData)
+      );
 
     // =====================================
     // /tasks/gettasks (route to get tasks)

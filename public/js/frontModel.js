@@ -72,6 +72,7 @@ const addNewTask = async function (payload) {
   if (taskData) {
     taskData.push(postTask.data);
     console.log(taskData);
+    return postTask.data;
     // await getTasks();
     // console.log(taskData);
   } else {
