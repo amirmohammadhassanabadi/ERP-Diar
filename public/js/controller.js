@@ -52,7 +52,8 @@ const controlConfirmPopup = async function (taskEl, confirm) {
     taskEl.dataset.taskStatus,
     taskEl.dataset.taskId
   );
-  console.log(response);
+
+  if (!response) return;
 
   // 2. remove task el
   containerView.removeTaskEl(taskEl);

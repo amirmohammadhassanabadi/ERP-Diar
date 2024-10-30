@@ -168,7 +168,7 @@ exports.changeTaskStatus = async (req, res) => {
     }
 
     taskStatus = await task.save();
-    return res.status(200).json({ statusCode: 200, message: "status changed" });
+    return res.status(200).json({ statusCode: 200 });
   } catch (err) {
     return res.status(500).json({ statusCode: 500, message: "server error" });
   }
