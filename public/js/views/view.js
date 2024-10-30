@@ -7,4 +7,8 @@ const clear = function (el) {
   el.innerHTML = '';
 };
 
-export default { renderHTML, clear };
+const removeHTML = function (el) {
+  el.remove();
+};
+
+export default { renderHTML, clear, removeHTML };

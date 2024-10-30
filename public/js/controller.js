@@ -23,11 +23,11 @@ const controlMenuChange = async function (menu) {
   } else console.error('cannot find menu');
 };
 
-const controlCheckbox = async function (taskId) {
+const controlCheckbox = async function (taskEl) {
   containerView.renderConfirmPopup(1);
 
   // ev listener for overlay, submit, and cancel button
-  containerView.handleConfirmPopup(controlConfirmPopup.bind(null, taskId));
+  containerView.handleConfirmPopup(controlConfirmPopup.bind(null, taskEl));
 
   // if (!isConfirmed) return;
 
@@ -37,16 +37,29 @@ const controlCheckbox = async function (taskId) {
   // await containerView.navChangeTaskReload(taskStat ? false : true);
 };
 
-const controlConfirmPopup = async function (taskId, confirm) {
+const controlConfirmPopup = async function (taskEl, confirm) {
   if (!confirm) {
     containerView.renderConfirmPopup(0);
     return;
   }
 
   containerView.renderConfirmPopup(0);
-  await model.toggleTaskState(taskId);
-  const taskStat = model.findTaskStat(taskId).status;
-  await containerView.navChangeTaskReload(taskStat ? false : true);
+
+  // 1. post to DB
+  console.log(taskEl);
+
+  const response = await model.toggleTaskState(
+    taskEl.dataset.taskStatus,
+    taskEl.dataset.taskId
+  );
+  console.log(response);
+
+  // 2. remove task el
+  containerView.removeTaskEl(taskEl);
+  // view.removeHTML(taskEl);
+
+  // const taskStat = model.findTaskStat(taskId).status;
+  // await containerView.navChangeTaskReload(taskStat ? false : true);
 };
 
 const controlContainerNav = function (navItem) {

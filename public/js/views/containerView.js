@@ -428,8 +428,8 @@ const handleCheckbox = function (handler) {
     const checkbox = e.target.closest('.checkbox');
     if (!checkbox) return;
 
-    const targetTaskId = e.target.closest('.task').dataset.taskId;
-    await handler(targetTaskId);
+    const targetTask = e.target.closest('.task');
+    await handler(targetTask);
   });
 };
 
@@ -624,6 +624,8 @@ const handleDeleteTask = async function (taskId) {
   }
 };
 
+const removeTaskEl = taskEl => view.removeHTML(taskEl);
+
 export default {
   renderContainerDashboard,
   handleTaskAddBtn,
@@ -638,5 +640,6 @@ export default {
   handleOverlayLayer,
   handleReferralsBtn,
   handleConfirmPopup,
-  renderConfirmPopup
+  renderConfirmPopup,
+  removeTaskEl
 };
