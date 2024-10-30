@@ -380,14 +380,34 @@ const handleCheckbox = function (handler) {
   });
 };
 
-const addConfirmPopup = function () {
-  const overlayEl = document.querySelector('.confirm__overlay');
-  const popupConfirmEl = document.querySelector('.popup__confirm');
+// could use toggle instead of add/remove REMINDER
 
-  // remove hidden from overlay
+const renderConfirmPopup = function (show) {
+  const confOverlayEl = document.querySelector('.confirm__overlay');
+
+  // toggle hidden
+  show
+    ? confOverlayEl.classList.remove('hidden')
+    : confOverlayEl.classList.add('hidden');
 };
 
-const handleConfirmPopup = function (handler) {};
+const handleConfirmPopup = function (handler) {
+  const popupConfirmEl = document.querySelector('.popup__confirm__down');
+  const confOverlayEl = document.querySelector('.confirm__overlay');
+
+  popupConfirmEl.addEventListener('click', function (e) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    if (btn.classList.contains('confirm__btn')) handler(1);
+    else if (btn.classList.contains('noconfirm__btn')) handler(0);
+  });
+
+  confOverlayEl.addEventListener('click', e => {
+    const clickedEl = e.target;
+    if (!(clickedEl === confOverlayEl)) return;
+    handler(0);
+  });
+};
 
 // popup event handlers
 // close and submit share parentEl => one ev listener for each REFACTOR
@@ -563,5 +583,7 @@ export default {
   handleCheckbox,
   renderContainerTasks,
   handleOverlayLayer,
-  handleReferralsBtn
+  handleReferralsBtn,
+  handleConfirmPopup,
+  renderConfirmPopup
 };
