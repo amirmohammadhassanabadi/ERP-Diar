@@ -145,7 +145,7 @@ exports.changeTaskStatus = async (req, res) => {
     if (taskStatus == "false") {
       task.status = true;
     } else {
-      task.status = true;
+      task.status = false;
     }
 
     taskStatus = await task.save();

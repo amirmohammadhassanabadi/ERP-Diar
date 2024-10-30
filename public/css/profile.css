@@ -4,7 +4,7 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 6vh;
+  height: 7%;
   padding: 0.5rem 0.5%;
   box-shadow: -6px 0 15px rgba(0, 0, 0, 0.8);
   position: relative;
@@ -76,6 +76,7 @@ main {
   display: flex;
   flex-grow: 1;
   width: 100%;
+  height: 93%;
 }
 
 /* SIDE MENU */
@@ -133,7 +134,6 @@ main {
 
 /* CONTAINER HEADER*/
 .container__header {
-  height: 10vh;
   display: flex;
   flex-direction: column;
   background-color: var(--color-grad-1);
@@ -225,7 +225,7 @@ main {
 
 .task__container {
   overflow-y: auto;
-  height: 75vh;
+  height: 75%;
 }
 
 .task:nth-child(1) {

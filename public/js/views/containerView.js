@@ -210,11 +210,13 @@ const navChangeAsignedTasks = async function () {
   view.clear(taskContainer);
 
   const tempAssignedToMarkup = () => `
-                <div class="c_body__head" style="font-size: 150%; margin-right: 40%; margin-top: 20%;">
-          این بخش در حال توسعه است...
-        </div>
         <div>
-          test
+          <div class="c_body__head" style="font-size: 150%; margin-right: 40%; margin-top: 20%;">
+            این بخش در حال توسعه است...
+          </div>
+          <div>
+            test
+          </div>
         </div>
   `;
   view.renderHTML(tempAssignedToMarkup, taskContainer);
