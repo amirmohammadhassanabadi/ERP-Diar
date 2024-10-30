@@ -542,11 +542,13 @@ const handlePopupSubmit = function () {
       document
         .querySelector('.nav__item-active')
         .classList.contains('my__tasks')
-    )
+    ) {
       taskContainerEl.insertAdjacentHTML(
         'beforeend',
         generateSingleTask(false, tskData)
       );
+      incrementTaskNum();
+    }
 
     // =====================================
     // /tasks/gettasks (route to get tasks)
@@ -564,6 +566,13 @@ const handlePopupSubmit = function () {
   });
 };
 
+const incrementTaskNum = function () {
+  const taskHint = document.querySelector('.hint-text');
+  taskHint.children[0].textContent =
+    Number(taskHint.children[0].textContent) + 1;
+  // taskHint.children[0].textContent = Number(taskHint.children[0].textContent)++;
+};
+
 const generateTaskContainer = async function (status) {
   const tasksData = await model.getTasks();
   if (!tasksData) {
@@ -573,13 +582,13 @@ const generateTaskContainer = async function (status) {
   }
 
   return `
-              <span class="hint-text">وظایف امروز (${tasksData.reduce(
+              <span class="hint-text">وظایف امروز (<span>${tasksData.reduce(
                 (acc, task) => {
                   if (task.status == status) acc++;
                   return acc;
                 },
                 0
-              )} مورد)</span>
+              )}</span> مورد)</span>
             <ul class="task__list">
             ${tasksData.map(generateSingleTask.bind(null, status)).join('')}
           </ul>
