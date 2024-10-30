@@ -18,14 +18,24 @@ const giveTasks = () => taskData;
 
 const findTaskStat = taskId => taskData.find(tsk => tsk.id === taskId);
 
-const toggleTaskState = taskId => {
+const toggleTaskState = async taskId => {
   // find index for the task obj that matches task ID
   const targetTask = findTaskStat(taskId);
 
-  if (targetTask)
+  if (targetTask){
+    const response = await postAPI("/tasks/changestatus", {
+      taskId: taskId,
+      taskStatus: targetTask.status
+    })
+  
+    if (response.statusCode != 200) {
+      return;
+    }
+    
     targetTask.status
       ? (targetTask.status = false)
       : (targetTask.status = true);
+  }
 };
 
 const addNewTask = async function (payload) {
