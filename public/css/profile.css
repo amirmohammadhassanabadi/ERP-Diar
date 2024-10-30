@@ -4,6 +4,7 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: 6vh;
   padding: 0.5rem 0.5%;
   box-shadow: -6px 0 15px rgba(0, 0, 0, 0.8);
   position: relative;
@@ -132,6 +133,7 @@ main {
 
 /* CONTAINER HEADER*/
 .container__header {
+  height: 10vh;
   display: flex;
   flex-direction: column;
   background-color: var(--color-grad-1);
@@ -178,6 +180,7 @@ main {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  height: 5vh;
 }
 
 .task__btn {
@@ -218,6 +221,11 @@ main {
 .hint-text {
   color: var(--color-gray-dark-1);
   margin: 2rem;
+}
+
+.task__container {
+  overflow-y: auto;
+  height: 75vh;
 }
 
 .task:nth-child(1) {
@@ -327,6 +335,57 @@ input[type='checkbox'] {
   /* border: 20px solid var(--color-grad-3); */
 }
 
+/* give ID for each overlay and add overlay class to both REFACTOR */
+
+.confirm__overlay {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup__confirm__up p {
+  text-align: center;
+  margin-bottom: 6rem;
+}
+
+.noconfirm__btn,
+.confirm__btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.noconfirm__btn {
+  padding-right: 2rem;
+  padding-left: 2rem;
+  background-color: var(--color-white);
+  color: var(--color-grad-3);
+  font-weight: bolder;
+}
+
+.noconfirm__btn:hover {
+  background-color: var(--color-gray-light-2);
+}
+
+.confirm__btn {
+  padding-right: 2.5rem;
+  padding-left: 2.5rem;
+  background-color: var(--color-grad-2);
+  color: var(--color-white);
+  font-weight: bolder;
+}
+
+.confirm__btn:hover {
+  background-color: var(--color-grad-3);
+}
 .overlay {
   position: fixed;
   width: 100%;
@@ -525,7 +584,7 @@ input[type='checkbox'] {
   background-color: var(--color-grad-3);
 }
 
-.referPopupWrapper{
+.referPopupWrapper {
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.7);
@@ -537,7 +596,7 @@ input[type='checkbox'] {
   z-index: 3;
 }
 
-.referPopupWrapper > .referPopup{
+.referPopupWrapper > .referPopup {
   width: 40%;
   background-color: var(--white);
   padding: 1rem;
@@ -551,8 +610,10 @@ input[type='checkbox'] {
   color: var(--gold);
 }
 
+
 .referPopupWrapper > .referPopup > button.agentBtn{
   width: calc(50% - 2rem);
+
   padding: 1rem;
   background-color: var(--navy);
   color: var(--white);
@@ -561,42 +622,42 @@ input[type='checkbox'] {
   position: relative;
 }
 
-.referPopupWrapper > .referPopup > textarea{
+.referPopupWrapper > .referPopup > textarea {
   width: 100%;
   resize: none;
   height: 100px;
-  padding: .5rem;
+  padding: 0.5rem;
   background-color: rgb(241, 241, 241);
   border: 1px solid var(--gold);
   margin-bottom: 1rem;
 }
 
-.referPopupWrapper > .referPopup > textarea:focus{
+.referPopupWrapper > .referPopup > textarea:focus {
   outline: 0;
   border: 1px solid var(--navy);
 }
 
-.referPopupWrapper > .referPopup > .btn-wrapper{
+.referPopupWrapper > .referPopup > .btn-wrapper {
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
 .referPopupWrapper > .referPopup > .btn-wrapper > button {
-  padding: .7rem;
+  padding: 0.7rem;
   border: 0;
   width: 15%;
   cursor: pointer;
   color: var(--white);
 }
 
-.referPopupWrapper > .referPopup > .btn-wrapper > button.cancelBtn{
+.referPopupWrapper > .referPopup > .btn-wrapper > button.cancelBtn {
   background-color: var(--color-red);
 }
 
-.referPopupWrapper > .referPopup > .btn-wrapper > button.submitBtn{
+.referPopupWrapper > .referPopup > .btn-wrapper > button.submitBtn {
   background-color: var(--navy);
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 #referUserPoppup{

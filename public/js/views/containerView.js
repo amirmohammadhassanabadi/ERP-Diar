@@ -19,24 +19,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("profile_name").innerText = userInfo.username;
 });
 
-const referPopupWrapper = document.querySelector(".referPopupWrapper");
-document.querySelector(".container").addEventListener("click", async (e) => {
-  if (e.target.classList.contains("deleteTaskBtn")) {
+const referPopupWrapper = document.querySelector('.referPopupWrapper');
+document.querySelector('.container').addEventListener('click', async e => {
+  if (e.target.classList.contains('deleteTaskBtn')) {
+
     const response = await deleteAPI(
       `/tasks/deletetask/${e.target.parentElement.parentElement.dataset.taskId}`
     );
     if (response.statusCode == 200) {
       e.target.parentElement.parentElement.remove();
     }
-  } else if (e.target.classList.contains("referBtn")) {
+
+  } else if (e.target.classList.contains('referBtn')) {
     referPopupWrapper.children[0].value =
       e.target.parentElement.parentElement.dataset.taskId;
-    referPopupWrapper.classList.toggle("dis-none");
-    referPopupWrapper.classList.toggle("dis-flex");
+    referPopupWrapper.classList.toggle('dis-none');
+    referPopupWrapper.classList.toggle('dis-flex');
+
     // const response = await getAPI("/tasks/referenceableusers");
     // console.log(response);
   }
 });
+
 
 function renderReffrencableUsers(users) {
   return users.map((user) => {
@@ -77,6 +81,7 @@ referPopupWrapper.addEventListener("click", async (e) => {
     } else if (data.statusCode == 500) {
       popupHandler(
         403,
+
         document.querySelector(".alert-wrapper"),
         document.querySelector(".main-alert"),
         document.querySelector(".main-alert > h3"),
@@ -259,9 +264,11 @@ const handleOverlayLayer = function () {
 };
 
 const handleReferralsBtn = function () {
-  const popupContainer = document.querySelector(".popup__container");
-  popupContainer.addEventListener("click", function (e) {
-    const agentBtn = e.target.closest(".agent-btn");
+
+  const popupContainer = document.querySelector('.options__list');
+  popupContainer.addEventListener('click', function (e) {
+    const agentBtn = e.target.closest('.agent-btn');
+
     if (!agentBtn) return;
 
     // Fetch Agents Data
@@ -409,6 +416,35 @@ const handleCheckbox = function (handler) {
   });
 };
 
+// could use toggle instead of add/remove REMINDER
+
+const renderConfirmPopup = function (show) {
+  const confOverlayEl = document.querySelector('.confirm__overlay');
+
+  // toggle hidden
+  show
+    ? confOverlayEl.classList.remove('hidden')
+    : confOverlayEl.classList.add('hidden');
+};
+
+const handleConfirmPopup = function (handler) {
+  const popupConfirmEl = document.querySelector('.popup__confirm__down');
+  const confOverlayEl = document.querySelector('.confirm__overlay');
+
+  popupConfirmEl.addEventListener('click', function (e) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    if (btn.classList.contains('confirm__btn')) handler(1);
+    else if (btn.classList.contains('noconfirm__btn')) handler(0);
+  });
+
+  confOverlayEl.addEventListener('click', e => {
+    const clickedEl = e.target;
+    if (!(clickedEl === confOverlayEl)) return;
+    handler(0);
+  });
+};
+
 // popup event handlers
 // close and submit share parentEl => one ev listener for each REFACTOR
 
@@ -467,6 +503,13 @@ const handlePopupSubmit = function () {
     // re-fetch & re-render tasks list
     taskContainerEl.innerHTML = "";
 
+    const taskNavEl = document.querySelector('.my__tasks');
+    const activeNavEl = document.querySelector('.nav__item-active');
+    if (taskNavEl !== activeNavEl) {
+      taskNavEl.classList.add('nav__item-active');
+      activeNavEl.classList.remove('nav__item-active');
+    }
+
     // in addition to this we need to change nav to ongoing tasks BUG
     // doesn't work yet BUG
     await view.renderHTML(
@@ -492,7 +535,6 @@ const handlePopupSubmit = function () {
 
 const generateTaskContainer = async function (status) {
   const tasksData = await model.giveTasks();
-  console.log(tasksData);
 
   return `
               <span class="hint-text">وظایف امروز (${tasksData.reduce(
@@ -512,6 +554,7 @@ const generateTaskContainer = async function (status) {
 const generateSingleTask = function (status, task) {
   let i = 0;
   let markup;
+  // console.log(task.agents);
 
   if (task.status === status) {
     markup = `
@@ -536,17 +579,23 @@ const generateSingleTask = function (status, task) {
           })
           .join("")}
       </div>
-      <span class="deadline">${task.deadline} روز مانده</span>
+      <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
           <button class="referBtn">ارجاع</button>
           <button class="fa fa-times deleteTaskBtn"></button>
     </div>
-  </li>
-`;
+    </li>
+    `;
   }
 
   i = 0;
 
   return markup;
+};
+
+const generateDeadlineTxt = days => {
+  if (days > 0) return `${days} روز مانده`;
+  else if (days === 0) return `<strong>امروز</strong>`;
+  else return `${-days} روز گذشته`;
 };
 
 const handleDeleteTask = async function (taskId) {
@@ -571,4 +620,7 @@ export default {
   renderContainerTasks,
   handleOverlayLayer,
   handleReferralsBtn,
+  handleConfirmPopup,
+  renderConfirmPopup
+
 };
