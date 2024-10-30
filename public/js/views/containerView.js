@@ -46,6 +46,7 @@ function renderReffrencableUsers(users) {
   return users.map((user) => {
     return `
     <div>
+    <input type="hidden" value="${user.id}" />
       <div class="nameInput">
         ${user.username}
       </div>

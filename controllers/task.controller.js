@@ -47,8 +47,10 @@ exports.getTasks = async (req, res) => {
 exports.getReferredTasks = async (req, res) => {
   try {
     let tasks = await Task.find().populate("creator");
+
+    
     tasks = tasks.filter((task) => {
-      return task.creator[0] == req.user.id;
+      return task.creator.id == req.user.id && task.creator.id != task.agents[0];
     });
 
     return res
