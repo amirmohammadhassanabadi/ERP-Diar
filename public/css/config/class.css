@@ -5,3 +5,7 @@
 .dis-flex{
     display: flex;
 }
+
+.dis-block{
+    display: block;
+}

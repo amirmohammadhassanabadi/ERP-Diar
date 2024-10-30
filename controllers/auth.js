@@ -35,10 +35,6 @@ exports.postLogin = async (req, res) => {
   }
 };
 
-exports.renderProfilePage = (req, res) => {
-  res.render('panel/profile');
-};
-
 exports.renderSignupPage = async (req, res) => {
   const { level, department } = req.user;
   const authLevel = [];
@@ -110,6 +106,7 @@ exports.getLoggedInUserInfo = (req, res) => {
         department: req.user.department
       }
     });
+
   } catch (error) {
     return res
       .status(500)
@@ -119,10 +116,9 @@ exports.getLoggedInUserInfo = (req, res) => {
 
 exports.logOut = (req, res) => {
   try {
-    delete req.user;
-    delete access - token['access-token'];
-    res.redirect('/auth/login');
-    console.log(req.cookies);
+
+    res.clearCookie("access-token");
+    res.redirect("/auth/login");
   } catch (error) {
     return res
       .status(500)
