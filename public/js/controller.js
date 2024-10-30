@@ -13,7 +13,7 @@ const controlMenuChange = async function (menu) {
 
   // 3. load menu according to function input
   if (menu.classList.contains('menu__dashboard'))
-    containerView.renderContainerDashboard();
+    await containerView.renderContainerDashboard();
   else if (menu.classList.contains('menu__tasks')) {
     await model.getTasks();
     await containerView.renderContainerTasks();

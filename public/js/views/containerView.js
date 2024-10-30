@@ -117,12 +117,12 @@ const renderContainerTasks = async function () {
   await view.renderHTML(generateMarkupTasks, parentEl);
 };
 
-const renderContainerDashboard = function () {
+const renderContainerDashboard = async function () {
   // clear container
   view.clear(parentEl);
 
   // render task container
-  view.renderHTML(generateMarkupDashboard, parentEl);
+  await view.renderHTML(generateMarkupDashboard, parentEl);
 
   // initialize dashboard event handlers REMINDER
 };
@@ -210,9 +210,11 @@ const navChangeAsignedTasks = async function () {
   view.clear(taskContainer);
 
   const tempAssignedToMarkup = () => `
-        <div class="container__body">
-        <div class="c_body__head" style="font-size: 150%; margin-right: 40%; margin-top: 20%;">
+                <div class="c_body__head" style="font-size: 150%; margin-right: 40%; margin-top: 20%;">
           این بخش در حال توسعه است...
+        </div>
+        <div>
+          test
         </div>
   `;
   view.renderHTML(tempAssignedToMarkup, taskContainer);
