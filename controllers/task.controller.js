@@ -49,22 +49,12 @@ exports.getTasks = async (req, res) => {
 exports.getReferredTasks = async (req, res) => {
   try {
     let tasks = await Task.find().populate("creator");
-
-    let temp = tasks;
-    let result = [];
-    for (let i = 0; i < temp.length; i++) {
-      temp[i].agents.pop();
-      for (let j = 0; j < temp[i].agents.length; j++) {
-        if (temp[i].agents[j] == req.user.id) {
-          result.push(temp[i]);
-          break;
-        }
-      }
-    }
     
     tasks = tasks.forEach((task) => {
-      if (task.creator.id == req.user.id && task.creator.id != task.agents[task.agents.length - 1]) {
-        result.push(task)
+      let taskAgents = task.agents;
+      taskAgents.pop();
+      if (task.creator.id == req.user.id && task.creator.id != task.agents[task.agents.length - 1] || taskAgents.includes(req.user.id)) {
+        return task;
       }
     });
 
