@@ -49,15 +49,18 @@ exports.getTasks = async (req, res) => {
 exports.getReferredTasks = async (req, res) => {
   try {
     let tasks = await Task.find().populate("creator");
-    
+
     tasks = tasks.filter((task, index) => {
-      if ((task.creator.id == req.user.id && task.creator.id != task.agents[task.agents.length - 1]) || task.agents.slice(0, task.agents.length - 1).includes(req.user.id)) {
+      if (
+        (task.creator.id == req.user.id &&
+          task.creator.id != task.agents[task.agents.length - 1]) ||
+        task.agents.slice(0, task.agents.length - 1).includes(req.user.id)
+      ) {
         console.log(index);
         return task;
       }
     });
     console.log(tasks);
-    
 
     return res
       .status(200)
@@ -207,12 +210,18 @@ exports.deleteTask = async (req, res) => {
 
 exports.referTaskAgent = async (req, res) => {
   try {
-    let { taskId, newAgent } = req.body;
+    let { taskId, newAgent, report } = req.body;
 
     if (req.user.level >= 4) {
       return res
         .status(403)
         .json({ statusCode: 403, message: "user can refer task" });
+    }
+
+    if (!report) {
+      return res
+        .status(417)
+        .json({ statusCode: 417, message: "report should not be empty" });
     }
 
     if (!taskId) {
@@ -252,13 +261,19 @@ exports.referTaskAgent = async (req, res) => {
       newAgent.level > req.user.level
     ) {
       task.agent.push(newAgent);
+      task.reports.push({
+        description: report,
+        writer: req.user.id,
+      });
       await task.save();
       res
         .status(200)
         .json({ statusCode: 200, message: "task referred to agent" });
     }
   } catch (error) {
-    return res.status(500).json({ statusCode: 500, message: `internal error - ${error.message}` });
+    return res
+      .status(500)
+      .json({ statusCode: 500, message: `internal error - ${error.message}` });
   }
 };
 

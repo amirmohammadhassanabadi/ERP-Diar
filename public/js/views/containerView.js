@@ -95,7 +95,7 @@ referPopupWrapper.addEventListener('click', async e => {
       taskId: referPopupWrapper.children[0].value,
       newAgent: ''
     };
-    const response = await postAPI('/tasks//changetaskagent', payload);
+    const response = await postAPI('/tasks/changetaskagent', payload);
   }
 });
 
