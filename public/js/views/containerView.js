@@ -311,11 +311,6 @@ const AssignedToMarkup = tasks => {
       }</div>
   </div>
   <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
-  ${
-    task.deleteOption
-      ? `<button class="fa fa-times deleteTaskBtn"></button>`
-      : ``
-  }
   </div>
  </li>
     </div>
@@ -743,7 +738,6 @@ const generateSingleTask = function (status, task) {
       </div>
       <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
           <button class="referBtn">ارجاع</button>
-          <button class="fa fa-times deleteTaskBtn"></button>
     </div>
     </li>
     `;
