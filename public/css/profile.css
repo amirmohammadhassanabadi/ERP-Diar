@@ -138,7 +138,7 @@ main {
   flex-direction: column;
   background-color: var(--color-grad-1);
   color: var(--color-white);
-  height: 15%;
+  /* height: 15%; */
 }
 
 .c_header-text {

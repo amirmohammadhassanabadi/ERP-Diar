@@ -288,30 +288,36 @@ const navChangeAsignedTasks = async function () {
 
   view.clear(taskContainer);
 
-  const tempAssignedToMarkup = (task) => {
-    return data.data.map(task => {
+  view.renderHTML(AssignedToMarkup.bind(null, data.data), taskContainer);
+};
+
+const AssignedToMarkup = tasks => {
+  return tasks
+    .map(task => {
       return `
-      <div class="creator-container">
-  <li class="task" data-task-status="${task.status}" data-task-id="${
-    task.id
-  }">
+    <div class="creator-container">
+  <li class="task" data-task-status="${task.status}" data-task-id="${task.id}">
   <div class="task__right">
-    <span class="task-text">${task.title}</span>
+  <span class="task-text">${task.title}</span>
   </div>
   <div class="task__left">
-    <div class="assignedto">
-      <div class="initial">${task.agents[task.agents.length - 1].username[0]}${task.agents[task.agents.length - 1].username[1]}</div>
-    </div>
-    <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
-    ${ task.deleteOption ? `<button class="fa fa-times deleteTaskBtn"></button>` : ``}
+  <div class="assignedto">
+    <div class="initial">${task.agents[task.agents.length - 1].username[0]}${
+        task.agents[task.agents.length - 1].username[1]
+      }</div>
   </div>
-  </li>
-      </div>
-`
-    }).join("");
+  <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
+  ${
+    task.deleteOption
+      ? `<button class="fa fa-times deleteTaskBtn"></button>`
+      : ``
   }
-  
-  view.renderHTML(tempAssignedToMarkup, taskContainer);
+  </div>
+ </li>
+    </div>
+ `;
+    })
+    .join('');
 };
 
 const switchActiveNav = function (navItem) {
@@ -690,6 +696,7 @@ const generateTaskContainer = async function (status) {
           </ul>
 
   `;
+  // on taskData.map, automatically passes task input
 };
 
 const generateSingleTask = function (status, task) {
