@@ -637,17 +637,29 @@ const handlePopupSubmit = function () {
         .querySelector('.nav__item-active')
         .classList.contains('my__tasks')
     );
+    const isAssignedToSelf = tskData.creator === newAgents.dataset.userId;
 
     if (
       document
         .querySelector('.nav__item-active')
-        .classList.contains('my__tasks')
+        .classList.contains('my__tasks') &&
+      isAssignedToSelf
     ) {
       taskContainerEl.insertAdjacentHTML(
         'beforeend',
         generateSingleTask(false, tskData)
       );
       incrementTaskNum(1);
+    } else if (
+      document
+        .querySelector('.nav__item-active')
+        .classList.contains('assigned__tasks') &&
+      !isAssignedToSelf
+    ) {
+      taskContainerEl.insertAdjacentHTML(
+        'beforeend',
+        AssignedToMarkup([tskData])
+      );
     }
 
     // =====================================
