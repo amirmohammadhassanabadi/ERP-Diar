@@ -104,8 +104,7 @@ referPopupWrapper.addEventListener('click', async e => {
   } else if (e.target.classList.contains('submitBtn')) {
     const userId = document.querySelector('.user__name').dataset.userId;
 
-    console.log("clicked");
-    
+    console.log('clicked');
 
     const payload = {
       taskId: referPopupWrapper.children[0].value,
@@ -308,7 +307,9 @@ const AssignedToMarkup = tasks => {
   </div>
   <div class="task__left">
   <div class="assignedto">
-    <div class="initial">${task.agents[task.agents.length - 1].username[0]}${
+    <div class="initial" data-full-name="${
+      task.agents[task.agents.length - 1].fullName
+    }" >${task.agents[task.agents.length - 1].username[0]}${
         task.agents[task.agents.length - 1].username[1]
       }</div>
   </div>
@@ -740,7 +741,9 @@ const generateSingleTask = function (status, task) {
           .map(person => {
             i++;
 
-            return `<div class="initial ${i == 1 ? '' : `initial-${i}`}">${
+            return `<div class="initial  ${
+              i == 1 ? '' : `initial-${i}`
+            }" data-full-name="${person.fullName}">${
               person.username[0] + person.username[1]
             }</div>`;
           })
@@ -748,7 +751,6 @@ const generateSingleTask = function (status, task) {
       </div>
       <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
           ${status ? `` : `<button class="referBtn">ارجاع</button>`}
-          ${status ? `` : `<button class="fa fa-times deleteTaskBtn"></button>`}
     </div>
     </li>
     `;
