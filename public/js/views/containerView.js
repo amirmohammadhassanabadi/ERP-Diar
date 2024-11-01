@@ -136,21 +136,48 @@ const handleReferredToUser = function () {
     );
 
     // hide user list
-    userListPopup.classList.toggle('dis-none');
-    userListPopup.classList.toggle('dis-block');
+    userListPopup.classList.add('dis-none');
+    userListPopup.classList.remove('dis-block');
 
     // hide agents btn
-    agentBtn.classList.toggle('hidden');
+    agentBtn.classList.add('dis-none');
+    agentBtn.classList.remove('dis-block');
 
     // add border to user display
     userDisplayEl.classList.add('user__border');
-    userDisplayEl.style.margin = '1rem 20rem';
+    userDisplayEl.style.width = 'calc(50% - 2rem)';
+    console.log(userDisplayEl.style);
 
     if (1) handlereferToCloseBtn();
   });
 };
 
-const handlereferToCloseBtn = function () {};
+const handlereferToCloseBtn = function () {
+  const userDisplayEl = document.querySelectorAll('.user__display')[1];
+  const closeBtn = document.querySelectorAll('.user__close__btn')[0];
+  console.log(closeBtn);
+  console.log(userDisplayEl);
+
+  userDisplayEl.addEventListener('mouseenter', function () {
+    closeBtn.classList.remove('hidden');
+  });
+
+  userDisplayEl.addEventListener('mouseleave', function () {
+    closeBtn.classList.add('hidden');
+  });
+
+  closeBtn.addEventListener('click', removeReferToUser);
+};
+
+const removeReferToUser = function () {
+  const userDisplayEl = document.querySelectorAll('.user__display')[1];
+  const agentBtn = document.querySelector('.agentBtn');
+
+  userDisplayEl.classList.remove('user__border');
+  view.clear(userDisplayEl);
+  agentBtn.classList.remove('dis-none');
+  agentBtn.classList.add('dis-block');
+};
 
 document.querySelector('.logout__btn').addEventListener('click', async () => {
   await getAPI('/auth/logout');
