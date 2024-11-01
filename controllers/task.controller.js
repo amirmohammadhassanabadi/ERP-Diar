@@ -234,10 +234,10 @@ exports.referTaskAgent = async (req, res) => {
         .json({ statusCode: 404, message: "task not found" });
     }
 
-    if (task.agents[0] != req.user.id) {
+    if (task.agents[task.agents.length - 1] != req.user.id) {
       return res
         .status(403)
-        .json({ statusCode: 404, message: "task is not related to this user" });
+        .json({ statusCode: 403, message: "task is not related to this user" });
     }
 
     const targetedAgent = await User.findById(newAgent);
@@ -258,7 +258,7 @@ exports.referTaskAgent = async (req, res) => {
         .json({ statusCode: 200, message: "task referred to agent" });
     }
   } catch (error) {
-    return res.status(500).json({ statusCode: 404, message: "task not found" });
+    return res.status(500).json({ statusCode: 500, message: `internal error - ${error.message}` });
   }
 };
 
