@@ -104,8 +104,7 @@ referPopupWrapper.addEventListener('click', async e => {
   } else if (e.target.classList.contains('submitBtn')) {
     const userId = document.querySelector('.user__name').dataset.userId;
 
-    console.log("clicked");
-    
+    console.log('clicked');
 
     const payload = {
       taskId: referPopupWrapper.children[0].value,
@@ -748,7 +747,6 @@ const generateSingleTask = function (status, task) {
       </div>
       <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
           ${status ? `` : `<button class="referBtn">ارجاع</button>`}
-          ${status ? `` : `<button class="fa fa-times deleteTaskBtn"></button>`}
     </div>
     </li>
     `;
