@@ -24,13 +24,14 @@ exports.getTasks = async (req, res) => {
             title: task.title,
             description: task.description,
             status: task.status,
-            deadline: (new Date(tasks[0].deadline).getTime() - new Date(new Date().toDateString()).getTime())  / (1000 * 60 * 60 * 24),
+            deadline:
+              (new Date(tasks[0].deadline).getTime() -
+                new Date(new Date().toDateString()).getTime()) /
+              (1000 * 60 * 60 * 24),
             creator: task.creator,
             agents: [task.agents[task.agents.length - 1]],
           };
         });
-
-      console.log(tasks);
 
       res.status(200).json({
         statusCode: 200,
@@ -51,8 +52,8 @@ exports.getReferredTasks = async (req, res) => {
     let tasks = await Task.find().populate("creator").populate("agents");
 
     tasks = tasks.filter((task, index) => {
-      let agentsId = task.agents.map(agent => agent.id)
-      
+      let agentsId = task.agents.map((agent) => agent.id);
+
       if (
         (task.creator.id == req.user.id &&
           task.creator.id != task.agents[task.agents.length - 1].id) ||
@@ -62,34 +63,36 @@ exports.getReferredTasks = async (req, res) => {
       }
     });
 
-    return res
-      .status(200)
-      .json({ 
-        statusCode: 200, 
-        data: tasks.map(task => {
-          return {
-            id:  task._id,
-            title: task.title,
-            description: task.description,
-            status: task.status,
-            deadline: (new Date(tasks[0].deadline).getTime() - new Date(new Date().toDateString()).getTime())  / (1000 * 60 * 60 * 24),
-            creator: {
-              id: task.creator.id,
-              fullName: task.creator.fullName,
-              username: task.creator.username,
-              department: task.creator.department
+    return res.status(200).json({
+      statusCode: 200,
+      data: tasks.map((task) => {
+        return {
+          id: task._id,
+          title: task.title,
+          description: task.description,
+          status: task.status,
+          deadline:
+            (new Date(tasks[0].deadline).getTime() -
+              new Date(new Date().toDateString()).getTime()) /
+            (1000 * 60 * 60 * 24),
+          creator: {
+            id: task.creator.id,
+            fullName: task.creator.fullName,
+            username: task.creator.username,
+            department: task.creator.department,
+          },
+          agents: [
+            {
+              id: task.agents[task.agents.length - 1].id,
+              fullName: task.agents[task.agents.length - 1].fullName,
+              username: task.agents[task.agents.length - 1].username,
+              department: task.agents[task.agents.length - 1].department,
             },
-            agents: [
-              {
-                id: task.agents[task.agents.length - 1].id,
-                fullName: task.agents[task.agents.length - 1].fullName,
-                username: task.agents[task.agents.length - 1].username,
-                department: task.agents[task.agents.length - 1].department
-              }
-            ],
-            deleteOption: task.creator.id == req.user.id ? true : false
-          }
-        })  });
+          ],
+          deleteOption: task.creator.id == req.user.id ? true : false,
+        };
+      }),
+    });
   } catch (error) {
     res
       .status(500)
@@ -175,7 +178,6 @@ exports.changeTaskStatus = async (req, res) => {
     }
 
     taskStatus = JSON.parse(taskStatus);
-    console.log(taskStatus);
 
     if (task.status != taskStatus) {
       return res
@@ -279,7 +281,7 @@ exports.referTaskAgent = async (req, res) => {
         .status(404)
         .json({ statusCode: 404, message: "targeted agent not found" });
     }
-    
+
     if (
       targetedAgent.department == req.user.department &&
       targetedAgent.level > req.user.level
@@ -290,7 +292,6 @@ exports.referTaskAgent = async (req, res) => {
         writer: req.user.id,
       };
 
-      console.log("test");
       await task.save();
       res
         .status(200)
