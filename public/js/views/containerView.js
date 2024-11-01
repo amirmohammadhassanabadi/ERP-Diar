@@ -102,9 +102,12 @@ referPopupWrapper.addEventListener('click', async e => {
     referPopupWrapper.classList.toggle('dis-flex');
     e.target.parentElement.previousElementSibling.value = '';
     removeReferToUser();
-  } else if (e.target.classList.contains('submitBtn')) {
-    const userId = document.querySelector('.user__name').dataset.userId;
-
+  } else if (
+    e.target.classList.contains('submitBtn') &&
+    document.querySelector('.user__name')?.dataset.userId &&
+    document.querySelector('.referPopup > textarea').value
+  ) {
+    const userId = document.querySelector('.user__name')?.dataset.userId;
     console.log('clicked');
 
     const payload = {
@@ -115,6 +118,20 @@ referPopupWrapper.addEventListener('click', async e => {
     const response = await postAPI('/tasks/changetaskagent', payload);
 
     console.log(response);
+    // 1. remove clicked task
+    const targetTask = [...document.querySelectorAll('.task')].filter(
+      taskEl => taskEl.dataset.taskId === referPopupWrapper.children[0].value
+    );
+
+    targetTask[0].remove();
+
+    // 2. empty fields
+    e.target.parentElement.previousElementSibling.value = '';
+    removeReferToUser();
+
+    // 3. hide overlay wrapper
+    referPopupWrapper.classList.toggle('dis-none');
+    referPopupWrapper.classList.toggle('dis-flex');
   }
 });
 
