@@ -24,7 +24,7 @@ exports.getTasks = async (req, res) => {
             title: task.title,
             description: task.description,
             status: task.status,
-            deadline: new Date(task.deadline).getDay() - new Date().getDay(),
+            deadline: (new Date(tasks[0].deadline).getTime() - new Date(new Date().toDateString()).getTime())  / (1000 * 60 * 60 * 24),
             creator: task.creator,
             agents: [task.agents[task.agents.length - 1]],
           };
@@ -52,7 +52,6 @@ exports.getReferredTasks = async (req, res) => {
 
     tasks = tasks.filter((task, index) => {
       let agentsId = task.agents.map(agent => agent.id)
-      console.log(agentsId.slice(0, task.agents.length - 1).includes(req.user.id));
       
       if (
         (task.creator.id == req.user.id &&
@@ -73,7 +72,7 @@ exports.getReferredTasks = async (req, res) => {
             title: task.title,
             description: task.description,
             status: task.status,
-            deadline: new Date(task.deadline).getDay() - new Date().getDay(),
+            deadline: (new Date(tasks[0].deadline).getTime() - new Date(new Date().toDateString()).getTime())  / (1000 * 60 * 60 * 24),
             creator: {
               id: task.creator.id,
               fullName: task.creator.fullName,
