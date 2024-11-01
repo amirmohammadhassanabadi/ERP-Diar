@@ -65,7 +65,30 @@ exports.getReferredTasks = async (req, res) => {
 
     return res
       .status(200)
-      .json({ statusCode: 200, data: neededTasksInfo(tasks) });
+      .json({ 
+        statusCode: 200, 
+        data: tasks.map(task => {
+          return {
+            title: task.title,
+            description: task.description,
+            status: task.status,
+            deadline: new Date(task.deadline).getDay() - new Date().getDay(),
+            creator: {
+              id: task.creator.id,
+              fullName: task.creator.fullName,
+              username: task.creator.username,
+              department: task.creator.department
+            },
+            agents: [
+              {
+                id: task.agents[task.agents.length - 1].id,
+                fullName: task.agents[task.agents.length - 1].fullName,
+                username: task.agents[task.agents.length - 1].username,
+                department: task.agents[task.agents.length - 1].department
+              }
+            ]
+          }
+        })  });
   } catch (error) {
     res
       .status(500)
