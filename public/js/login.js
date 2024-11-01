@@ -1,6 +1,32 @@
 // DOM Variables
 const loginWrapper = document.querySelector(".login-wrapper");
 const errorContent = document.querySelector(".main-alert>h3");
+const usernameInput = document.querySelector(".input-wrapper > input");
+const passwordInput = document.querySelector(".password-input-wrapper > input");
+console.log(passwordInput);
+
+function postInformation() {
+  fetch("/auth/postlogin", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: usernameInput.value,
+      password: passwordInput.value,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === 200) {
+        location.href = `/`;
+      } else if (data.status === 404) {
+        errorHandler("نام کاربری یا رمز عبور نادرست است");
+      } else if (data.status === 500) {
+        errorHandler("مشکلی پیش آمده لطفا لحظاتی دیگر دوباره تلاش کنید");
+      }
+    });
+}
 
 function errorHandler(message) {
   document.querySelector(".alert-wrapper").style.animation =
@@ -22,25 +48,12 @@ loginWrapper.addEventListener("click", (e) => {
       e.target.classList = "fa-solid fa-eye-slash";
     }
   } else if (e.target.id == "logInBtn") {
-    fetch("/auth/postlogin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: e.target.parentElement.children[0].value,
-        password: e.target.parentElement.children[1].children[1].value,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === 200) {
-          location.href = `/`;
-        } else if (data.status === 404) {
-          errorHandler("نام کاربری یا رمز عبور نادرست است");
-        } else if (data.status === 500) {
-          errorHandler("مشکلی پیش آمده لطفا لحظاتی دیگر دوباره تلاش کنید");
-        }
-      });
+    postInformation();
+  }
+});
+
+document.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    postInformation();
   }
 });
