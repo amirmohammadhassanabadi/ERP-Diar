@@ -736,8 +736,8 @@ const generateSingleTask = function (status, task) {
           .join('')}
       </div>
       <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
-          <button class="referBtn">ارجاع</button>
-          <button class="fa fa-times deleteTaskBtn"></button>
+          ${status ? `` : `<button class="referBtn">ارجاع</button>`}
+          ${status ? `` : `<button class="fa fa-times deleteTaskBtn"></button>`}
     </div>
     </li>
     `;
