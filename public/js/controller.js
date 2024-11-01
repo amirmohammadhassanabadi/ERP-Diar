@@ -23,11 +23,15 @@ const controlMenuChange = async function (menu) {
   } else console.error('cannot find menu');
 };
 
+let handlerFlag;
 const controlCheckbox = async function (taskEl) {
   containerView.renderConfirmPopup(1);
 
-  // ev listener for overlay, submit, and cancel button
-  containerView.handleConfirmPopup(controlConfirmPopup.bind(null, taskEl));
+  if (!handlerFlag) {
+    handlerFlag = 1;
+    // ev listener for overlay, submit, and cancel button
+    containerView.handleConfirmPopup(controlConfirmPopup.bind(null, taskEl));
+  }
 
   // if (!isConfirmed) return;
 

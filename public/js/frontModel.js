@@ -23,6 +23,8 @@ const toggleTaskState = async (taskStatus, taskId) => {
     taskId: taskId,
     taskStatus: taskStatus
   });
+  console.log(taskId, typeof taskId);
+  console.log(taskStatus, typeof taskStatus);
 
   if (response.statusCode !== 200) {
     console.error(response.statusCode);
@@ -31,27 +33,27 @@ const toggleTaskState = async (taskStatus, taskId) => {
   return true;
 };
 
-const temp = async taskId => {
-  // find index for the task obj that matches task ID
-  const targetTask = findTaskStat(taskId);
+// const temp = async taskId => {
+//   // find index for the task obj that matches task ID
+//   const targetTask = findTaskStat(taskId);
 
-  if (targetTask) {
-    const response = await postAPI('/tasks/changestatus', {
-      taskId: taskId,
-      taskStatus: targetTask.status
-    });
+//   if (targetTask) {
+//     const response = await postAPI('/tasks/changestatus', {
+//       taskId: taskId,
+//       taskStatus: targetTask.status
+//     });
 
-    if (response.statusCode != 200) {
-      console.error(response.statusCode);
-      return;
-    }
+//     if (response.statusCode != 200) {
+//       console.error(response.statusCode);
+//       return;
+//     }
 
-    targetTask.status
-      ? (targetTask.status = false)
-      : (targetTask.status = true);
-  }
-  console.log(taskData);
-};
+//     targetTask.status
+//       ? (targetTask.status = false)
+//       : (targetTask.status = true);
+//   }
+//   console.log(taskData);
+// };
 
 const addNewTask = async function (payload) {
   const postTask = await postAPI('/tasks/addtasks', payload);
