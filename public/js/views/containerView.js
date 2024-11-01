@@ -145,8 +145,7 @@ const handleReferredToUser = function () {
 
     // add border to user display
     userDisplayEl.classList.add('user__border');
-    userDisplayEl.style.width = 'calc(50% - 2rem)';
-    console.log(userDisplayEl.style);
+    userDisplayEl.style.margin = '1rem calc(50% - 5rem)';
 
     if (1) handlereferToCloseBtn();
   });
@@ -176,7 +175,9 @@ const removeReferToUser = function () {
   userDisplayEl.classList.remove('user__border');
   view.clear(userDisplayEl);
   agentBtn.classList.remove('dis-none');
-  agentBtn.classList.add('dis-block');
+  // agentBtn.classList.add('dis-block');
+
+  userDisplayEl.style.margin = '0';
 };
 
 document.querySelector('.logout__btn').addEventListener('click', async () => {

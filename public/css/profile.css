@@ -611,13 +611,12 @@ input[type='checkbox'] {
 }
 
 .referPopupWrapper > .referPopup > button.agentBtn {
-  width: calc(50% - 2rem);
-
-  padding: 1rem;
+  padding: 1rem calc(50% - 20rem);
+  margin-bottom: 1rem;
+  /* padding: 1rem; */
   background-color: var(--navy);
   color: var(--white);
   border: 0;
-  margin-bottom: 1rem;
   position: relative;
 }
 
