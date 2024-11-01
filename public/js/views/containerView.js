@@ -503,7 +503,8 @@ const handlePopupSubmit = function () {
     console.log(payload);
 
     // POST task to DB
-    await model.addNewTask(payload);
+    const tskData = await model.addNewTask(payload);
+    console.log(tskData);
 
     // NO ERROR HANDLING APPLIED HERE BUG
     // show success message (with a timer)
@@ -517,22 +518,37 @@ const handlePopupSubmit = function () {
     newDeadline.value = '';
     removePopupUsers();
 
-    // re-fetch & re-render tasks list
-    taskContainerEl.innerHTML = '';
+    // taskContainerEl.innerHTML = '';
 
-    const taskNavEl = document.querySelector('.my__tasks');
-    const activeNavEl = document.querySelector('.nav__item-active');
-    if (taskNavEl !== activeNavEl) {
-      taskNavEl.classList.add('nav__item-active');
-      activeNavEl.classList.remove('nav__item-active');
-    }
+    // const taskNavEl = document.querySelector('.my__tasks');
+    // const activeNavEl = document.querySelector('.nav__item-active');
+    // if (taskNavEl !== activeNavEl) {
+    //   taskNavEl.classList.add('nav__item-active');
+    //   activeNavEl.classList.remove('nav__item-active');
+    // }
 
     // in addition to this we need to change nav to ongoing tasks BUG
-    // doesn't work yet BUG
-    await view.renderHTML(
-      generateTaskContainer.bind(null, false),
-      taskContainerEl
+    // await view.renderHTML(
+    //   generateSingleTask.bind(null, false, tskData),
+    //   taskContainerEl
+    // );
+    console.log(
+      document
+        .querySelector('.nav__item-active')
+        .classList.contains('my__tasks')
     );
+
+    if (
+      document
+        .querySelector('.nav__item-active')
+        .classList.contains('my__tasks')
+    ) {
+      taskContainerEl.insertAdjacentHTML(
+        'beforeend',
+        generateSingleTask(false, tskData)
+      );
+      incrementTaskNum();
+    }
 
     // =====================================
     // /tasks/gettasks (route to get tasks)
@@ -550,17 +566,29 @@ const handlePopupSubmit = function () {
   });
 };
 
+const incrementTaskNum = function () {
+  const taskHint = document.querySelector('.hint-text');
+  taskHint.children[0].textContent =
+    Number(taskHint.children[0].textContent) + 1;
+  // taskHint.children[0].textContent = Number(taskHint.children[0].textContent)++;
+};
+
 const generateTaskContainer = async function (status) {
-  const tasksData = await model.giveTasks();
+  const tasksData = await model.getTasks();
+  if (!tasksData) {
+    console.error('taskData returns nothing');
+
+    return;
+  }
 
   return `
-              <span class="hint-text">وظایف امروز (${tasksData.reduce(
+              <span class="hint-text">وظایف امروز (<span>${tasksData.reduce(
                 (acc, task) => {
                   if (task.status == status) acc++;
                   return acc;
                 },
                 0
-              )} مورد)</span>
+              )}</span> مورد)</span>
             <ul class="task__list">
             ${tasksData.map(generateSingleTask.bind(null, status)).join('')}
           </ul>

@@ -7,7 +7,7 @@ async function getTasks() {
   const taskRes = await getAPI('/tasks/gettasks');
   if (taskRes.statusCode !== 200 || !taskRes) {
     console.error(taskRes.statusCode);
-    return;
+    return false;
   }
 
   taskData = taskRes.data;
@@ -19,7 +19,6 @@ const giveTasks = () => taskData;
 const findTaskStat = taskId => taskData.find(tsk => tsk.id === taskId);
 
 const toggleTaskState = async (taskStatus, taskId) => {
-
   const response = await postAPI('/tasks/changestatus', {
     taskId: taskId,
     taskStatus: taskStatus
@@ -73,6 +72,7 @@ const addNewTask = async function (payload) {
   if (taskData) {
     taskData.push(postTask.data);
     console.log(taskData);
+    return postTask.data;
     // await getTasks();
     // console.log(taskData);
   } else {
