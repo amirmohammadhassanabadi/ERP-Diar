@@ -61,7 +61,9 @@ let referUserEvListenerFlag;
 
 referPopupWrapper.addEventListener('click', async e => {
   if (e.target.classList.contains('referPopupWrapper')) {
-    e.target.children[1].children[2].value = '';
+    referPopupWrapper.children[1].children[3].value = '';
+    removeReferToUser();
+
     referPopupWrapper.classList.toggle('dis-none');
     referPopupWrapper.classList.toggle('dis-flex');
   } else if (e.target.classList.contains('agentBtn')) {
@@ -668,8 +670,6 @@ const clearAddTaskPopup = function () {
   const newTitle = document.querySelector('.title-input');
   const newDesc = document.getElementById('descInput');
   const newDeadline = document.getElementById('dateInput');
-  const newAgents = document.querySelector('.user__name');
-
   newTitle.value = '';
   newDesc.value = '';
   newDeadline.value = '';
