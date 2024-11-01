@@ -288,30 +288,36 @@ const navChangeAsignedTasks = async function () {
 
   view.clear(taskContainer);
 
-  const tempAssignedToMarkup = (task) => {
-    return data.data.map(task => {
+  view.renderHTML(AssignedToMarkup.bind(null, data.data), taskContainer);
+};
+
+const AssignedToMarkup = tasks => {
+  return tasks
+    .map(task => {
       return `
-      <div class="creator-container">
-  <li class="task" data-task-status="${task.status}" data-task-id="${
-    task.id
-  }">
+    <div class="creator-container">
+  <li class="task" data-task-status="${task.status}" data-task-id="${task.id}">
   <div class="task__right">
-    <span class="task-text">${task.title}</span>
+  <span class="task-text">${task.title}</span>
   </div>
   <div class="task__left">
-    <div class="assignedto">
-      <div class="initial">${task.agents[task.agents.length - 1].username[0]}${task.agents[task.agents.length - 1].username[1]}</div>
-    </div>
-    <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
-    ${ task.deleteOption ? `<button class="fa fa-times deleteTaskBtn"></button>` : ``}
+  <div class="assignedto">
+    <div class="initial">${task.agents[task.agents.length - 1].username[0]}${
+        task.agents[task.agents.length - 1].username[1]
+      }</div>
   </div>
-  </li>
-      </div>
-`
-    }).join("");
+  <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
+  ${
+    task.deleteOption
+      ? `<button class="fa fa-times deleteTaskBtn"></button>`
+      : ``
   }
-  
-  view.renderHTML(tempAssignedToMarkup, taskContainer);
+  </div>
+ </li>
+    </div>
+ `;
+    })
+    .join('');
 };
 
 const switchActiveNav = function (navItem) {
@@ -337,10 +343,6 @@ const handleTaskAddBtn = function () {
       if (!btn) return;
       overlayEl.classList.remove('hidden');
       closeUserListOnClick();
-
-      // ASYNC => GET USERS REMINDER
-
-      // Add referrals btn event listener
     });
   } catch (err) {
     console.log(err);
@@ -353,6 +355,7 @@ const handleOverlayLayer = function () {
     const clicked = e.target;
     if (!(clicked === overlayEl)) return;
     overlayEl.classList.add('hidden');
+    clearAddTaskPopup();
     const popupList = document.querySelector('.popup__overlay');
     console.log(popupList);
 
@@ -370,6 +373,7 @@ const handleReferralsBtn = function () {
 
     // Fetch Agents Data
 
+    // must be handled in controller REMINDER
     handlePopupUserList();
   });
 };
@@ -382,7 +386,7 @@ const handlePopupUserList = async function () {
     console.error('err code:', response.statusCode, 'OR empty data');
     return;
   }
-  console.log(response.data);
+  // console.log(response.data);
   const users = await response.data;
 
   const popupUserList = document.querySelector('.popup__overlay');
@@ -424,7 +428,7 @@ const closeUserListOnClick = function () {
 };
 
 const generateUsersListMarkup = function (user) {
-  console.log(user.fullName);
+  // console.log(user.fullName);
 
   return `
     <li>
@@ -569,6 +573,7 @@ const handlePopupClose = function () {
     const btn = e.target.closest('.cancel__btn');
     if (!btn) return;
     overlayEl.classList.add('hidden');
+    clearAddTaskPopup();
   });
 };
 
@@ -609,10 +614,7 @@ const handlePopupSubmit = function () {
     overlayEl.classList.add('hidden');
 
     // re-initialize popup input (remove user inputs)
-    newTitle.value = '';
-    newDesc.value = '';
-    newDeadline.value = '';
-    removePopupUsers();
+    clearAddTaskPopup();
 
     // taskContainerEl.innerHTML = '';
 
@@ -662,6 +664,18 @@ const handlePopupSubmit = function () {
   });
 };
 
+const clearAddTaskPopup = function () {
+  const newTitle = document.querySelector('.title-input');
+  const newDesc = document.getElementById('descInput');
+  const newDeadline = document.getElementById('dateInput');
+  const newAgents = document.querySelector('.user__name');
+
+  newTitle.value = '';
+  newDesc.value = '';
+  newDeadline.value = '';
+  removePopupUsers();
+};
+
 const incrementTaskNum = function () {
   const taskHint = document.querySelector('.hint-text');
   taskHint.children[0].textContent =
@@ -690,6 +704,7 @@ const generateTaskContainer = async function (status) {
           </ul>
 
   `;
+  // on taskData.map, automatically passes task input
 };
 
 const generateSingleTask = function (status, task) {
@@ -715,7 +730,7 @@ const generateSingleTask = function (status, task) {
             i++;
 
             return `<div class="initial ${i == 1 ? '' : `initial-${i}`}">${
-              person.username[0]
+              person.username[0] + person.username[1]
             }</div>`;
           })
           .join('')}
