@@ -86,7 +86,8 @@ exports.getReferredTasks = async (req, res) => {
                 username: task.agents[task.agents.length - 1].username,
                 department: task.agents[task.agents.length - 1].department
               }
-            ]
+            ],
+            deleteOption: task.creator.id == req.user.id ? true : false
           }
         })  });
   } catch (error) {

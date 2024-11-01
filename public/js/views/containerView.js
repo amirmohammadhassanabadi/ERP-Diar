@@ -217,13 +217,10 @@ const navChangeAsignedTasks = async function () {
   </div>
   <div class="task__left">
     <div class="assignedto">
-      <div class="initial">${
-            task.agents[task.agents.length - 1].username
-          }</div>
+      <div class="initial">${task.agents[task.agents.length - 1].username[0]}${task.agents[task.agents.length - 1].username[1]}</div>
     </div>
     <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
-        <button class="referBtn">ارجاع</button>
-        <button class="fa fa-times deleteTaskBtn"></button>
+    ${ task.deleteOption ? `<button class="fa fa-times deleteTaskBtn"></button>` : ``}
   </div>
   </li>
       </div>
