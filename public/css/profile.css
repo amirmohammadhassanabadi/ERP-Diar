@@ -16,6 +16,32 @@ header .menu__btn {
   cursor: pointer;
 }
 
+.animation {
+  animation: spin 0.5s cubic-bezier(0.85, 0, 0.15, 1) 0s forwards;
+}
+
+.animation-reverse {
+  animation: rspin 0.5s cubic-bezier(0.85, 0, 0.15, 1) 0s forwards;
+}
+
+@keyframes rspin {
+  0% {
+    transform: rotate(-90deg); /* Starting position */
+  }
+  100% {
+    transform: rotate(0deg); /* End position (270 degrees from the right) */
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Starting position */
+  }
+  100% {
+    transform: rotate(-90deg); /* End position (270 degrees from the right) */
+  }
+}
+
 header .header__logo {
   width: 50px;
   height: 40px;
