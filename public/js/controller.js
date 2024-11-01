@@ -43,7 +43,9 @@ const controlCheckbox = async function (taskEl) {
 
 const controlConfirmPopup = async function (taskEl, confirm) {
   if (!confirm) {
+    const checkbox = taskEl.querySelector('.checkbox');
     containerView.renderConfirmPopup(0);
+    checkbox.checked = !checkbox.checked;
     return;
   }
 
