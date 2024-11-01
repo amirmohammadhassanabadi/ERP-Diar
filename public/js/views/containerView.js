@@ -343,10 +343,6 @@ const handleTaskAddBtn = function () {
       if (!btn) return;
       overlayEl.classList.remove('hidden');
       closeUserListOnClick();
-
-      // ASYNC => GET USERS REMINDER
-
-      // Add referrals btn event listener
     });
   } catch (err) {
     console.log(err);
@@ -359,6 +355,7 @@ const handleOverlayLayer = function () {
     const clicked = e.target;
     if (!(clicked === overlayEl)) return;
     overlayEl.classList.add('hidden');
+    clearAddTaskPopup();
     const popupList = document.querySelector('.popup__overlay');
     console.log(popupList);
 
@@ -376,6 +373,7 @@ const handleReferralsBtn = function () {
 
     // Fetch Agents Data
 
+    // must be handled in controller REMINDER
     handlePopupUserList();
   });
 };
@@ -388,7 +386,7 @@ const handlePopupUserList = async function () {
     console.error('err code:', response.statusCode, 'OR empty data');
     return;
   }
-  console.log(response.data);
+  // console.log(response.data);
   const users = await response.data;
 
   const popupUserList = document.querySelector('.popup__overlay');
@@ -430,7 +428,7 @@ const closeUserListOnClick = function () {
 };
 
 const generateUsersListMarkup = function (user) {
-  console.log(user.fullName);
+  // console.log(user.fullName);
 
   return `
     <li>
@@ -575,6 +573,7 @@ const handlePopupClose = function () {
     const btn = e.target.closest('.cancel__btn');
     if (!btn) return;
     overlayEl.classList.add('hidden');
+    clearAddTaskPopup();
   });
 };
 
@@ -615,10 +614,7 @@ const handlePopupSubmit = function () {
     overlayEl.classList.add('hidden');
 
     // re-initialize popup input (remove user inputs)
-    newTitle.value = '';
-    newDesc.value = '';
-    newDeadline.value = '';
-    removePopupUsers();
+    clearAddTaskPopup();
 
     // taskContainerEl.innerHTML = '';
 
@@ -666,6 +662,18 @@ const handlePopupSubmit = function () {
     // timeInputEl.value = '';
     // persistTasks();
   });
+};
+
+const clearAddTaskPopup = function () {
+  const newTitle = document.querySelector('.title-input');
+  const newDesc = document.getElementById('descInput');
+  const newDeadline = document.getElementById('dateInput');
+  const newAgents = document.querySelector('.user__name');
+
+  newTitle.value = '';
+  newDesc.value = '';
+  newDeadline.value = '';
+  removePopupUsers();
 };
 
 const incrementTaskNum = function () {
