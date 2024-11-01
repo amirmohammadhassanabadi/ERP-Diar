@@ -722,7 +722,7 @@ const generateSingleTask = function (status, task) {
             i++;
 
             return `<div class="initial ${i == 1 ? '' : `initial-${i}`}">${
-              person.username[0]
+              person.username[0] + person.username[1]
             }</div>`;
           })
           .join('')}
