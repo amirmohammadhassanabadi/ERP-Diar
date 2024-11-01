@@ -69,6 +69,7 @@ exports.getReferredTasks = async (req, res) => {
         statusCode: 200, 
         data: tasks.map(task => {
           return {
+            id:  task._id,
             title: task.title,
             description: task.description,
             status: task.status,
@@ -143,7 +144,6 @@ exports.addTask = async (req, res) => {
 
   newTask = await newTask.save();
   const temp = await Task.findById(newTask._id).populate("agents");
-  console.log(temp);
 
   res.status(200).json({
     statusCode: 200,

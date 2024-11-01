@@ -225,7 +225,7 @@ const navChangeAsignedTasks = async function () {
   </li>
       </div>
 `
-    }).join();
+    }).join("");
   }
   
   view.renderHTML(tempAssignedToMarkup, taskContainer);
