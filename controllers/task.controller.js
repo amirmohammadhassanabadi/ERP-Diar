@@ -279,16 +279,18 @@ exports.referTaskAgent = async (req, res) => {
         .status(404)
         .json({ statusCode: 404, message: "targeted agent not found" });
     }
-
+    
     if (
       targetedAgent.department == req.user.department &&
-      newAgent.level > req.user.level
+      targetedAgent.level > req.user.level
     ) {
-      task.agent.push(newAgent);
-      task.reports.push({
+      task.agents[task.agents.length - 1] = newAgent;
+      task.reports[task.reports.length - 1] = {
         description: report,
         writer: req.user.id,
-      });
+      };
+
+      console.log("test");
       await task.save();
       res
         .status(200)
