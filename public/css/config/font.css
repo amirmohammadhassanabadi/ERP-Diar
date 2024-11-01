@@ -2,3 +2,7 @@
     font-family: IransSans;
     src: url("/css/packages/font/IRANSansXFaNum-Regular.woff");
 }
+
+*:not(i){
+    font-family: "IransSans";
+}

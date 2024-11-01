@@ -104,9 +104,13 @@ referPopupWrapper.addEventListener('click', async e => {
   } else if (e.target.classList.contains('submitBtn')) {
     const userId = document.querySelector('.user__name').dataset.userId;
 
+    console.log("clicked");
+    
+
     const payload = {
       taskId: referPopupWrapper.children[0].value,
-      newAgent: [userId]
+      newAgent: [userId],
+      report: referPopupWrapper.children[1].children[3].value
     };
     const response = await postAPI('/tasks/changetaskagent', payload);
 
@@ -309,11 +313,6 @@ const AssignedToMarkup = tasks => {
       }</div>
   </div>
   <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
-  ${
-    task.deleteOption
-      ? `<button class="fa fa-times deleteTaskBtn"></button>`
-      : ``
-  }
   </div>
  </li>
     </div>
