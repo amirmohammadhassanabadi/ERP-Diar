@@ -548,21 +548,23 @@ const renderConfirmPopup = function (show) {
     : confOverlayEl.classList.add('hidden');
 };
 
-const handleConfirmPopup = function (handler) {
-  const popupConfirmEl = document.querySelector('.popup__confirm__down');
-  const confOverlayEl = document.querySelector('.confirm__overlay');
+const handleConfirmPopup = function () {
+  return new Promise(resolve => {
+    const popupConfirmEl = document.querySelector('.popup__confirm__down');
+    const confOverlayEl = document.querySelector('.confirm__overlay');
 
-  popupConfirmEl.addEventListener('click', function (e) {
-    const btn = e.target.closest('button');
-    if (!btn) return;
-    if (btn.classList.contains('confirm__btn')) handler(1);
-    else if (btn.classList.contains('noconfirm__btn')) handler(0);
-  });
+    popupConfirmEl.addEventListener('click', function (e) {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      if (btn.classList.contains('confirm__btn')) resolve(1);
+      else if (btn.classList.contains('noconfirm__btn')) resolve(0);
+    });
 
-  confOverlayEl.addEventListener('click', e => {
-    const clickedEl = e.target;
-    if (!(clickedEl === confOverlayEl)) return;
-    handler(0);
+    confOverlayEl.addEventListener('click', e => {
+      const clickedEl = e.target;
+      if (!(clickedEl === confOverlayEl)) return;
+      resolve(0);
+    });
   });
 };
 
