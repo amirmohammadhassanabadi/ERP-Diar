@@ -603,11 +603,9 @@ const handlePopupSubmit = function () {
       agents: [newAgents.dataset.userId],
       deadline: newDeadline.value
     };
-    console.log(payload);
 
     // POST task to DB
     const tskData = await model.addNewTask(payload);
-    console.log(tskData);
 
     // NO ERROR HANDLING APPLIED HERE BUG
     // show success message (with a timer)
@@ -647,7 +645,7 @@ const handlePopupSubmit = function () {
         'beforeend',
         generateSingleTask(false, tskData)
       );
-      incrementTaskNum();
+      incrementTaskNum(1);
     }
 
     // =====================================
@@ -678,10 +676,10 @@ const clearAddTaskPopup = function () {
   removePopupUsers();
 };
 
-const incrementTaskNum = function () {
+const incrementTaskNum = function (num) {
   const taskHint = document.querySelector('.hint-text');
   taskHint.children[0].textContent =
-    Number(taskHint.children[0].textContent) + 1;
+    Number(taskHint.children[0].textContent) + num;
   // taskHint.children[0].textContent = Number(taskHint.children[0].textContent)++;
 };
 
@@ -782,5 +780,6 @@ export default {
   handleReferralsBtn,
   handleConfirmPopup,
   renderConfirmPopup,
-  removeTaskEl
+  removeTaskEl,
+  incrementTaskNum
 };

@@ -23,8 +23,6 @@ const toggleTaskState = async (taskStatus, taskId) => {
     taskId: taskId,
     taskStatus: taskStatus
   });
-  console.log(taskId, typeof taskId);
-  console.log(taskStatus, typeof taskStatus);
 
   if (response.statusCode !== 200) {
     console.error(response.statusCode);

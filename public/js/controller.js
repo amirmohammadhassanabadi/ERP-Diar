@@ -24,13 +24,10 @@ const controlMenuChange = async function (menu) {
 };
 
 const controlCheckbox = async function (taskEl) {
-  console.log(taskEl);
-
   containerView.renderConfirmPopup(1);
 
   // ev listener for overlay, submit, and cancel button
   const isConfirmed = await containerView.handleConfirmPopup();
-  console.log(isConfirmed);
   controlConfirmPopup(taskEl, isConfirmed);
 
   // if (!isConfirmed) return;
@@ -52,15 +49,17 @@ const controlConfirmPopup = async function (taskEl, confirm) {
   containerView.renderConfirmPopup(0);
 
   // 1. post to DB
-  console.log(taskEl);
-
   const response = await model.toggleTaskState(
     taskEl.dataset.taskStatus,
     taskEl.dataset.taskId
   );
 
-  if (!response) return;
-
+  if (!response) {
+    checkbox.checked = !checkbox.checked;
+    // show error message REMINDER
+    return;
+  }
+  containerView.incrementTaskNum(-1);
   // 2. remove task el
   containerView.removeTaskEl(taskEl);
   // view.removeHTML(taskEl);
