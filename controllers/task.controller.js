@@ -25,7 +25,7 @@ exports.getTasks = async (req, res) => {
             description: task.description,
             status: task.status,
             deadline:
-              (new Date(tasks[0].deadline).getTime() -
+              (new Date(task.deadline).getTime() -
                 new Date(new Date().toDateString()).getTime()) /
               (1000 * 60 * 60 * 24),
             creator: task.creator,
@@ -72,7 +72,7 @@ exports.getReferredTasks = async (req, res) => {
           description: task.description,
           status: task.status,
           deadline:
-            (new Date(tasks[0].deadline).getTime() -
+            (new Date(task.deadline).getTime() -
               new Date(new Date().toDateString()).getTime()) /
             (1000 * 60 * 60 * 24),
           creator: {
