@@ -661,13 +661,6 @@ input[type='checkbox'] {
   background-color: var(--navy);
   margin-right: 0.5rem;
 }
-/* ========================================================= */
-.creator-container{
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-}
-/* ========================================================= */
 
 #referUserPoppup{
   position: absolute;
