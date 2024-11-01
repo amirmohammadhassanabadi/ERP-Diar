@@ -612,15 +612,13 @@ input[type='checkbox'] {
   color: var(--gold);
 }
 
-
-.referPopupWrapper > .referPopup > button.agentBtn{
-  width: calc(50% - 2rem);
-
-  padding: 1rem;
+.referPopupWrapper > .referPopup > button.agentBtn {
+  padding: 1rem calc(50% - 20rem);
+  margin-bottom: 1rem;
+  /* padding: 1rem; */
   background-color: var(--navy);
   color: var(--white);
   border: 0;
-  margin-bottom: 1rem;
   position: relative;
 }
 
@@ -662,7 +660,7 @@ input[type='checkbox'] {
   margin-right: 0.5rem;
 }
 
-#referUserPoppup{
+#referUserPoppup {
   position: absolute;
   top: 100%;
   right: 0;
@@ -673,22 +671,22 @@ input[type='checkbox'] {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-#referUserPoppup > div{
+#referUserPoppup > div {
   width: 100%;
-  padding: .5rem;
+  padding: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--color-gray-light-3);
   color: var(--black);
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 #referUserPoppup > div:hover {
   background-color: var(--color-gray-light-2);
 }
 
-#referUserPoppup > div > span{
+#referUserPoppup > div > span {
   margin: 0;
 }
 /*  RESPONSIVE  */

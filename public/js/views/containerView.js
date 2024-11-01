@@ -42,7 +42,7 @@ document.querySelector('.container').addEventListener('click', async e => {
 function renderReffrencableUsers(users) {
   return users.map(user => {
     return `
-    <div>
+    <div class="refUser">
     <input type="hidden" value="${user.id}" />
       <div class="nameInput">
         ${user.username}
@@ -54,6 +54,10 @@ function renderReffrencableUsers(users) {
 `;
   });
 }
+
+// if already has event listener, flag=1 so we don't add more
+//   ev listeners. send to controller later with no flag REMINDER
+let referUserEvListenerFlag;
 
 referPopupWrapper.addEventListener('click', async e => {
   if (e.target.classList.contains('referPopupWrapper')) {
@@ -67,6 +71,11 @@ referPopupWrapper.addEventListener('click', async e => {
         renderReffrencableUsers(data.data).join('');
       document.getElementById('referUserPoppup').classList.toggle('dis-none');
       document.getElementById('referUserPoppup').classList.toggle('dis-block');
+
+      if (!referUserEvListenerFlag) {
+        referUserEvListenerFlag = 1;
+        handleReferredToUser();
+      }
     } else if (data.statusCode == 403) {
       console.log('ok');
       popupHandler(
@@ -91,13 +100,87 @@ referPopupWrapper.addEventListener('click', async e => {
     referPopupWrapper.classList.toggle('dis-flex');
     e.target.parentElement.previousElementSibling.value = '';
   } else if (e.target.classList.contains('submitBtn')) {
+    const userId = document.querySelector('.user__name').dataset.userId;
+
     const payload = {
       taskId: referPopupWrapper.children[0].value,
-      newAgent: ''
+      newAgent: [userId]
     };
     const response = await postAPI('/tasks/changetaskagent', payload);
+
+    console.log(response);
   }
 });
+
+const handleReferredToUser = function () {
+  const userListPopup = document.getElementById('referUserPoppup');
+  const agentBtn = document.querySelector('.agentBtn');
+
+  userListPopup.addEventListener('click', async function (e) {
+    const userEl = e.target.closest('.refUser');
+    if (!userEl) return;
+
+    // extract target user's info
+    const userId = userEl.children[0].value;
+    const userName = userEl.children[1].innerText;
+    // const userInits = userEl.children[2].innerText;
+
+    // select user display
+    const userDisplayEl = document.querySelectorAll('.user__display')[1];
+    console.log(userDisplayEl);
+
+    // render user__display with clicked user's info
+    await view.renderHTML(
+      generateUserReferralMarkup.bind(null, userId, [
+        { id: userId, fullName: userName }
+      ]),
+      userDisplayEl
+    );
+
+    // hide user list
+    userListPopup.classList.add('dis-none');
+    userListPopup.classList.remove('dis-block');
+
+    // hide agents btn
+    agentBtn.classList.add('dis-none');
+    agentBtn.classList.remove('dis-block');
+
+    // add border to user display
+    userDisplayEl.classList.add('user__border');
+    userDisplayEl.style.margin = '1rem calc(50% - 5rem)';
+
+    if (1) handlereferToCloseBtn();
+  });
+};
+
+const handlereferToCloseBtn = function () {
+  const userDisplayEl = document.querySelectorAll('.user__display')[1];
+  const closeBtn = document.querySelectorAll('.user__close__btn')[0];
+  console.log(closeBtn);
+  console.log(userDisplayEl);
+
+  userDisplayEl.addEventListener('mouseenter', function () {
+    closeBtn.classList.remove('hidden');
+  });
+
+  userDisplayEl.addEventListener('mouseleave', function () {
+    closeBtn.classList.add('hidden');
+  });
+
+  closeBtn.addEventListener('click', removeReferToUser);
+};
+
+const removeReferToUser = function () {
+  const userDisplayEl = document.querySelectorAll('.user__display')[1];
+  const agentBtn = document.querySelector('.agentBtn');
+
+  userDisplayEl.classList.remove('user__border');
+  view.clear(userDisplayEl);
+  agentBtn.classList.remove('dis-none');
+  // agentBtn.classList.add('dis-block');
+
+  userDisplayEl.style.margin = '0';
+};
 
 document.querySelector('.logout__btn').addEventListener('click', async () => {
   await getAPI('/auth/logout');
@@ -368,7 +451,7 @@ const handleSelectedReferral = function (users) {
     // close users list
     handlePopupUserList();
 
-    // render user to referral div
+    // =======render user to referral div
 
     // 1. add hidden to referral btn
     agentBtn.classList.toggle('hidden');
