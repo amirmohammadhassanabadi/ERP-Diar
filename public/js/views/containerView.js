@@ -307,7 +307,9 @@ const AssignedToMarkup = tasks => {
   </div>
   <div class="task__left">
   <div class="assignedto">
-    <div class="initial">${task.agents[task.agents.length - 1].username[0]}${
+    <div class="initial" data-full-name="${
+      task.agents[task.agents.length - 1].fullName
+    }" >${task.agents[task.agents.length - 1].username[0]}${
         task.agents[task.agents.length - 1].username[1]
       }</div>
   </div>
@@ -739,7 +741,9 @@ const generateSingleTask = function (status, task) {
           .map(person => {
             i++;
 
-            return `<div class="initial ${i == 1 ? '' : `initial-${i}`}">${
+            return `<div class="initial  ${
+              i == 1 ? '' : `initial-${i}`
+            }" data-full-name="${person.fullName}">${
               person.username[0] + person.username[1]
             }</div>`;
           })
