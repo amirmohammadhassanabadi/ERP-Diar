@@ -17,7 +17,11 @@
 const arr = [1,2,3,4,5]
 
 
-console.log(arr.slice(0, arr.length - 1));
+console.log(arr.slice(0, arr.length - 1).filter(it => {
+    if (it == 3) {
+        return true
+    }
+}));
 console.log(arr);
 
 

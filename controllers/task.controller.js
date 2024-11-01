@@ -48,19 +48,20 @@ exports.getTasks = async (req, res) => {
 
 exports.getReferredTasks = async (req, res) => {
   try {
-    let tasks = await Task.find().populate("creator");
+    let tasks = await Task.find().populate("creator").populate("agents");
 
     tasks = tasks.filter((task, index) => {
+      let agentsId = task.agents.map(agent => agent.id)
+      console.log(agentsId.slice(0, task.agents.length - 1).includes(req.user.id));
+      
       if (
         (task.creator.id == req.user.id &&
-          task.creator.id != task.agents[task.agents.length - 1]) ||
-        task.agents.slice(0, task.agents.length - 1).includes(req.user.id)
+          task.creator.id != task.agents[task.agents.length - 1].id) ||
+        agentsId.slice(0, task.agents.length - 1).includes(req.user.id)
       ) {
-        console.log(index);
         return task;
       }
     });
-    console.log(tasks);
 
     return res
       .status(200)
