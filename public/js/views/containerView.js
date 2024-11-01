@@ -228,7 +228,7 @@ const generateMarkupTasks = async function (status = false) {
             <i class="fa-solid fa-plus fa-2xs" style="color: #ffffff"></i>
             ایجاد وظیفه
           </button>
-          <button class="task__btn task__btn-filter">
+          <button class="task__btn task__btn-filter hidden">
             <img src="/img/icons/sort-icon.png" alt="sort-icon" />
             فیلتر نمایش وظایف
           </button>

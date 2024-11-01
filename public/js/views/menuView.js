@@ -4,9 +4,13 @@ const parentEl = document.querySelector('.menu');
 
 const collapseMenu = function () {
   const containerEl = document.querySelector('.container');
+  const menuList = document.querySelector('.menu > ul');
+  menuList.classList.toggle('noOpacity');
+  const menuItemSpans = document.querySelectorAll('.menu__item > span');
 
   parentEl.classList.toggle('collapse');
   containerEl.classList.toggle('fullscreen');
+  menuItemSpans.forEach(span => span.classList.toggle('hidden'));
 };
 
 const handleMenuChange = function (handler) {
