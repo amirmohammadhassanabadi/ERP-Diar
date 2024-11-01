@@ -199,22 +199,38 @@ const navChangeTaskReload = async function (status) {
 
 const navChangeAsignedTasks = async function () {
   const data = await getAPI('/tasks/getrefferedtasks');
-  console.log(data);
+  console.log(data.data);
 
   const taskContainer = parentEl.querySelector('.task__container');
 
   view.clear(taskContainer);
 
-  const tempAssignedToMarkup = () => `
-        <div>
-          <div class="c_body__head" style="font-size: 150%; margin-right: 40%; margin-top: 20%;">
-            این بخش در حال توسعه است...
-          </div>
-          <div>
-            test
-          </div>
-        </div>
-  `;
+  const tempAssignedToMarkup = (task) => {
+    return data.data.map(task => {
+      return `
+      <div class="creator-container">
+  <li class="task" data-task-status="${task.status}" data-task-id="${
+    task.id
+  }">
+  <div class="task__right">
+    <span class="task-text">${task.title}</span>
+  </div>
+  <div class="task__left">
+    <div class="assignedto">
+      <div class="initial">${
+            task.agents[task.agents.length - 1].username
+          }</div>
+    </div>
+    <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
+        <button class="referBtn">ارجاع</button>
+        <button class="fa fa-times deleteTaskBtn"></button>
+  </div>
+  </li>
+      </div>
+`
+    }).join();
+  }
+  
   view.renderHTML(tempAssignedToMarkup, taskContainer);
 };
 
