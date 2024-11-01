@@ -101,6 +101,7 @@ referPopupWrapper.addEventListener('click', async e => {
     referPopupWrapper.classList.toggle('dis-none');
     referPopupWrapper.classList.toggle('dis-flex');
     e.target.parentElement.previousElementSibling.value = '';
+    removeReferToUser();
   } else if (e.target.classList.contains('submitBtn')) {
     const userId = document.querySelector('.user__name').dataset.userId;
 
@@ -178,7 +179,13 @@ const handlereferToCloseBtn = function () {
 const removeReferToUser = function () {
   const userDisplayEl = document.querySelectorAll('.user__display')[1];
   const agentBtn = document.querySelector('.agentBtn');
+  const userList = document.getElementById('referUserPoppup');
+  console.log(userList);
 
+  if (userList?.classList.contains('dis-block')) {
+    userList.classList.remove('dis-block');
+    userList.classList.add('dis-none');
+  }
   userDisplayEl.classList.remove('user__border');
   view.clear(userDisplayEl);
   agentBtn.classList.remove('dis-none');
@@ -495,7 +502,7 @@ const generateUserReferralMarkup = function (id, users) {
      .slice(0, 2)
      .map(word => word[0].toUpperCase())
      .join(' ')} </div>
-    <i class="user__close__btn hidden fa-duotone fa-solid fa-xmark fa-s"></i>
+    <i class="user__close__btn hidden fa-duotone fa-solid fa-xmark fa-xl"></i>
 
   `;
 };

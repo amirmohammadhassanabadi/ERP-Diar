@@ -310,7 +310,7 @@ menu ul::after {
 .referBtn {
   margin-right: 0.5rem;
   padding: 0.5rem 1rem;
-  background-color: var(--navy);
+  background-color: var(--color-grad-1);
   color: var(--color-white);
   border: 0;
   transition: all 0.3s ease;
@@ -318,7 +318,7 @@ menu ul::after {
 }
 
 .referBtn:hover {
-  background-color: #6aa7e9;
+  background-color: var(--color-grad-2);
 }
 
 .deleteTaskBtn {
@@ -574,9 +574,10 @@ input[type='checkbox'] {
 
 .user__border {
   border: 2px solid var(--color-gray-light-3);
+  transition: 0.1s ease;
 }
 .user__border:hover {
-  border: 2px solid var(--color-grad-3);
+  border: 3px solid var(--color-grad-3);
 }
 
 .user__close__btn {
@@ -604,11 +605,22 @@ input[type='checkbox'] {
 }
 
 #dateInput {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: var(--color-gray-light-1);
+  border: 2px solid var(--color-gray-light-3);
+  border-radius: 0.25rem;
+  transition: 0.3s ease-in-out;
+  margin-left: 1rem;
 }
 
 .agent-btn {
-  padding: 0.5rem 1rem;
+  background-color: var(--color-gray-light-1);
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: 2px solid var(--color-gray-light-3);
+  border-radius: 0.25rem;
+  transition: 0.3s ease-in-out;
 }
 
 .cancel__btn,
@@ -672,7 +684,7 @@ input[type='checkbox'] {
 }
 
 .referPopupWrapper > .referPopup > button.agentBtn {
-  padding: 1rem calc(50% - 20rem);
+  padding: 1rem 5rem;
   margin-bottom: 1rem;
   /* padding: 1rem; */
   background-color: var(--navy);
