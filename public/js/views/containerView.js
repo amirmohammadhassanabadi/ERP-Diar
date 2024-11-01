@@ -61,7 +61,9 @@ let referUserEvListenerFlag;
 
 referPopupWrapper.addEventListener('click', async e => {
   if (e.target.classList.contains('referPopupWrapper')) {
-    e.target.children[1].children[2].value = '';
+    referPopupWrapper.children[1].children[3].value = '';
+    removeReferToUser();
+
     referPopupWrapper.classList.toggle('dis-none');
     referPopupWrapper.classList.toggle('dis-flex');
   } else if (e.target.classList.contains('agentBtn')) {
@@ -602,11 +604,9 @@ const handlePopupSubmit = function () {
       agents: [newAgents.dataset.userId],
       deadline: newDeadline.value
     };
-    console.log(payload);
 
     // POST task to DB
     const tskData = await model.addNewTask(payload);
-    console.log(tskData);
 
     // NO ERROR HANDLING APPLIED HERE BUG
     // show success message (with a timer)
@@ -636,17 +636,29 @@ const handlePopupSubmit = function () {
         .querySelector('.nav__item-active')
         .classList.contains('my__tasks')
     );
+    const isAssignedToSelf = tskData.creator === newAgents.dataset.userId;
 
     if (
       document
         .querySelector('.nav__item-active')
-        .classList.contains('my__tasks')
+        .classList.contains('my__tasks') &&
+      isAssignedToSelf
     ) {
       taskContainerEl.insertAdjacentHTML(
         'beforeend',
         generateSingleTask(false, tskData)
       );
-      incrementTaskNum();
+      incrementTaskNum(1);
+    } else if (
+      document
+        .querySelector('.nav__item-active')
+        .classList.contains('assigned__tasks') &&
+      !isAssignedToSelf
+    ) {
+      taskContainerEl.insertAdjacentHTML(
+        'beforeend',
+        AssignedToMarkup([tskData])
+      );
     }
 
     // =====================================
@@ -669,18 +681,16 @@ const clearAddTaskPopup = function () {
   const newTitle = document.querySelector('.title-input');
   const newDesc = document.getElementById('descInput');
   const newDeadline = document.getElementById('dateInput');
-  const newAgents = document.querySelector('.user__name');
-
   newTitle.value = '';
   newDesc.value = '';
   newDeadline.value = '';
   removePopupUsers();
 };
 
-const incrementTaskNum = function () {
+const incrementTaskNum = function (num) {
   const taskHint = document.querySelector('.hint-text');
   taskHint.children[0].textContent =
-    Number(taskHint.children[0].textContent) + 1;
+    Number(taskHint.children[0].textContent) + num;
   // taskHint.children[0].textContent = Number(taskHint.children[0].textContent)++;
 };
 
@@ -737,7 +747,8 @@ const generateSingleTask = function (status, task) {
           .join('')}
       </div>
       <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
-          <button class="referBtn">ارجاع</button>
+          ${status ? `` : `<button class="referBtn">ارجاع</button>`}
+          ${status ? `` : `<button class="fa fa-times deleteTaskBtn"></button>`}
     </div>
     </li>
     `;
@@ -780,5 +791,6 @@ export default {
   handleReferralsBtn,
   handleConfirmPopup,
   renderConfirmPopup,
-  removeTaskEl
+  removeTaskEl,
+  incrementTaskNum
 };
