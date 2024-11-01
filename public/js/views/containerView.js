@@ -100,9 +100,11 @@ referPopupWrapper.addEventListener('click', async e => {
     referPopupWrapper.classList.toggle('dis-flex');
     e.target.parentElement.previousElementSibling.value = '';
   } else if (e.target.classList.contains('submitBtn')) {
+    const userId = document.querySelector('.user__name').dataset.userId;
+
     const payload = {
       taskId: referPopupWrapper.children[0].value,
-      newAgent: ''
+      newAgent: [userId]
     };
     const response = await postAPI('/tasks/changetaskagent', payload);
 
