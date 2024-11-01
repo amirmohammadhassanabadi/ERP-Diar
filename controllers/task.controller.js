@@ -50,17 +50,18 @@ exports.getReferredTasks = async (req, res) => {
   try {
     let tasks = await Task.find().populate("creator");
     
-    tasks = tasks.forEach((task) => {
-      let taskAgents = task.agents;
-      taskAgents.pop();
-      if (task.creator.id == req.user.id && task.creator.id != task.agents[task.agents.length - 1] || taskAgents.includes(req.user.id)) {
+    tasks = tasks.filter((task, index) => {
+      if ((task.creator.id == req.user.id && task.creator.id != task.agents[task.agents.length - 1]) || task.agents.slice(0, task.agents.length - 1).includes(req.user.id)) {
+        console.log(index);
         return task;
       }
     });
+    console.log(tasks);
+    
 
-    // return res
-    //   .status(200)
-    //   .json({ statusCode: 200, data: neededTasksInfo(tasks) });
+    return res
+      .status(200)
+      .json({ statusCode: 200, data: neededTasksInfo(tasks) });
   } catch (error) {
     res
       .status(500)
