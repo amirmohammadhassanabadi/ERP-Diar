@@ -226,7 +226,7 @@ main {
 }
 
 .task__container {
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
   /* direction: ltr; */
   overflow-y: auto;
   height: 90%;
@@ -315,10 +315,9 @@ main {
 .initial::after {
   content: attr(data-full-name);
   position: absolute;
-  bottom: 100%; /* Position above the profile */
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0.4rem;
+  top: -5%;
+  left: 90%;
+  padding: 0.2rem 0.4rem;
   background-color: var(--color-primary);
   color: var(--color-white);
   border-radius: 0.5rem;
