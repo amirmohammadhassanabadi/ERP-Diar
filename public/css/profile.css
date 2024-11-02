@@ -156,6 +156,7 @@ menu ul::after {
 .collapse {
   width: 0;
   padding: 0;
+  margin: 0;
 }
 
 /* CONTAINER */

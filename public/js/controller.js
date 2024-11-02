@@ -77,15 +77,17 @@ const controlContainerNav = function (navItem) {
   // 3. load task body according to function input
   if (navItem.classList.contains('my__tasks')) {
     // TEMP remove add task btn
-    document.querySelector('.task__btn-add').classList.remove('hidden');
+    document
+      .querySelector('.c_body__head')
+      .classList.remove('hidden', 'collapse');
     containerView.navChangeTaskReload(false);
   } else if (navItem.classList.contains('completed__tasks')) {
     // TEMP remove add task btn
-    document.querySelector('.task__btn-add').classList.add('hidden');
+    document.querySelector('.c_body__head').classList.add('hidden', 'collapse');
     containerView.navChangeTaskReload(true);
   } else if (navItem.classList.contains('assigned__tasks')) {
     // TEMP remove add task btn
-    document.querySelector('.task__btn-add').classList.add('hidden');
+    document.querySelector('.c_body__head').classList.add('hidden', 'collapse');
     containerView.navChangeAsignedTasks();
   } else console.error('cannot find nav item');
 };
