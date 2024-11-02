@@ -226,14 +226,12 @@ const renderContainerTasks = async function () {
   await view.renderHTML(generateMarkupTasks, parentEl);
 };
 
+// DASHBOARD MENU CHANGE REMINDER
 const renderContainerDashboard = async function () {
   // clear container
-  view.clear(parentEl);
-
+  // view.clear(parentEl);
   // render task container
-  await view.renderHTML(generateMarkupDashboard, parentEl);
-
-  // initialize dashboard event handlers REMINDER
+  // await view.renderHTML(generateMarkupDashboard, parentEl);
 };
 
 const generateMarkupTasks = async function (status = false) {
