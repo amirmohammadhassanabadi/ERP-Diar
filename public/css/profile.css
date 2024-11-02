@@ -62,29 +62,17 @@ header .header__profile {
   flex-direction: row-reverse;
 }
 
+/* complete later with actual data */
 #profile_img {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  margin-left: 2rem;
   text-align: center;
   line-height: 2rem;
   color: var(--color-white);
   background-color: #e0cfaf; /* user profile color*/
   margin-right: 0.5rem;
-}
-
-/* complete later with actual data */
-header .header__profile #profile_img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin-left: 2rem;
-  text-align: center;
-  line-height: 2rem;
-  color: var(--color-white);
-  background-color: #e0cfaf; /* user profile color*/
-  margin-right: 0.5rem;
+  display: inline-block;
 }
 
 .logout__btn {
@@ -102,7 +90,23 @@ header .header__profile #profile_img {
   top: 0.2rem;
 }
 
-header .header__profile span:nth-child(3) {
+/* header .header__profile span:nth-child(3) {
+} */
+
+.user__profile {
+  margin-left: 2rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  direction: ltr;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.user__profile:hover {
+  background-color: var(--color-grad-1);
+}
+
+.user__profile span:nth-child(2) {
   color: #ddd;
 }
 
