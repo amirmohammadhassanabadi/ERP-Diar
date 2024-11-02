@@ -29,6 +29,7 @@ button {
   font-family: inherit;
   transition: 0.2s;
   cursor: pointer;
+  transition: all .3s ease;
 }
 
 li {

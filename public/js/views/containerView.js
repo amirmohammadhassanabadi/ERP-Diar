@@ -801,6 +801,8 @@ const handleDeleteTask = async function (taskId) {
   }
 };
 
+document.querySelector(".task-info-desc").value = "test test test"
+
 const removeTaskEl = taskEl => view.removeHTML(taskEl);
 
 export default {
