@@ -16,6 +16,32 @@ header .menu__btn {
   cursor: pointer;
 }
 
+.animation {
+  animation: spin 0.5s cubic-bezier(0.85, 0, 0.15, 1) 0s forwards;
+}
+
+.animation-reverse {
+  animation: rspin 0.5s cubic-bezier(0.85, 0, 0.15, 1) 0s forwards;
+}
+
+@keyframes rspin {
+  0% {
+    transform: rotate(-90deg); /* Starting position */
+  }
+  100% {
+    transform: rotate(0deg); /* End position (270 degrees from the right) */
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Starting position */
+  }
+  100% {
+    transform: rotate(-90deg); /* End position (270 degrees from the right) */
+  }
+}
+
 header .header__logo {
   width: 50px;
   height: 40px;
@@ -81,20 +107,31 @@ main {
 
 /* SIDE MENU */
 .menu {
-  width: 12%;
+  width: 12vw;
   padding: 0.5%;
   position: relative;
   z-index: 2;
   background-color: var(--color-white);
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
   border-left: 1px solid var(--color-gray-light);
+  transition: all 0.3s ease-in-out;
+}
+
+.noOpacity {
+  opacity: 0;
 }
 
 .menu ul {
   list-style: none;
+  transition: all 0.3s ease-in-out;
+}
+
+menu ul::after {
+  opacity: 0;
 }
 
 .menu li {
+  white-space: nowrap;
   padding: 1rem 1.5rem 1rem 0;
   cursor: pointer;
 }
@@ -117,19 +154,20 @@ main {
 }
 
 .collapse {
-  display: none;
-  width: 0%;
+  width: 0;
+  padding: 0;
 }
 
 /* CONTAINER */
 .container {
-  width: 88%;
+  transition: width 0.3s ease-in-out;
+  width: 88vw;
   /* overflow-y: auto; */
   background-color: var(--color-gray-light-1);
 }
 
 .fullscreen {
-  width: 100%;
+  width: 100vw;
 }
 
 /* CONTAINER HEADER*/
@@ -144,9 +182,9 @@ main {
 .c_header-text {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 1rem;
-  margin-right: 2rem;
-  margin-top: 0.3rem;
+  margin-bottom: 0.8rem;
+  margin-right: 1.5rem;
+  margin-top: 0.4rem;
 }
 
 .c_header__nav {
@@ -158,13 +196,12 @@ main {
 
 .nav__item {
   color: var(--color-grad-4);
-
   cursor: pointer;
   padding: 0 2rem 1rem 2rem;
-  /* padding-bottom: 0.5rem; */
+  border-bottom: 4px solid var(--color-grad-1);
 }
 .nav__item-active {
-  border-bottom: 3px solid var(--color-secondary);
+  border-bottom: 4px solid var(--color-secondary);
 }
 
 .nav__item:hover {
@@ -193,8 +230,8 @@ main {
 .task__btn-add {
   background-color: var(--color-grad-2);
   color: var(--color-white);
-  padding: 0.5rem;
-  font-size: 120%;
+  padding: 0.6rem 0.8rem;
+  font-size: 130%;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 0.2rem;
   transition: 0.3s;
@@ -204,6 +241,7 @@ main {
   background-color: var(--color-grad-3);
 }
 
+/* REMINDER */
 .task__btn-filter {
   color: var(--color-gray-dark-1);
   align-items: left;
@@ -229,7 +267,7 @@ main {
   margin-top: 1rem;
   /* direction: ltr; */
   overflow-y: auto;
-  height: 90%;
+  height: 85%;
 }
 
 .task:nth-child(1) {
@@ -272,7 +310,7 @@ main {
 .referBtn {
   margin-right: 0.5rem;
   padding: 0.5rem 1rem;
-  background-color: var(--navy);
+  background-color: var(--color-grad-1);
   color: var(--color-white);
   border: 0;
   transition: all 0.3s ease;
@@ -280,7 +318,7 @@ main {
 }
 
 .referBtn:hover {
-  background-color: #6aa7e9;
+  background-color: var(--color-grad-2);
 }
 
 .deleteTaskBtn {
@@ -324,7 +362,6 @@ main {
   white-space: nowrap;
   opacity: 0;
   display: none;
-  transition: opacity 0.2s;
 }
 
 .initial:hover::after {
@@ -537,10 +574,9 @@ input[type='checkbox'] {
 
 .user__border {
   border: 2px solid var(--color-gray-light-3);
-  transition: 0.2s ease;
 }
 .user__border:hover {
-  border: 2px solid var(--color-grad-3);
+  border: 3px solid var(--color-grad-3);
 }
 
 .user__close__btn {
@@ -568,11 +604,22 @@ input[type='checkbox'] {
 }
 
 #dateInput {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: var(--color-gray-light-1);
+  border: 2px solid var(--color-gray-light-3);
+  border-radius: 0.25rem;
+  transition: 0.3s ease-in-out;
+  margin-left: 1rem;
 }
 
 .agent-btn {
-  padding: 0.5rem 1rem;
+  background-color: var(--color-gray-light-1);
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: 2px solid var(--color-gray-light-3);
+  border-radius: 0.25rem;
+  transition: 0.3s ease-in-out;
 }
 
 .cancel__btn,
@@ -636,7 +683,7 @@ input[type='checkbox'] {
 }
 
 .referPopupWrapper > .referPopup > button.agentBtn {
-  padding: 1rem calc(50% - 20rem);
+  padding: 1rem 5rem;
   margin-bottom: 1rem;
   /* padding: 1rem; */
   background-color: var(--navy);

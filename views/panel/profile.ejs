@@ -21,8 +21,8 @@
 
 <body>
   <header>
-    <div class="menu__btn">
-      <img src="/img/icons/icon-menu.png" alt="menu-icon" />
+    <div class="menu__btn" data-animation="0">
+      <i class="fa-solid fa-bars fa-2xl" style="color: #cfab5d;"></i>
     </div>
     <img class="header__logo" src="/img/logo/logo-low.png" alt="logo-png" />
     <div class="header__profile">
@@ -43,12 +43,12 @@
       <ul class="menu__list">
         <li class="menu__item menu__dashboard">
           <i class="fa-solid fa-house" style="color: #cf564c"></i>
-          داشبورد
+          <span>داشبورد</span>
         </li>
         <div class="divider"></div>
         <li class="menu__item menu__tasks">
           <i class="fa-solid fa-circle-check" style="color: #2c9e66"></i>
-          وظایف
+          <span>وظایف</span>
         </li>
       </ul>
     </div>
@@ -68,9 +68,10 @@
           <textarea name="descInput" id="descInput" placeholder="توضیحات"></textarea>
         </div>
         <ul class="options__list">
-          <input type="text" data-jdp data-jdp-only-date id="dateInput" placeholder="زمان اتمام وظیفه">
+          <input class="task__btn" type="text" data-jdp data-jdp-only-date id="dateInput" placeholder="زمان اتمام وظیفه"
+            autocomplete="off">
           <div style="display: inline-block;">
-            <button class="agent-btn" tabindex="0">
+            <button class="agent-btn task__btn" tabindex="0">
               <i class="fa-solid fa-user fa-xl" style="color: #888888"></i>
               مسئول انجام
             </button>

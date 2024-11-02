@@ -97,13 +97,18 @@ referPopupWrapper.addEventListener('click', async e => {
         'مشکلی پیش آمده لطفا دوباره تلاش کنید'
       );
     }
+    console.log(document.querySelector('.referPopup > textarea').value);
   } else if (e.target.classList.contains('cancelBtn')) {
     referPopupWrapper.classList.toggle('dis-none');
     referPopupWrapper.classList.toggle('dis-flex');
     e.target.parentElement.previousElementSibling.value = '';
-  } else if (e.target.classList.contains('submitBtn')) {
-    const userId = document.querySelector('.user__name').dataset.userId;
-
+    removeReferToUser();
+  } else if (
+    e.target.classList.contains('submitBtn') &&
+    document.querySelector('.user__name')?.dataset.userId &&
+    document.querySelector('.referPopup > textarea').value
+  ) {
+    const userId = document.querySelector('.user__name')?.dataset.userId;
     console.log('clicked');
 
     const payload = {
@@ -114,6 +119,20 @@ referPopupWrapper.addEventListener('click', async e => {
     const response = await postAPI('/tasks/changetaskagent', payload);
 
     console.log(response);
+    // 1. remove clicked task
+    const targetTask = [...document.querySelectorAll('.task')].filter(
+      taskEl => taskEl.dataset.taskId === referPopupWrapper.children[0].value
+    );
+
+    targetTask[0].remove();
+
+    // 2. empty fields
+    e.target.parentElement.previousElementSibling.value = '';
+    removeReferToUser();
+
+    // 3. hide overlay wrapper
+    referPopupWrapper.classList.toggle('dis-none');
+    referPopupWrapper.classList.toggle('dis-flex');
   }
 });
 
@@ -178,7 +197,13 @@ const handlereferToCloseBtn = function () {
 const removeReferToUser = function () {
   const userDisplayEl = document.querySelectorAll('.user__display')[1];
   const agentBtn = document.querySelector('.agentBtn');
+  const userList = document.getElementById('referUserPoppup');
+  console.log(userList);
 
+  if (userList?.classList.contains('dis-block')) {
+    userList.classList.remove('dis-block');
+    userList.classList.add('dis-none');
+  }
   userDisplayEl.classList.remove('user__border');
   view.clear(userDisplayEl);
   agentBtn.classList.remove('dis-none');
@@ -225,10 +250,10 @@ const generateMarkupTasks = async function (status = false) {
       <div class="container__body">
         <div class="c_body__head">
           <button class="task__btn-add task__btn">
-            <i class="fa-solid fa-plus fa-2xs" style="color: #ffffff"></i>
-            ایجاد وظیفه
+            <i class="fa-solid fa-plus fa-lg" style="color: #ffffff"></i>
+            <strong>ایجاد وظیفه</strong>
           </button>
-          <button class="task__btn task__btn-filter">
+          <button class="task__btn task__btn-filter hidden">
             <img src="/img/icons/sort-icon.png" alt="sort-icon" />
             فیلتر نمایش وظایف
           </button>
@@ -495,7 +520,7 @@ const generateUserReferralMarkup = function (id, users) {
      .slice(0, 2)
      .map(word => word[0].toUpperCase())
      .join(' ')} </div>
-    <i class="user__close__btn hidden fa-duotone fa-solid fa-xmark fa-s"></i>
+    <i class="user__close__btn hidden fa-duotone fa-solid fa-xmark fa-xl"></i>
 
   `;
 };
