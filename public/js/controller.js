@@ -75,13 +75,19 @@ const controlContainerNav = function (navItem) {
   // 2. (ASYNC) render placeholder data REMINDER
 
   // 3. load task body according to function input
-  if (navItem.classList.contains('my__tasks'))
+  if (navItem.classList.contains('my__tasks')) {
+    // TEMP remove add task btn
+    document.querySelector('.task__btn-add').classList.remove('hidden');
     containerView.navChangeTaskReload(false);
-  else if (navItem.classList.contains('completed__tasks'))
+  } else if (navItem.classList.contains('completed__tasks')) {
+    // TEMP remove add task btn
+    document.querySelector('.task__btn-add').classList.add('hidden');
     containerView.navChangeTaskReload(true);
-  else if (navItem.classList.contains('assigned__tasks'))
+  } else if (navItem.classList.contains('assigned__tasks')) {
+    // TEMP remove add task btn
+    document.querySelector('.task__btn-add').classList.add('hidden');
     containerView.navChangeAsignedTasks();
-  else console.error('cannot find nav item');
+  } else console.error('cannot find nav item');
 };
 
 const controlMenuBtn = function () {

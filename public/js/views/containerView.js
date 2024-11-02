@@ -97,6 +97,7 @@ referPopupWrapper.addEventListener('click', async e => {
         'مشکلی پیش آمده لطفا دوباره تلاش کنید'
       );
     }
+    console.log(document.querySelector('.referPopup > textarea').value);
   } else if (e.target.classList.contains('cancelBtn')) {
     referPopupWrapper.classList.toggle('dis-none');
     referPopupWrapper.classList.toggle('dis-flex');
