@@ -97,8 +97,38 @@ const controlMenuBtn = function () {
   menuView.collapseMenu();
 };
 
+const controlProfileBtn = async function () {
+  //1. change btn state to active
+  document.querySelector('.user__profile').classList.add('profile__btn-active');
+
+  // chcek if info already open
+  const infoList = document.querySelector('.profile__info__list');
+
+  if (!infoList.classList.contains('hidden')) return;
+  infoList.classList.remove('hidden');
+};
+
+const controlChangePass = async function () {
+  window.location.href = `${window.location.origin}/auth/changepassword`;
+};
+
+const controlUserInfoClosure = function () {
+  const infoList = document.querySelector('.profile__info__list');
+  const profBtn = document.querySelector('.profile__btn-active');
+  if (!profBtn) return;
+
+  // hide info list
+  infoList.classList.add('hidden');
+
+  // take off active el
+  profBtn.classList.remove('profile__btn-active');
+};
+
 const init = function () {
   navView.handleMenuBtn(controlMenuBtn);
+  navView.handleProfileBtn(controlProfileBtn);
+  navView.handlePassChangeBtn(controlChangePass);
+  navView.handleUserInfoClosure(controlUserInfoClosure);
   menuView.handleMenuChange(controlMenuChange);
   // containerView.localStorageInit();
   // containerView.handleTaskAddBtn();
