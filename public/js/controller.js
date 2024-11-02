@@ -6,6 +6,9 @@ import model from '/js/frontModel.js';
 // };
 
 const controlMenuChange = async function (menu) {
+  // REMOVE DASHBOARD NAV FUNCTIONALITY
+  if (menu.classList.contains('menu__dashboard')) return;
+
   // 1. switch active class
   menuView.switchActiveEl(menu);
 

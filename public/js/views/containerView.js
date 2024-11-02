@@ -133,6 +133,9 @@ referPopupWrapper.addEventListener('click', async e => {
     // 3. hide overlay wrapper
     referPopupWrapper.classList.toggle('dis-none');
     referPopupWrapper.classList.toggle('dis-flex');
+
+    //4. decrement task count
+    incrementTaskNum(-1);
   }
 });
 
@@ -198,7 +201,6 @@ const removeReferToUser = function () {
   const userDisplayEl = document.querySelectorAll('.user__display')[1];
   const agentBtn = document.querySelector('.agentBtn');
   const userList = document.getElementById('referUserPoppup');
-  console.log(userList);
 
   if (userList?.classList.contains('dis-block')) {
     userList.classList.remove('dis-block');
@@ -310,7 +312,6 @@ const navChangeTaskReload = async function (status) {
 
 const navChangeAsignedTasks = async function () {
   const data = await getAPI('/tasks/getrefferedtasks');
-  console.log(data.data);
 
   const taskContainer = parentEl.querySelector('.task__container');
 
