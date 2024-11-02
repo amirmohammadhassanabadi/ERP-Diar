@@ -13,7 +13,15 @@ header {
 }
 
 header .menu__btn {
+  position: absolute;
   cursor: pointer;
+}
+
+.menu__btn__container {
+  width: 30vh;
+  display: flex;
+  justify-content: right;
+  align-items: center;
 }
 
 .animation {
@@ -48,6 +56,7 @@ header .header__logo {
 }
 
 header .header__profile {
+  width: 30vh;
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
