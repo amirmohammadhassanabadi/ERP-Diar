@@ -68,52 +68,109 @@
     </div>
   </main>
 
-  <div class="overlay hidden">
-    <div class="popup__container">
-      <!-- <div class="popup--task-content"> -->
-      <div class="popup__upside">
-        <p class="popup-text">ایجاد وظیفه</p>
-        <div class="task__title">
-          <p class="title-text">عنوان فعالیت جدید</p>
-          <input class="title-input" type="text" placeholder="عنوان فعالیت جدید..." />
-          <p class="title-text">توضیحات</p>
-          <textarea name="descInput" id="descInput" placeholder="توضیحات"></textarea>
-        </div>
-        <ul class="options__list">
-          <input class="task__btn" type="text" data-jdp data-jdp-only-date id="dateInput" placeholder="زمان اتمام وظیفه"
-            autocomplete="off">
-          <div style="display: inline-block;">
-            <button class="agent-btn task__btn" tabindex="0">
-              <i class="fa-solid fa-user fa-xl" style="color: #888888"></i>
-              مسئول انجام
-            </button>
-            <div class="user__display">
-            </div>
-          </div>
-          <div class="popup__overlay hidden"></div>
+        <span id="profile_img"></span>
+        <span id="profile_name"></span>
+      </div>
+    </header>
+    <main>
+      <div class="menu">
+        <ul class="menu__list">
+          <li class="menu__item menu__dashboard">
+            <i class="fa-solid fa-house" style="color: #cf564c"></i>
+            <span>داشبورد</span>
+          </li>
+          <div class="divider"></div>
+          <li class="menu__item menu__tasks">
+            <i class="fa-solid fa-circle-check" style="color: #2c9e66"></i>
+            <span>وظایف</span>
+          </li>
         </ul>
       </div>
-      <div class="popup__downside">
-        <button class="cancel__btn">انصراف</button>
-        <button class="submit__btn">ثبت</button>
-        <!-- onclick="getInputValue()" -->
-      </div>
-      <!-- </div> -->
-    </div>
-  </div>
+      <div class="container"></div>
+    </main>
 
-  <div class="confirm__overlay hidden">
-    <div class="popup__container">
-      <div class="popup__confirm__up">
-        <p class="popup-text">آیا از این تصمیم مطمئن هستید؟</p>
-      </div>
-      <div class="popup__confirm__down">
-        <button class="confirm__btn">بله</button>
-        <button class="noconfirm__btn">خیر</button>
-
+    <div class="overlay hidden">
+      <div class="popup__container">
+        <!-- <div class="popup--task-content"> -->
+        <div class="popup__upside">
+          <p class="popup-text">ایجاد وظیفه</p>
+          <div class="task__title">
+            <p class="title-text">عنوان فعالیت جدید</p>
+            <input
+              class="title-input"
+              type="text"
+              placeholder="عنوان فعالیت جدید..."
+            />
+            <p class="title-text">توضیحات</p>
+            <textarea
+              name="descInput"
+              id="descInput"
+              placeholder="توضیحات"
+            ></textarea>
+          </div>
+          <ul class="options__list">
+            <input
+              class="task__btn"
+              type="text"
+              data-jdp
+              data-jdp-only-date
+              id="dateInput"
+              placeholder="زمان اتمام وظیفه"
+              autocomplete="off"
+            />
+            <div style="display: inline-block">
+              <button class="agent-btn task__btn" tabindex="0">
+                <i class="fa-solid fa-user fa-xl" style="color: #888888"></i>
+                مسئول انجام
+              </button>
+              <div class="user__display"></div>
+            </div>
+            <div class="popup__overlay hidden"></div>
+          </ul>
+        </div>
+        <div class="popup__downside">
+          <button class="cancel__btn">انصراف</button>
+          <button class="submit__btn">ثبت</button>
+          <!-- onclick="getInputValue()" -->
+        </div>
+        <!-- </div> -->
       </div>
     </div>
-  </div>
+
+    <div class="confirm__overlay hidden">
+      <div class="popup__container">
+        <div class="popup__confirm__up">
+          <p class="popup-text">آیا از این تصمیم مطمئن هستید؟</p>
+        </div>
+        <div class="popup__confirm__down">
+          <button class="confirm__btn">بله</button>
+          <button class="noconfirm__btn">خیر</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="referPopupWrapper dis-none">
+      <input type="hidden" />
+      <div class="referPopup">
+        <h3>ارجاع تسک</h3>
+        <button class="agentBtn">
+          مسئول انجام
+          <div id="referUserPoppup" class="dis-none"></div>
+        </button>
+        <div class="user__display"></div>
+        <textarea
+          name="report"
+          id="reportTestarea"
+          placeholder="توضیحات"
+        ></textarea>
+
+        <div class="btn-wrapper">
+          <button class="cancelBtn">انصراف</button>
+          <button class="submitBtn">ثبت</button>
+        </div>
+      </div>
+    </div>
+
 
   <div class="overlay__changepass hidden">
     <div class="popup__container__changepass">
@@ -143,29 +200,55 @@
         مسئول انجام
         <div id="referUserPoppup" class="dis-none">
 
+    <div id="taskInfowrapper" class="dis-none">
+      <div class="task-info">
+        <div class="top-info">
+          <div class="top-info-right">
+            <h3></h3>
+            <span></span>
+          </div>
 
+
+          <div class="top-info-left">
+            <div>
+              <span> ایجاد شده: </span>
+              <span></span>
+            </div>
+
+            <div>
+              <span> تاریخ اتمام: </span>
+              <span></span>
+            </div>
+          </div>
         </div>
-      </button>
-      <div class="user__display">
-      </div>
-      <textarea name="report" id="reportTestarea" placeholder="توضیحات"></textarea>
 
-      <div class="btn-wrapper">
-        <button class="cancelBtn">
-          انصراف
-        </button>
-        <button class="submitBtn">
-          ثبت
-        </button>
+        <div class="middle-text">
+          <h4>توضیحات</h4>
+          <textarea
+            name="description"
+            class="task-info-desc"
+            disabled
+          ></textarea>
+          <div class="historyBtnWrapper">
+            <button class="referHistoryBtn">
+              تاریخچه ارجاع
+              <div class="historyBox dis-none">
+
+              </div>
+            </button>
+          </div>
+        </div>
+        
       </div>
     </div>
-  </div>
 
-  <%- include("../includes/alert.ejs") %>
+    <%- include("../includes/alert.ejs") %>
 
-    <script src="https://kit.fontawesome.com/7a20fd358e.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/7a20fd358e.js"
+      crossorigin="anonymous"
+    ></script>
     <script type="module" src="/js/controller.js"></script>
     <script src="/js/tasks/addTask.js"></script>
-</body>
-
+  </body>
 </html>

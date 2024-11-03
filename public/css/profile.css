@@ -891,6 +891,141 @@ input[type='checkbox'] {
 #referUserPoppup > div > span {
   margin: 0;
 }
+
+.singleTaskInfoBtn{
+  padding: .7rem 1rem;
+  background-color: var(--color-gray-light-3);
+  color: var(--black);
+  color: var(--white);
+  margin-right: .5rem;
+  border: 0;
+  border-radius: .5rem;
+  line-height: 0;
+}
+
+.done-task{
+  background-color: rgb(216, 255, 216);
+  border-right: 2px solid green;
+}
+
+.done-box{
+  padding: .5rem;
+  background-color: green;
+  color: var(--white);
+  margin-right: 1rem;
+}
+
+.singleTaskInfoBtn:hover{
+  background-color: var(--color-gray-dark-1);
+}
+
+#taskInfowrapper{
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 4;
+}
+
+#taskInfowrapper > .task-info{
+  padding: 1.5rem;
+  width: 50%;
+  background-color: #f0f0f0;
+}
+
+#taskInfowrapper > .task-info > .top-info > .top-info-right > h3{
+  font-size: 1.5rem;
+}
+
+#taskInfowrapper > .task-info > .top-info > .top-info-right > span{
+  color: var(--color-gray-dark-1);
+}
+
+#taskInfowrapper > .task-info > .top-info {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#taskInfowrapper > .task-info > .top-info > .top-info-left {
+  display: flex;
+  flex-direction: column;
+}
+
+#taskInfowrapper > .task-info > .top-info > .top-info-left > div > span:nth-child(1){
+  color: var(--color-gray-dark-1);
+}
+
+#taskInfowrapper > .task-info > .middle-text > h4{
+  margin-bottom: 0.5rem;
+}
+
+#taskInfowrapper > .task-info > .middle-text > textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+}
+
+.historyBtnWrapper{
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.referHistoryBtn{
+  padding: 1rem;
+  width: 50%;
+  background-color: var(--light-gray);
+  border: 0;
+  color: var(--black);
+  position: relative;
+}
+
+.referHistoryBtn:hover{
+  background-color: var(--color-gray-light-3);
+}
+
+.referHistoryBtn > .historyBox{
+  width: 100%;
+  height: fit-content;
+  padding: 1rem;
+  max-height: 200px;
+  overflow: auto;
+  position: absolute;
+  right: 0;
+  top: 110%;
+  background-color: var(--color-gray-light-2);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.referHistoryBtn > .historyBox >.historyItem{
+  background-color: var(--white-bg);
+  margin-bottom: 1rem;
+}
+
+.referHistoryBtn > .historyBox >.historyItem > .person-info-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem .5rem;
+  border-bottom: 1px solid var(--black);
+}
+
+.referHistoryBtn > .historyBox >.historyItem > .desc-item{
+  padding: .5rem;
+}
+
+.referHistoryBtn > .historyBox >.historyItem > .desc-item > h5{
+  margin-bottom: .5rem;
+}
+
+.referHistoryBtn > .historyBox >.historyItem > .desc-item > p{
+  text-align: justify;
+  font-size: .9rem;
+}
 /*  RESPONSIVE  */
 
 @media (max-width: 1024px) {

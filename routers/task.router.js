@@ -15,6 +15,7 @@ taskRouter.post("/changestatus", JWT.validateToken, taskController.changeTaskSta
 taskRouter.delete("/deletetask/:id", JWT.validateToken, taskController.deleteTask); 
 taskRouter.post("/changetaskagent", JWT.validateToken, taskController.referTaskAgent); // Not Tested
 taskRouter.get("/subordinatetasks", JWT.validateToken, taskController.getSubordinateTask); // Not Tested
+taskRouter.get("/taskinfo/:taskid", JWT.validateToken, taskController.getTaskInfo); // Not Tested
 
 module.exports = {
   taskRouter,
