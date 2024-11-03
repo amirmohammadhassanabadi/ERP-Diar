@@ -56,7 +56,6 @@ header .header__logo {
 }
 
 header .header__profile {
-  width: 30vh;
   display: flex;
   align-items: center;
   flex-direction: row-reverse;

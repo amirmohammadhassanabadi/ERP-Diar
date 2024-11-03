@@ -1,75 +1,54 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="shortcut icon" href="/img/logo/logo-low.png" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"
+    ></script>
+    <link rel="stylesheet" href="/css/config/variables.css" />
+    <link rel="stylesheet" href="/css/includes/top-line.css" />
+    <link rel="stylesheet" href="/css/config/font.css" />
+    <link rel="stylesheet" href="/css/config/reseter.css" />
+    <link rel="stylesheet" href="/css/config/animation.css" />
+    <link rel="stylesheet" href="/css/includes/alert.css" />
+    <link rel="stylesheet" href="/css/config/class.css" />
+    <link rel="stylesheet" href="/css/profile.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile</title>
-  <link rel="shortcut icon" href="/img/logo/logo-low.png" />
-  <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
-  <script type="text/javascript"
-    src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
-  <link rel="stylesheet" href="/css/config/variables.css" />
-  <link rel="stylesheet" href="/css/includes/top-line.css" />
-  <link rel="stylesheet" href="/css/config/font.css" />
-  <link rel="stylesheet" href="/css/config/reseter.css" />
-  <link rel="stylesheet" href="/css/config/animation.css">
-  <link rel="stylesheet" href="/css/includes/alert.css">
-  <link rel="stylesheet" href="/css/config/class.css">
-  <link rel="stylesheet" href="/css/profile.css" />
-</head>
-
-<body>
-  <header>
-    <div class="menu__btn__container">
-      <div class="menu__btn" data-animation="0">
-        <i class="fa-solid fa-bars fa-2xl" style="color: #cfab5d;"></i>
+  <body>
+    <header>
+      <div class="menu__btn__container">
+        <div class="menu__btn" data-animation="0">
+          <i class="fa-solid fa-bars fa-2xl" style="color: #cfab5d"></i>
+        </div>
       </div>
-    </div>
-    <img class="header__logo" src="/img/logo/logo-low.png" alt="logo-png" />
-    <div class="header__profile">
-
-      <form action="/auth/logout" method="get">
-        <button type="submit" class="logout__btn">
-          <span>خروج</span>
-          <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
-        </button>
-      </form>
-      <div class="user__profile">
-        <span id="profile_img"></span>
-        <span id="profile_name"></span>
-      </div>
-      <ul class="profile__info__list hidden">
-        <li>نام و نام خانوادگی: <strong>کسری گلی راد</strong></li>
-        <li>نام کاربری: <strong>kasragolirad</strong></li>
-        <li>
-          <button class="change__pas__btn task__btn">
-            تغییر رمز عبور
+      <img class="header__logo" src="/img/logo/logo-low.png" alt="logo-png" />
+      <div class="header__profile">
+        <form action="/auth/logout" method="get">
+          <button type="submit" class="logout__btn">
+            <span>خروج</span>
+            <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
           </button>
-        </li>
-      </ul>
-    </div>
-  </header>
-  <main>
-    <div class="menu">
-      <ul class="menu__list">
-        <li class="menu__item menu__dashboard">
-          <i class="fa-solid fa-house" style="color: #cf564c"></i>
-          <span>داشبورد</span>
-        </li>
-        <div class="divider"></div>
-        <li class="menu__item menu__tasks">
-          <i class="fa-solid fa-circle-check" style="color: #2c9e66"></i>
-          <span>وظایف</span>
-        </li>
-      </ul>
-    </div>
-    <div class="container">
-    </div>
-  </main>
-
-        <span id="profile_img"></span>
-        <span id="profile_name"></span>
+        </form>
+        <div class="user__profile">
+          <span id="profile_img"></span>
+          <span id="profile_name"></span>
+        </div>
+        <ul class="profile__info__list hidden">
+          <li>نام و نام خانوادگی: <strong>کسری گلی راد</strong></li>
+          <li>نام کاربری: <strong>kasragolirad</strong></li>
+          <li>
+            <button class="change__pas__btn task__btn">تغییر رمز عبور</button>
+          </li>
+        </ul>
       </div>
     </header>
     <main>
@@ -88,6 +67,27 @@
       </div>
       <div class="container"></div>
     </main>
+
+    <!-- <span id="profile_img"></span>
+        <span id="profile_name"></span>
+      </div>
+    </header> -->
+    <!-- <main>
+      <div class="menu">
+        <ul class="menu__list">
+          <li class="menu__item menu__dashboard">
+            <i class="fa-solid fa-house" style="color: #cf564c"></i>
+            <span>داشبورد</span>
+          </li>
+          <div class="divider"></div>
+          <li class="menu__item menu__tasks">
+            <i class="fa-solid fa-circle-check" style="color: #2c9e66"></i>
+            <span>وظایف</span>
+          </li>
+        </ul>
+      </div>
+      <div class="container"></div>
+    </main> -->
 
     <div class="overlay hidden">
       <div class="popup__container">
@@ -171,34 +171,49 @@
       </div>
     </div>
 
-
-  <div class="overlay__changepass hidden">
-    <div class="popup__container__changepass">
-      <div class="popup__changepass__up">
-        <p class="popup-text">تغییر پسورد</p>
-        <p class="pass-text">پسورد قدیمی</p>
-        <input type="password" class="pass-input oldpass-input" type="text" placeholder="پسورد قدیمی..." />
-        <p class="pass-text">پسورد جدید</p>
-        <input type="password" class="pass-input newpass-input" type="text" placeholder="پسورد جدید..." />
-        <p class="pass-text">پسورد جدید</p>
-        <input type="password" class="pass-input newpass__again-input" type="text" placeholder="پسورد جدید..." />
-      </div>
-      <div class="popup__changepass__down">
-        <button class="cancel__pass-btn">انصراف</button>
-        <button class="submit__pass-btn">ثبت</button>
+    <div class="overlay__changepass hidden">
+      <div class="popup__container__changepass">
+        <div class="popup__changepass__up">
+          <p class="popup-text">تغییر پسورد</p>
+          <p class="pass-text">پسورد قدیمی</p>
+          <input
+            type="password"
+            class="pass-input oldpass-input"
+            type="text"
+            placeholder="پسورد قدیمی..."
+          />
+          <p class="pass-text">پسورد جدید</p>
+          <input
+            type="password"
+            class="pass-input newpass-input"
+            type="text"
+            placeholder="پسورد جدید..."
+          />
+          <p class="pass-text">پسورد جدید</p>
+          <input
+            type="password"
+            class="pass-input newpass__again-input"
+            type="text"
+            placeholder="پسورد جدید..."
+          />
+        </div>
+        <div class="popup__changepass__down">
+          <button class="cancel__pass-btn">انصراف</button>
+          <button class="submit__pass-btn">ثبت</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="referPopupWrapper dis-none">
-    <input type="hidden">
-    <div class="referPopup">
-      <h3>
-        ارجاع تسک
-      </h3>
-      <button class="agentBtn">
-        مسئول انجام
-        <div id="referUserPoppup" class="dis-none">
+    <div class="referPopupWrapper dis-none">
+      <input type="hidden" />
+      <div class="referPopup">
+        <h3>ارجاع تسک</h3>
+        <button class="agentBtn">
+          مسئول انجام
+          <div id="referUserPoppup" class="dis-none"></div>
+        </button>
+      </div>
+    </div>
 
     <div id="taskInfowrapper" class="dis-none">
       <div class="task-info">
@@ -207,7 +222,6 @@
             <h3></h3>
             <span></span>
           </div>
-
 
           <div class="top-info-left">
             <div>
@@ -232,13 +246,10 @@
           <div class="historyBtnWrapper">
             <button class="referHistoryBtn">
               تاریخچه ارجاع
-              <div class="historyBox dis-none">
-
-              </div>
+              <div class="historyBox dis-none"></div>
             </button>
           </div>
         </div>
-        
       </div>
     </div>
 
