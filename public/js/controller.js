@@ -6,6 +6,9 @@ import model from '/js/frontModel.js';
 // };
 
 const controlMenuChange = async function (menu) {
+  // REMOVE DASHBOARD NAV FUNCTIONALITY
+  if (menu.classList.contains('menu__dashboard')) return;
+
   // 1. switch active class
   menuView.switchActiveEl(menu);
 
@@ -77,15 +80,17 @@ const controlContainerNav = function (navItem) {
   // 3. load task body according to function input
   if (navItem.classList.contains('my__tasks')) {
     // TEMP remove add task btn
-    document.querySelector('.task__btn-add').classList.remove('hidden');
+    document
+      .querySelector('.c_body__head')
+      .classList.remove('hidden', 'collapse');
     containerView.navChangeTaskReload(false);
   } else if (navItem.classList.contains('completed__tasks')) {
     // TEMP remove add task btn
-    document.querySelector('.task__btn-add').classList.add('hidden');
+    document.querySelector('.c_body__head').classList.add('hidden', 'collapse');
     containerView.navChangeTaskReload(true);
   } else if (navItem.classList.contains('assigned__tasks')) {
     // TEMP remove add task btn
-    document.querySelector('.task__btn-add').classList.add('hidden');
+    document.querySelector('.c_body__head').classList.add('hidden', 'collapse');
     containerView.navChangeAsignedTasks();
   } else console.error('cannot find nav item');
 };
@@ -95,8 +100,48 @@ const controlMenuBtn = function () {
   menuView.collapseMenu();
 };
 
+const controlProfileBtn = async function () {
+  //1. change btn state to active
+  document.querySelector('.user__profile').classList.add('profile__btn-active');
+
+  // chcek if info already open
+  const infoList = document.querySelector('.profile__info__list');
+
+  if (!infoList.classList.contains('hidden')) return;
+  infoList.classList.remove('hidden');
+};
+
+const controlChangePass = async function () {
+  document.querySelector('.overlay__changepass').classList.remove('hidden');
+};
+
+const controlUserInfoClosure = function () {
+  const infoList = document.querySelector('.profile__info__list');
+  const profBtn = document.querySelector('.profile__btn-active');
+  if (!profBtn) return;
+
+  // hide info list
+  infoList.classList.add('hidden');
+
+  // take off active el
+  profBtn.classList.remove('profile__btn-active');
+};
+
+const controlChangePassBtns = function (confirm) {
+  // close panel & empty fields
+  console.log(confirm);
+  const overlayEl = document.querySelector('.overlay__changepass');
+  const containerEl = document.querySelector('.popup__container__changepass');
+  overlayEl.classList.add('hidden');
+
+  // clearChangePassPopup();
+};
+
 const init = function () {
   navView.handleMenuBtn(controlMenuBtn);
+  navView.handleProfileBtn(controlProfileBtn);
+  navView.handlePassChangeBtn(controlChangePass);
+  navView.handleUserInfoClosure(controlUserInfoClosure);
   menuView.handleMenuChange(controlMenuChange);
   // containerView.localStorageInit();
   // containerView.handleTaskAddBtn();
@@ -104,6 +149,7 @@ const init = function () {
   containerView.handlePopupSubmit();
   containerView.handleReferralsBtn();
   containerView.handleOverlayLayer();
+  containerView.handleChangePassBtns(controlChangePassBtns);
   // containerView.handleContainerNav();
 };
 

@@ -7,16 +7,14 @@ import { popupHandler } from "/js/includes/popup.js";
 // get user information
 document.addEventListener("DOMContentLoaded", async () => {
   const userInfo = await getUserInfo();
-  let fullName = "";
-  if (userInfo.fullName.split(" ").length > 1) {
-    fullName =
-      userInfo.fullName.split(" ")[0][0] + userInfo.fullName.split(" ")[1][0];
-  } else {
-    fullName =
-      userInfo.fullName.split(" ")[0][0] + userInfo.fullName.split(" ")[0][1];
-  }
-  document.getElementById("profile_img").innerText = fullName;
-  document.getElementById("profile_name").innerText = userInfo.username;
+
+  document.getElementById('profile_img').innerText =
+    userInfo.username[0] + userInfo.username[1];
+  document.getElementById('profile_name').innerText = userInfo.fullName;
+  const infoList = document.querySelectorAll('.profile__info__list > li');
+  [...infoList][0].children[0].innerText = userInfo.fullName;
+  [...infoList][1].children[0].innerText = userInfo.username;
+
 });
 
 function taskInfoWrapperFiller(wrapper, data) {
@@ -208,8 +206,13 @@ referPopupWrapper.addEventListener("click", async (e) => {
     removeReferToUser();
 
     // 3. hide overlay wrapper
-    referPopupWrapper.classList.toggle("dis-none");
-    referPopupWrapper.classList.toggle("dis-flex");
+
+    referPopupWrapper.classList.toggle('dis-none');
+    referPopupWrapper.classList.toggle('dis-flex');
+
+    //4. decrement task count
+    incrementTaskNum(-1);
+
   }
 });
 
@@ -272,10 +275,11 @@ const handlereferToCloseBtn = function () {
 };
 
 const removeReferToUser = function () {
-  const userDisplayEl = document.querySelectorAll(".user__display")[1];
-  const agentBtn = document.querySelector(".agentBtn");
-  const userList = document.getElementById("referUserPoppup");
-  console.log(userList);
+
+  const userDisplayEl = document.querySelectorAll('.user__display')[1];
+  const agentBtn = document.querySelector('.agentBtn');
+  const userList = document.getElementById('referUserPoppup');
+
 
   if (userList?.classList.contains("dis-block")) {
     userList.classList.remove("dis-block");
@@ -303,14 +307,12 @@ const renderContainerTasks = async function () {
   await view.renderHTML(generateMarkupTasks, parentEl);
 };
 
+// DASHBOARD MENU CHANGE REMINDER
 const renderContainerDashboard = async function () {
   // clear container
-  view.clear(parentEl);
-
+  // view.clear(parentEl);
   // render task container
-  await view.renderHTML(generateMarkupDashboard, parentEl);
-
-  // initialize dashboard event handlers REMINDER
+  // await view.renderHTML(generateMarkupDashboard, parentEl);
 };
 
 const generateMarkupTasks = async function (status = false) {
@@ -388,8 +390,8 @@ const navChangeTaskReload = async function (status) {
 };
 
 const navChangeAsignedTasks = async function () {
-  const data = await getAPI("/tasks/getrefferedtasks");
-  console.log(data.data);
+  const data = await getAPI('/tasks/getrefferedtasks');
+
 
   const taskContainer = parentEl.querySelector(".task__container");
 
@@ -454,6 +456,7 @@ const handleTaskAddBtn = function () {
   }
 };
 
+// SEPARATOR;
 const handleOverlayLayer = function () {
   const overlayEl = document.querySelector(".overlay");
   overlayEl.addEventListener("click", function (e) {
@@ -461,8 +464,9 @@ const handleOverlayLayer = function () {
     if (!(clicked === overlayEl)) return;
     overlayEl.classList.add("hidden");
     clearAddTaskPopup();
-    const popupList = document.querySelector(".popup__overlay");
-    console.log(popupList);
+
+    const popupList = document.querySelector('.popup__overlay');
+
 
     if (popupList && !popupList.classList.contains("hidden"))
       popupList.classList.add("hidden");
@@ -627,6 +631,17 @@ const removePopupUsers = function () {
   agentBtn.classList.remove("hidden");
 };
 
+const handleChangePassBtns = function (handler) {
+  const parentEl = document.querySelector('.popup__changepass__down');
+
+  parentEl.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+
+    btn.classList.contains('submit__pass-btn') ? handler(1) : handler(0);
+  });
+};
+
 const handleCheckbox = function (handler) {
   const parentEl = document.querySelector(".task__container");
   parentEl.addEventListener("click", async function (e) {
@@ -672,6 +687,7 @@ const handleConfirmPopup = function () {
 // popup event handlers
 // close and submit share parentEl => one ev listener for each REFACTOR
 
+// SEPARATOR
 const handlePopupClose = function () {
   const overlayEl = document.querySelector(".overlay");
   const parentEl = document.querySelector(".popup__downside");
@@ -901,4 +917,6 @@ export default {
   renderConfirmPopup,
   removeTaskEl,
   incrementTaskNum,
+  handleChangePassBtns
+
 };
