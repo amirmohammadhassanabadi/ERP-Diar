@@ -33,9 +33,11 @@ document.querySelector('.container').addEventListener('click', async e => {
       e.target.parentElement.parentElement.dataset.taskId;
     referPopupWrapper.classList.toggle('dis-none');
     referPopupWrapper.classList.toggle('dis-flex');
-
-    // const response = await getAPI("/tasks/referenceableusers");
-    // console.log(response);
+  }else if (e.target.classList.contains('taskInfoBtn')){
+    const taskId = e.target.parentElement.parentElement.dataset.taskId;
+    console.log(`/tasks/taskinfo/${taskId}`);
+    
+    const task = await getAPI(`/tasks/taskinfo/${taskId}`);
   }
 });
 
@@ -339,6 +341,9 @@ const AssignedToMarkup = tasks => {
       }</div>
   </div>
   <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
+  <button class="taskInfoBtn">
+    <i class="fas fa-ellipsis-v"></i>
+  </button>
   </div>
  </li>
     </div>
@@ -776,6 +781,9 @@ const generateSingleTask = function (status, task) {
       </div>
       <span class="deadline">${generateDeadlineTxt(task.deadline)}</span>
           ${status ? `` : `<button class="referBtn">ارجاع</button>`}
+          <button class="taskInfoBtn">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
     </div>
     </li>
     `;

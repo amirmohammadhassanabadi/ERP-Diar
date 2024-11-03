@@ -348,3 +348,8 @@ exports.getSubordinateTask = async (req, res) => {
     return res.status(500).json({ statusCode: 500, message: 'internal error' });
   }
 };
+
+exports.getTaskInfo = async (req, res) => {
+  const taskId = req.params.taskid;
+  console.log(taskId);
+}
