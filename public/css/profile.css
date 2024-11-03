@@ -772,6 +772,18 @@ input[type='checkbox'] {
   line-height: 0;
 }
 
+.done-task{
+  background-color: rgb(216, 255, 216);
+  border-right: 2px solid green;
+}
+
+.done-box{
+  padding: .5rem;
+  background-color: green;
+  color: var(--white);
+  margin-right: 1rem;
+}
+
 .singleTaskInfoBtn:hover{
   background-color: var(--color-gray-dark-1);
 }

@@ -403,9 +403,9 @@ const AssignedToMarkup = (tasks) => {
     .map((task) => {
       return `
     <div class="creator-container">
-  <li class="task" data-task-status="${task.status}" data-task-id="${task.id}">
+  <li class="task ${task.status ? "done-task" : ""}" data-task-status="${task.status}" data-task-id="${task.id}">
   <div class="task__right">
-  <span class="task-text">${task.title}</span>
+  <span class="task-text">${task.title} ${task.status ? "<span class='done-box'>انجام شده</span>" : ""}</span>
   </div>
   <div class="task__left">
   <div class="assignedto">
