@@ -780,16 +780,22 @@ input[type='checkbox'] {
   background-color: #f0f0f0;
 }
 
-#taskInfowrapper > .task-info > .top-info > h3{
+#taskInfowrapper > .task-info > .top-info > .top-info-right > h3{
   font-size: 1.5rem;
 }
 
-#taskInfowrapper > .task-info > .top-info > span{
+#taskInfowrapper > .task-info > .top-info > .top-info-right > span{
   color: var(--color-gray-dark-1);
 }
 
 #taskInfowrapper > .task-info > .top-info {
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#taskInfowrapper > .task-info > .top-info > .top-info-left > span:nth-child(1){
+  color: var(--color-gray-dark-1);
 }
 
 #taskInfowrapper > .task-info > .middle-text > h4{
@@ -823,9 +829,12 @@ input[type='checkbox'] {
 
 .referHistoryBtn > .historyBox{
   width: 100%;
+  height: fit-content;
+  max-height: 200px;
+  overflow: auto;
   position: absolute;
   right: 0;
-  top: -100%;
+  top: 110%;
   background-color: var(--white-bg);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
