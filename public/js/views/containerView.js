@@ -372,6 +372,7 @@ const handleTaskAddBtn = function () {
   }
 };
 
+// SEPARATOR;
 const handleOverlayLayer = function () {
   const overlayEl = document.querySelector('.overlay');
   overlayEl.addEventListener('click', function (e) {
@@ -380,7 +381,6 @@ const handleOverlayLayer = function () {
     overlayEl.classList.add('hidden');
     clearAddTaskPopup();
     const popupList = document.querySelector('.popup__overlay');
-    console.log(popupList);
 
     if (popupList && !popupList.classList.contains('hidden'))
       popupList.classList.add('hidden');
@@ -545,14 +545,14 @@ const removePopupUsers = function () {
   agentBtn.classList.remove('hidden');
 };
 
-const handleChangePassBtns = function () {
+const handleChangePassBtns = function (handler) {
   const parentEl = document.querySelector('.popup__changepass__down');
 
   parentEl.addEventListener('click', e => {
     const btn = e.target.closest('button');
     if (!btn) return;
 
-    btn.classList.contains('submit__pass-btn') ? handler(0) : handler(1);
+    btn.classList.contains('submit__pass-btn') ? handler(1) : handler(0);
   });
 };
 
@@ -601,6 +601,7 @@ const handleConfirmPopup = function () {
 // popup event handlers
 // close and submit share parentEl => one ev listener for each REFACTOR
 
+// SEPARATOR
 const handlePopupClose = function () {
   const overlayEl = document.querySelector('.overlay');
   const parentEl = document.querySelector('.popup__downside');

@@ -129,6 +129,12 @@ const controlUserInfoClosure = function () {
 
 const controlChangePassBtns = function (confirm) {
   // close panel & empty fields
+  console.log(confirm);
+  const overlayEl = document.querySelector('.overlay__changepass');
+  const containerEl = document.querySelector('.popup__container__changepass');
+  overlayEl.classList.add('hidden');
+
+  // clearChangePassPopup();
 };
 
 const init = function () {

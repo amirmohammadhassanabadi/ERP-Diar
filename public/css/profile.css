@@ -609,6 +609,14 @@ input[type='checkbox'] {
   margin-bottom: 1rem;
 }
 
+.pass-input {
+  padding: 1rem 0.5rem 0.5rem 1rem;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--color-gray-light-2);
+  margin-bottom: 1rem;
+}
+
 #descInput {
   margin-top: 0.5rem;
   padding: 0.5rem;
