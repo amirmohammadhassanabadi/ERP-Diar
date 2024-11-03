@@ -289,8 +289,8 @@ exports.referTaskAgent = async (req, res) => {
       targetedAgent.department == req.user.department &&
       targetedAgent.level > req.user.level
     ) {
-      task.agents[task.agents.length - 1] = newAgent;
-      task.reports[task.reports.length - 1] = {
+      task.agents[task.agents.length] = newAgent;
+      task.reports[task.reports.length] = {
         description: report,
         writer: req.user.id,
         date: new Date(),

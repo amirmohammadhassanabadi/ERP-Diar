@@ -44,7 +44,7 @@ function taskInfoWrapperFiller(wrapper, data) {
        <div class="person-info-wrapper">
          <div class="history-item-right">
            <span> 2 - </span>
-           <span> سازنده: </span>
+           <span> ارجاع کننده: </span>
            <span> ${data.agents[data.agents.length - 2].fullName} </span>
          </div>
        </div>
