@@ -112,7 +112,7 @@ const controlProfileBtn = async function () {
 };
 
 const controlChangePass = async function () {
-  window.location.href = `${window.location.origin}/auth/changepassword`;
+  // open change pass popup
 };
 
 const controlUserInfoClosure = function () {

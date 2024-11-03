@@ -7,16 +7,13 @@ import { popupHandler } from '/js/includes/popup.js';
 // get user information
 document.addEventListener('DOMContentLoaded', async () => {
   const userInfo = await getUserInfo();
-  let fullName = '';
-  if (userInfo.fullName.split(' ').length > 1) {
-    fullName =
-      userInfo.fullName.split(' ')[0][0] + userInfo.fullName.split(' ')[1][0];
-  } else {
-    fullName =
-      userInfo.fullName.split(' ')[0][0] + userInfo.fullName.split(' ')[0][1];
-  }
-  document.getElementById('profile_img').innerText = fullName;
-  document.getElementById('profile_name').innerText = userInfo.username;
+
+  document.getElementById('profile_img').innerText =
+    userInfo.username[0] + userInfo.username[1];
+  document.getElementById('profile_name').innerText = userInfo.fullName;
+  const infoList = document.querySelectorAll('.profile__info__list > li');
+  [...infoList][0].children[0].innerText = userInfo.fullName;
+  [...infoList][1].children[0].innerText = userInfo.username;
 });
 
 const referPopupWrapper = document.querySelector('.referPopupWrapper');

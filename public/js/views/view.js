@@ -12,3 +12,5 @@ const removeHTML = function (el) {
 };
 
 export default { renderHTML, clear, removeHTML };
+
+// err list : 408 empty title, 409wrong data input
