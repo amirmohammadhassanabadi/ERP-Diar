@@ -292,7 +292,8 @@ exports.referTaskAgent = async (req, res) => {
       task.agents[task.agents.length - 1] = newAgent;
       task.reports[task.reports.length - 1] = {
         description: report,
-        writer: req.user.id
+        writer: req.user.id,
+        date: new Date()
       };
 
       await task.save();
