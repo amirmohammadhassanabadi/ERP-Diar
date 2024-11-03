@@ -7,19 +7,20 @@ const collapseMenu = function () {
   const menuList = document.querySelector('.menu > ul');
   menuList.classList.toggle('noOpacity');
   const menuItemSpans = document.querySelectorAll('.menu__item > span');
-  const menuBtn = document.querySelector('.menu__btn');
+  // const menuBtn = document.querySelector('.menu__btn');
 
-  if (menuBtn.dataset.animation == '0') {
-    menuBtn.classList.add('animation');
-    menuBtn.classList.remove('animation-reverse');
-  } else if (menuBtn.dataset.animation == '1') {
-    menuBtn.classList.remove('animation');
-    menuBtn.classList.add('animation-reverse');
-  }
+  // if (menuBtn.dataset.animation == '0') {
+  //   menuBtn.classList.add('animation');
+  //   menuBtn.classList.remove('animation-reverse');
+  // } else if (menuBtn.dataset.animation == '1') {
+  //   menuBtn.classList.remove('animation');
+  //   menuBtn.classList.add('animation-reverse');
+  // }
 
-  menuBtn.dataset.animation == '0'
-    ? (menuBtn.dataset.animation = '1')
-    : (menuBtn.dataset.animation = '0');
+  // menuBtn.dataset.animation == '0'
+  //   ? (menuBtn.dataset.animation = '1')
+  //   : (menuBtn.dataset.animation = '0');
+
   parentEl.classList.toggle('collapse');
   containerEl.classList.toggle('fullscreen');
   menuItemSpans.forEach(span => span.classList.toggle('hidden'));
