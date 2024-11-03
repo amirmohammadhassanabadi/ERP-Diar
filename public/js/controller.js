@@ -112,7 +112,7 @@ const controlProfileBtn = async function () {
 };
 
 const controlChangePass = async function () {
-  // open change pass popup
+  document.querySelector('.overlay__changepass').classList.remove('hidden');
 };
 
 const controlUserInfoClosure = function () {
