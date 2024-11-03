@@ -25,9 +25,60 @@ function taskInfoWrapperFiller(wrapper, data) {
   wrapper.children[0].children[0].children[1].children[0].children[1].innerText = `${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}`;
   wrapper.children[0].children[0].children[1].children[1].children[1].innerText = `${data.deadline.year}/${data.deadline.month}/${data.deadline.day}`;
   wrapper.children[0].children[1].children[1].value = data.description;
-  
+  let history = "";
+  history += `
+      <div class="historyItem">
+       <div class="person-info-wrapper">
+         <div class="history-item-right">
+           <span> 1 - </span>
+           <span> سازنده: </span>
+           <span> ${data.creator.fullName} </span>
+         </div>
+         <div class="history-item-right">${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}</div>
+       </div>
+     </div>
+    `;
+    if (data.agents.length > 1) {
+      history += `
+      <div class="historyItem">
+       <div class="person-info-wrapper">
+         <div class="history-item-right">
+           <span> 2 - </span>
+           <span> سازنده: </span>
+           <span> ${data.agents[data.agents.length - 2].fullName} </span>
+         </div>
+       </div>
+     </div>
+
+      <div class="historyItem">
+       <div class="person-info-wrapper">
+         <div class="history-item-right">
+           <span> 3 - </span>
+           <span> مسئول انجام: </span>
+           <span> ${data.agents[data.agents.length - 1].fullName} </span>
+         </div>
+       </div>
+     </div>
+      `
+    }else {
+      console.log(data.agents[data.agents.length - 1]);
+      
+      history += `
+      <div class="historyItem">
+       <div class="person-info-wrapper">
+         <div class="history-item-right">
+           <span> 2 - </span>
+           <span> مسئول انجام: </span>
+           <span> ${data.agents[data.agents.length - 1].fullName} </span>
+         </div>
+       </div>
+     </div>
+      `
+    }
+  document.querySelector(".historyBox").innerHTML = history;
 }
 
+const taskInfowrapper = document.getElementById("taskInfowrapper");
 const referPopupWrapper = document.querySelector(".referPopupWrapper");
 document.querySelector(".container").addEventListener("click", async (e) => {
   if (e.target.classList.contains("deleteTaskBtn")) {
@@ -46,7 +97,8 @@ document.querySelector(".container").addEventListener("click", async (e) => {
     const taskId = e.target.parentElement.parentElement.dataset.taskId;
 
     const response = await getAPI(`/tasks/taskinfo/${taskId}`);
-    const taskInfowrapper = document.getElementById("taskInfowrapper");
+    console.log(response);
+    
     if (response.statusCode == 200) {
       taskInfowrapper.classList.toggle("dis-none");
       taskInfowrapper.classList.toggle("dis-flex");
@@ -54,6 +106,15 @@ document.querySelector(".container").addEventListener("click", async (e) => {
     }
   }
 });
+
+taskInfowrapper.addEventListener("click", e => {
+  if (e.target.id == "taskInfowrapper") {   
+    taskInfowrapper.classList.remove("dis-flex")
+    taskInfowrapper.classList.add("dis-none");
+  }else if(e.target.classList.contains("referHistoryBtn")){
+    e.target.children[0].classList.toggle("dis-none");
+  }
+})
 
 function renderReffrencableUsers(users) {
   return users.map((user) => {

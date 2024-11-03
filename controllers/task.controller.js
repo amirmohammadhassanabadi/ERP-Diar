@@ -381,7 +381,11 @@ exports.getTaskInfo = async (req, res) => {
       },
       createdAt: dateConverter.gregorianToSolar(new Date(task.createdAt).getFullYear(), (new Date(task.createdAt).getMonth()) + 1, new Date(task.createdAt).getDate(), "object"),
       deadline: dateConverter.gregorianToSolar(new Date(task.deadline).getFullYear(), (new Date(task.deadline).getMonth()) + 1, new Date(task.deadline).getDate(), "object"),
-      reports: task.reports
+      reports: {
+        description: task.reports.description,
+        writer: task.reports.writer,
+        date: task.reports.date ? dateConverter.gregorianToSolar(new Date(task.reports.date).getFullYear(), (new Date(task.reports.date).getMonth()) + 1, new Date(task.reports.date).getDate(), "object") : null
+      }
     }})
     
   } catch (error) {
