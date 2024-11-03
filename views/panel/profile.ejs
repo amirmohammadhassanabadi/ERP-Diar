@@ -1,248 +1,246 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="shortcut icon" href="/img/logo/logo-low.png" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"
+    ></script>
+    <link rel="stylesheet" href="/css/config/variables.css" />
+    <link rel="stylesheet" href="/css/includes/top-line.css" />
+    <link rel="stylesheet" href="/css/config/font.css" />
+    <link rel="stylesheet" href="/css/config/reseter.css" />
+    <link rel="stylesheet" href="/css/config/animation.css" />
+    <link rel="stylesheet" href="/css/includes/alert.css" />
+    <link rel="stylesheet" href="/css/config/class.css" />
+    <link rel="stylesheet" href="/css/profile.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile</title>
-  <link rel="shortcut icon" href="/img/logo/logo-low.png" />
-  <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
-  <script type="text/javascript"
-    src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
-  <link rel="stylesheet" href="/css/config/variables.css" />
-  <link rel="stylesheet" href="/css/includes/top-line.css" />
-  <link rel="stylesheet" href="/css/config/font.css" />
-  <link rel="stylesheet" href="/css/config/reseter.css" />
-  <link rel="stylesheet" href="/css/config/animation.css">
-  <link rel="stylesheet" href="/css/includes/alert.css">
-  <link rel="stylesheet" href="/css/config/class.css">
-  <link rel="stylesheet" href="/css/profile.css" />
-</head>
+  <body>
+    <header>
+      <div class="menu__btn" data-animation="0">
+        <i class="fa-solid fa-bars fa-2xl" style="color: #cfab5d"></i>
+      </div>
+      <img class="header__logo" src="/img/logo/logo-low.png" alt="logo-png" />
+      <div class="header__profile">
+        <form action="/auth/logout" method="get">
+          <button type="submit" class="logout__btn">
+            <span>خروج</span>
+            <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
+          </button>
+        </form>
 
-<body>
-  <header>
-    <div class="menu__btn" data-animation="0">
-      <i class="fa-solid fa-bars fa-2xl" style="color: #cfab5d;"></i>
-    </div>
-    <img class="header__logo" src="/img/logo/logo-low.png" alt="logo-png" />
-    <div class="header__profile">
-
-      <form action="/auth/logout" method="get">
-        <button type="submit" class="logout__btn">
-          <span>خروج</span>
-          <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
-        </button>
-      </form>
-
-      <span id="profile_img"></span>
-      <span id="profile_name"></span>
-    </div>
-  </header>
-  <main>
-    <div class="menu">
-      <ul class="menu__list">
-        <li class="menu__item menu__dashboard">
-          <i class="fa-solid fa-house" style="color: #cf564c"></i>
-          <span>داشبورد</span>
-        </li>
-        <div class="divider"></div>
-        <li class="menu__item menu__tasks">
-          <i class="fa-solid fa-circle-check" style="color: #2c9e66"></i>
-          <span>وظایف</span>
-        </li>
-      </ul>
-    </div>
-    <div class="container">
-    </div>
-  </main>
-
-  <div class="overlay hidden">
-    <div class="popup__container">
-      <!-- <div class="popup--task-content"> -->
-      <div class="popup__upside">
-        <p class="popup-text">ایجاد وظیفه</p>
-        <div class="task__title">
-          <p class="title-text">عنوان فعالیت جدید</p>
-          <input class="title-input" type="text" placeholder="عنوان فعالیت جدید..." />
-          <p class="title-text">توضیحات</p>
-          <textarea name="descInput" id="descInput" placeholder="توضیحات"></textarea>
-        </div>
-        <ul class="options__list">
-          <input class="task__btn" type="text" data-jdp data-jdp-only-date id="dateInput" placeholder="زمان اتمام وظیفه"
-            autocomplete="off">
-          <div style="display: inline-block;">
-            <button class="agent-btn task__btn" tabindex="0">
-              <i class="fa-solid fa-user fa-xl" style="color: #888888"></i>
-              مسئول انجام
-            </button>
-            <div class="user__display">
-            </div>
-          </div>
-          <div class="popup__overlay hidden"></div>
+        <span id="profile_img"></span>
+        <span id="profile_name"></span>
+      </div>
+    </header>
+    <main>
+      <div class="menu">
+        <ul class="menu__list">
+          <li class="menu__item menu__dashboard">
+            <i class="fa-solid fa-house" style="color: #cf564c"></i>
+            <span>داشبورد</span>
+          </li>
+          <div class="divider"></div>
+          <li class="menu__item menu__tasks">
+            <i class="fa-solid fa-circle-check" style="color: #2c9e66"></i>
+            <span>وظایف</span>
+          </li>
         </ul>
       </div>
-      <div class="popup__downside">
-        <button class="cancel__btn">انصراف</button>
-        <button class="submit__btn">ثبت</button>
-        <!-- onclick="getInputValue()" -->
-      </div>
-      <!-- </div> -->
-    </div>
-  </div>
-  <div class="confirm__overlay hidden">
-    <div class="popup__container">
-      <div class="popup__confirm__up">
-        <p class="popup-text">آیا از این تصمیم مطمئن هستید؟</p>
-      </div>
-      <div class="popup__confirm__down">
-        <button class="confirm__btn">بله</button>
-        <button class="noconfirm__btn">خیر</button>
+      <div class="container"></div>
+    </main>
 
-      </div>
-    </div>
-  </div>
-
-  <div class="referPopupWrapper dis-none">
-    <input type="hidden">
-    <div class="referPopup">
-      <h3>
-        ارجاع تسک
-      </h3>
-      <button class="agentBtn">
-        مسئول انجام
-        <div id="referUserPoppup" class="dis-none">
-
-
-        </div>
-      </button>
-      <div class="user__display">
-      </div>
-      <textarea name="report" id="reportTestarea" placeholder="توضیحات"></textarea>
-
-      <div class="btn-wrapper">
-        <button class="cancelBtn">
-          انصراف
-        </button>
-        <button class="submitBtn">
-          ثبت
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div id="taskInfowrapper">
-    <div class="task-info">
-      <div class="top-info">
-        <div class="top-info-right">
-          <h3>
-            تسک شماره 10
-          </h3>
-          <span>
-            4789h3r87fgbv987y8rvb807hk09ikb-g0j
-          </span>
-        </div>
-
-        <div class="top-info-left">
-          <span>
-            ایجاد شده: 
-          </span>
-          <span>09/12/1403</span>
-        </div>
-      </div>
-
-      <div class="middle-text">
-        <h4>
-          توضیحات
-        </h4>
-        <textarea name="description" class="task-info-desc" disabled></textarea>
-        <div class="historyBtnWrapper">
-          <button class="referHistoryBtn">
-            تاریخچه ارجاع
-            <div class="historyBox">
-              <div class="historyItem">
-                <div class="history-item-right">
-                  <span id="num">
-                    1 - 
-                  </span>
-                  <span  id="name">
-                    مهدی جمالزاده
-                  </span>
-                </div>
-                <div class="history-item-right">
-                  <span>
-                    09/08/1403
-                  </span>
-                </div>
-              </div>
-
-              <div class="historyItem">
-                <div class="history-item-right">
-                  <span>
-                    1 - 
-                  </span>
-                  <span>
-                    مهدی جمالزاده
-                  </span>
-                </div>
-                <div class="history-item-right">
-                  09/08/1403
-                </div>
-              </div>
-
-              <div class="historyItem">
-                <div class="history-item-right">
-                  <span>
-                    1 - 
-                  </span>
-                  <span>
-                    مهدی جمالزاده
-                  </span>
-                </div>
-                <div class="history-item-right">
-                  09/08/1403
-                </div>
-              </div>
-
-              <div class="historyItem">
-                <div class="history-item-right">
-                  <span>
-                    1 - 
-                  </span>
-                  <span>
-                    مهدی جمالزاده
-                  </span>
-                </div>
-                <div class="history-item-right">
-                  09/08/1403
-                </div>
-              </div>
-
-              <div class="historyItem">
-                <div class="history-item-right">
-                  <span>
-                    1 - 
-                  </span>
-                  <span>
-                    مهدی جمالزاده
-                  </span>
-                </div>
-                <div class="history-item-right">
-                  09/08/1403
-                </div>
-              </div>
+    <div class="overlay hidden">
+      <div class="popup__container">
+        <!-- <div class="popup--task-content"> -->
+        <div class="popup__upside">
+          <p class="popup-text">ایجاد وظیفه</p>
+          <div class="task__title">
+            <p class="title-text">عنوان فعالیت جدید</p>
+            <input
+              class="title-input"
+              type="text"
+              placeholder="عنوان فعالیت جدید..."
+            />
+            <p class="title-text">توضیحات</p>
+            <textarea
+              name="descInput"
+              id="descInput"
+              placeholder="توضیحات"
+            ></textarea>
+          </div>
+          <ul class="options__list">
+            <input
+              class="task__btn"
+              type="text"
+              data-jdp
+              data-jdp-only-date
+              id="dateInput"
+              placeholder="زمان اتمام وظیفه"
+              autocomplete="off"
+            />
+            <div style="display: inline-block">
+              <button class="agent-btn task__btn" tabindex="0">
+                <i class="fa-solid fa-user fa-xl" style="color: #888888"></i>
+                مسئول انجام
+              </button>
+              <div class="user__display"></div>
             </div>
-          </button>
+            <div class="popup__overlay hidden"></div>
+          </ul>
+        </div>
+        <div class="popup__downside">
+          <button class="cancel__btn">انصراف</button>
+          <button class="submit__btn">ثبت</button>
+          <!-- onclick="getInputValue()" -->
+        </div>
+        <!-- </div> -->
+      </div>
+    </div>
+    <div class="confirm__overlay hidden">
+      <div class="popup__container">
+        <div class="popup__confirm__up">
+          <p class="popup-text">آیا از این تصمیم مطمئن هستید؟</p>
+        </div>
+        <div class="popup__confirm__down">
+          <button class="confirm__btn">بله</button>
+          <button class="noconfirm__btn">خیر</button>
         </div>
       </div>
-
     </div>
-  </div>
 
-  <%- include("../includes/alert.ejs") %>
+    <div class="referPopupWrapper dis-none">
+      <input type="hidden" />
+      <div class="referPopup">
+        <h3>ارجاع تسک</h3>
+        <button class="agentBtn">
+          مسئول انجام
+          <div id="referUserPoppup" class="dis-none"></div>
+        </button>
+        <div class="user__display"></div>
+        <textarea
+          name="report"
+          id="reportTestarea"
+          placeholder="توضیحات"
+        ></textarea>
 
-    <script src="https://kit.fontawesome.com/7a20fd358e.js" crossorigin="anonymous"></script>
+        <div class="btn-wrapper">
+          <button class="cancelBtn">انصراف</button>
+          <button class="submitBtn">ثبت</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="taskInfowrapper">
+      <div class="task-info">
+        <div class="top-info">
+          <div class="top-info-right">
+            <h3>تسک شماره 10</h3>
+            <span> 4789h3r87fgbv987y8rvb807hk09ikb-g0j </span>
+          </div>
+
+          <div class="top-info-left">
+            <div>
+              <span> ایجاد شده: </span>
+              <span>09/12/1403</span>
+            </div>
+
+            <div>
+              <span> تاریخ اتمام: </span>
+              <span>09/12/1403</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="middle-text">
+          <h4>توضیحات</h4>
+          <textarea
+            name="description"
+            class="task-info-desc"
+            disabled
+          ></textarea>
+          <div class="historyBtnWrapper">
+            <button class="referHistoryBtn">
+              تاریخچه ارجاع
+              <div class="historyBox dis-none">
+
+                <div class="historyItem">
+                  <div class="person-info-wrapper">
+                    <div class="history-item-right">
+                      <span> 1 - </span>
+                      <span> مهدی جمالزاده </span>
+                    </div>
+                    <div class="history-item-right">09/08/1403</div>
+                  </div>
+                  <div class="desc-item">
+                    <h5>
+                      گزارش
+                    </h5>
+                    <p>
+                      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="historyItem">
+                  <div class="person-info-wrapper">
+                    <div class="history-item-right">
+                      <span> 1 - </span>
+                      <span> مهدی جمالزاده </span>
+                    </div>
+                    <div class="history-item-right">09/08/1403</div>
+                  </div>
+                  <div class="desc-item">
+                    <h5>
+                      گزارش
+                    </h5>
+                    <p>
+                      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="historyItem">
+                  <div class="person-info-wrapper">
+                    <div class="history-item-right">
+                      <span> 1 - </span>
+                      <span> مهدی جمالزاده </span>
+                    </div>
+                    <div class="history-item-right">09/08/1403</div>
+                  </div>
+                  <div class="desc-item">
+                    <h5>
+                      گزارش
+                    </h5>
+                    <p>
+                      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <%- include("../includes/alert.ejs") %>
+
+    <script
+      src="https://kit.fontawesome.com/7a20fd358e.js"
+      crossorigin="anonymous"
+    ></script>
     <script type="module" src="/js/controller.js"></script>
     <script src="/js/tasks/addTask.js"></script>
-</body>
-
+  </body>
 </html>

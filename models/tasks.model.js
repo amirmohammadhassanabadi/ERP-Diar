@@ -17,7 +17,7 @@ const taskSchema = new mongoose.Schema({
   },
   createdAt: { type: Date, default: Date.now() },
   deadline: { type: Date },
-  reports: [
+  reports: [ 
     {
       description: { type: String },
       writer: {

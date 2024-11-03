@@ -794,7 +794,12 @@ input[type='checkbox'] {
   justify-content: space-between;
 }
 
-#taskInfowrapper > .task-info > .top-info > .top-info-left > span:nth-child(1){
+#taskInfowrapper > .task-info > .top-info > .top-info-left {
+  display: flex;
+  flex-direction: column;
+}
+
+#taskInfowrapper > .task-info > .top-info > .top-info-left > div > span:nth-child(1){
   color: var(--color-gray-dark-1);
 }
 
@@ -830,20 +835,39 @@ input[type='checkbox'] {
 .referHistoryBtn > .historyBox{
   width: 100%;
   height: fit-content;
+  padding: 1rem;
   max-height: 200px;
   overflow: auto;
   position: absolute;
   right: 0;
   top: 110%;
-  background-color: var(--white-bg);
+  background-color: var(--color-gray-light-2);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .referHistoryBtn > .historyBox >.historyItem{
+  background-color: var(--white-bg);
+  margin-bottom: 1rem;
+}
+
+.referHistoryBtn > .historyBox >.historyItem > .person-info-wrapper {
   display: flex;
   justify-content: space-between;
   padding: 1rem .5rem;
   border-bottom: 1px solid var(--black);
+}
+
+.referHistoryBtn > .historyBox >.historyItem > .desc-item{
+  padding: .5rem;
+}
+
+.referHistoryBtn > .historyBox >.historyItem > .desc-item > h5{
+  margin-bottom: .5rem;
+}
+
+.referHistoryBtn > .historyBox >.historyItem > .desc-item > p{
+  text-align: justify;
+  font-size: .9rem;
 }
 /*  RESPONSIVE  */
 
