@@ -545,6 +545,17 @@ const removePopupUsers = function () {
   agentBtn.classList.remove('hidden');
 };
 
+const handleChangePassBtns = function () {
+  const parentEl = document.querySelector('.popup__changepass__down');
+
+  parentEl.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+
+    btn.classList.contains('submit__pass-btn') ? handler(0) : handler(1);
+  });
+};
+
 const handleCheckbox = function (handler) {
   const parentEl = document.querySelector('.task__container');
   parentEl.addEventListener('click', async function (e) {
@@ -815,5 +826,6 @@ export default {
   handleConfirmPopup,
   renderConfirmPopup,
   removeTaskEl,
-  incrementTaskNum
+  incrementTaskNum,
+  handleChangePassBtns
 };

@@ -127,6 +127,10 @@ const controlUserInfoClosure = function () {
   profBtn.classList.remove('profile__btn-active');
 };
 
+const controlChangePassBtns = function (confirm) {
+  // close panel & empty fields
+};
+
 const init = function () {
   navView.handleMenuBtn(controlMenuBtn);
   navView.handleProfileBtn(controlProfileBtn);
@@ -139,6 +143,7 @@ const init = function () {
   containerView.handlePopupSubmit();
   containerView.handleReferralsBtn();
   containerView.handleOverlayLayer();
+  containerView.handleChangePassBtns(controlChangePassBtns);
   // containerView.handleContainerNav();
 };
 
