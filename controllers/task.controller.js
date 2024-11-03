@@ -1,24 +1,24 @@
-const { User } = require('../models/user');
-const { Task } = require('../models/tasks.model');
-const dateConverter = require('farvardin');
+const { User } = require("../models/user");
+const { Task } = require("../models/tasks.model");
+const dateConverter = require("farvardin");
 const {
   neddedUserInfo,
-  neededTasksInfo
-} = require('../utilities/dataInfoClient');
+  neededTasksInfo,
+} = require("../utilities/dataInfoClient");
 
 exports.getTasks = async (req, res) => {
   try {
     if (req.user) {
       let tasks = await Task.find()
-        .populate('agents', '_id username fullName department')
-        .populate('creator', '_id username fullName department');
+        .populate("agents", "_id username fullName department")
+        .populate("creator", "_id username fullName department");
 
       tasks = tasks
-        .filter(task => {
+        .filter((task) => {
           const flag = task.agents[task.agents.length - 1].id == req.user.id;
           if (flag) return task;
         })
-        .map(task => {
+        .map((task) => {
           return {
             id: task._id,
             title: task.title,
@@ -29,16 +29,16 @@ exports.getTasks = async (req, res) => {
                 new Date(new Date().toDateString()).getTime()) /
               (1000 * 60 * 60 * 24),
             creator: task.creator,
-            agents: [task.agents[task.agents.length - 1]]
+            agents: [task.agents[task.agents.length - 1]],
           };
         });
 
       res.status(200).json({
         statusCode: 200,
-        data: tasks
+        data: tasks,
       });
     } else {
-      res.status(401).json({ statusCode: 401, message: 'Unauthorized' });
+      res.status(401).json({ statusCode: 401, message: "Unauthorized" });
     }
   } catch (error) {
     res
@@ -49,10 +49,10 @@ exports.getTasks = async (req, res) => {
 
 exports.getReferredTasks = async (req, res) => {
   try {
-    let tasks = await Task.find().populate('creator').populate('agents');
+    let tasks = await Task.find().populate("creator").populate("agents");
 
     tasks = tasks.filter((task, index) => {
-      let agentsId = task.agents.map(agent => agent.id);
+      let agentsId = task.agents.map((agent) => agent.id);
 
       if (
         (task.creator.id == req.user.id &&
@@ -65,7 +65,7 @@ exports.getReferredTasks = async (req, res) => {
 
     return res.status(200).json({
       statusCode: 200,
-      data: tasks.map(task => {
+      data: tasks.map((task) => {
         return {
           id: task._id,
           title: task.title,
@@ -79,19 +79,19 @@ exports.getReferredTasks = async (req, res) => {
             id: task.creator.id,
             fullName: task.creator.fullName,
             username: task.creator.username,
-            department: task.creator.department
+            department: task.creator.department,
           },
           agents: [
             {
               id: task.agents[task.agents.length - 1].id,
               fullName: task.agents[task.agents.length - 1].fullName,
               username: task.agents[task.agents.length - 1].username,
-              department: task.agents[task.agents.length - 1].department
-            }
+              department: task.agents[task.agents.length - 1].department,
+            },
           ],
-          deleteOption: task.creator.id == req.user.id ? true : false
+          deleteOption: task.creator.id == req.user.id ? true : false,
         };
-      })
+      }),
     });
   } catch (error) {
     res
@@ -105,9 +105,9 @@ exports.getVerifiedAgents = async (req, res) => {
     let users = await User.find({ department: req.user.department });
 
     if (!users)
-      return res.status(401).json({ statusCode: 401, message: 'unauthorized' });
+      return res.status(401).json({ statusCode: 401, message: "unauthorized" });
 
-    users = users.filter(member => {
+    users = users.filter((member) => {
       return member.level >= req.user.level;
     });
 
@@ -115,14 +115,14 @@ exports.getVerifiedAgents = async (req, res) => {
       .status(200)
       .json({ statusCode: 200, data: neddedUserInfo(users) });
   } catch (error) {
-    res.status(500).json({ statusCode: 500, data: 'error' });
+    res.status(500).json({ statusCode: 500, data: "error" });
   }
 };
 
 exports.addTask = async (req, res) => {
   let { title, description, deadline, agents } = req.body;
 
-  deadline = deadline.split('/').map(item => {
+  deadline = deadline.split("/").map((item) => {
     return Number(item);
   });
 
@@ -141,11 +141,11 @@ exports.addTask = async (req, res) => {
     agents: agents,
     creator: req.user.id,
     createdAt: Date.now(),
-    deadline: deadline
+    deadline: deadline,
   });
 
   newTask = await newTask.save();
-  const temp = await Task.findById(newTask._id).populate('agents');
+  const temp = await Task.findById(newTask._id).populate("agents");
 
   res.status(200).json({
     statusCode: 200,
@@ -157,14 +157,14 @@ exports.addTask = async (req, res) => {
         {
           username: temp.username,
           fullName: temp.fullName,
-          department: temp.department
-        }
+          department: temp.department,
+        },
       ],
       deadline:
         (new Date(newTask.deadline).getTime() -
           new Date(new Date().toDateString()).getTime()) /
-        (1000 * 60 * 60 * 24)
-    }
+        (1000 * 60 * 60 * 24),
+    },
   });
 };
 
@@ -177,7 +177,7 @@ exports.changeTaskStatus = async (req, res) => {
     if (!task) {
       return res
         .status(404)
-        .json({ statusCode: 404, message: 'task not found' });
+        .json({ statusCode: 404, message: "task not found" });
     }
 
     taskStatus = JSON.parse(taskStatus);
@@ -185,13 +185,13 @@ exports.changeTaskStatus = async (req, res) => {
     if (task.status != taskStatus) {
       return res
         .status(404)
-        .json({ statusCode: 404, message: 'status is not right' });
+        .json({ statusCode: 404, message: "status is not right" });
     }
 
     if (task.agents[task.agents.length - 1] != req.user.id) {
       return res
         .status(403)
-        .json({ statusCode: 403, message: 'user dont have access' });
+        .json({ statusCode: 403, message: "user dont have access" });
     }
 
     if (taskStatus === false) {
@@ -203,7 +203,7 @@ exports.changeTaskStatus = async (req, res) => {
     taskStatus = await task.save();
     return res.status(200).json({ statusCode: 200 });
   } catch (err) {
-    return res.status(500).json({ statusCode: 500, message: 'server error' });
+    return res.status(500).json({ statusCode: 500, message: "server error" });
   }
 };
 
@@ -229,7 +229,7 @@ exports.deleteTask = async (req, res) => {
       }
     }
     await Task.findByIdAndDelete(taskId);
-    return res.status(200).json({ statusCode: 200, message: 'task deleted' });
+    return res.status(200).json({ statusCode: 200, message: "task deleted" });
   } catch (error) {
     return res
       .status(500)
@@ -244,45 +244,45 @@ exports.referTaskAgent = async (req, res) => {
     if (req.user.level >= 4) {
       return res
         .status(403)
-        .json({ statusCode: 403, message: 'user can refer task' });
+        .json({ statusCode: 403, message: "user can refer task" });
     }
 
     if (!report) {
       return res
         .status(417)
-        .json({ statusCode: 417, message: 'report should not be empty' });
+        .json({ statusCode: 417, message: "report should not be empty" });
     }
 
     if (!taskId) {
       return res
         .status(417)
-        .json({ statusCode: 417, message: 'taskId is not valid' });
+        .json({ statusCode: 417, message: "taskId is not valid" });
     }
 
     if (!newAgent) {
       return res
         .status(417)
-        .json({ statusCode: 417, message: 'agent is not valid' });
+        .json({ statusCode: 417, message: "agent is not valid" });
     }
 
     let task = await Task.findById(taskId);
     if (!task) {
       return res
         .status(404)
-        .json({ statusCode: 404, message: 'task not found' });
+        .json({ statusCode: 404, message: "task not found" });
     }
 
     if (task.agents[task.agents.length - 1] != req.user.id) {
       return res
         .status(403)
-        .json({ statusCode: 403, message: 'task is not related to this user' });
+        .json({ statusCode: 403, message: "task is not related to this user" });
     }
 
     const targetedAgent = await User.findById(newAgent);
     if (!targetedAgent) {
       return res
         .status(404)
-        .json({ statusCode: 404, message: 'targeted agent not found' });
+        .json({ statusCode: 404, message: "targeted agent not found" });
     }
 
     if (
@@ -293,13 +293,13 @@ exports.referTaskAgent = async (req, res) => {
       task.reports[task.reports.length - 1] = {
         description: report,
         writer: req.user.id,
-        date: new Date()
+        date: new Date(),
       };
 
       await task.save();
       res
         .status(200)
-        .json({ statusCode: 200, message: 'task referred to agent' });
+        .json({ statusCode: 200, message: "task referred to agent" });
     }
   } catch (error) {
     return res
@@ -316,12 +316,12 @@ exports.getReferenceableUsers = async (req, res) => {
     if (level >= 4) {
       return res
         .status(403)
-        .json({ statusCode: 403, message: 'user can not refer task' });
+        .json({ statusCode: 403, message: "user can not refer task" });
     }
 
     let users = await User.find({ department: department });
     let filteredUsers = users.filter(
-      user => user.level >= level && user.id != req.user.id
+      (user) => user.level >= level && user.id != req.user.id
     );
 
     return res
@@ -330,14 +330,14 @@ exports.getReferenceableUsers = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ statusCode: 500, message: 'internal error - ' });
+      .json({ statusCode: 500, message: "internal error - " });
   }
 };
 
 exports.getSubordinateTask = async (req, res) => {
   try {
     const tasks = await Task.find().populate();
-    tasks = tasks.filter(task => {
+    tasks = tasks.filter((task) => {
       return task.agent[0].level >= req.user.level;
     });
 
@@ -345,11 +345,48 @@ exports.getSubordinateTask = async (req, res) => {
       .status(200)
       .json({ statusCode: 200, data: neededTasksInfo(tasks) });
   } catch (error) {
-    return res.status(500).json({ statusCode: 500, message: 'internal error' });
+    return res.status(500).json({ statusCode: 500, message: "internal error" });
   }
 };
 
 exports.getTaskInfo = async (req, res) => {
-  const taskId = req.params.taskid;
-  console.log(taskId);
-}
+  try {
+    const taskId = req.params.taskid;
+    const task = await Task.findById(taskId).populate("creator").populate("agents");
+    
+    if (!task) {
+      return res
+      .status(404)
+      .json({ statusCode: 404, message: `task id invalid` });  
+    }
+    
+    return res.status(200).json({statusCode: 200, data: {
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      status: task.status,
+      agents: task.agents.map(item => {
+        return {
+          id: item.id,
+          username: item.username,
+          fullName: item.fullName,
+          department: item.department
+        }
+      } ),
+      creator: {
+        id: task.creator.id,
+        username: task.creator.username,
+        fullName: task.creator.fullName,
+        department: task.creator.department
+      },
+      createdAt: dateConverter.gregorianToSolar(new Date(task.createdAt).getFullYear(), (new Date(task.createdAt).getMonth()) + 1, new Date(task.createdAt).getDate(), "object"),
+      deadline: dateConverter.gregorianToSolar(new Date(task.deadline).getFullYear(), (new Date(task.deadline).getMonth()) + 1, new Date(task.deadline).getDate(), "object"),
+      reports: task.reports
+    }})
+    
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ statusCode: 500, message: `internal error - ${error.message}` });
+  }
+};

@@ -761,7 +761,7 @@ input[type='checkbox'] {
   margin: 0;
 }
 
-.taskInfoBtn{
+.singleTaskInfoBtn{
   padding: .7rem 1rem;
   background-color: var(--color-gray-light-3);
   color: var(--black);
@@ -772,9 +772,8 @@ input[type='checkbox'] {
   line-height: 0;
 }
 
-.taskInfoBtn:hover{
+.singleTaskInfoBtn:hover{
   background-color: var(--color-gray-dark-1);
-  line-height: 0;
 }
 
 #taskInfowrapper{
