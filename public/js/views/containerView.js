@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 function taskInfoWrapperFiller(wrapper, data) {
   wrapper.children[0].children[0].children[0].children[0].innerText =
     data.title;
+    wrapper.children[0].children[0].children[0].children[1].innerText = data.id;
+    
   wrapper.children[0].children[0].children[1].children[0].children[1].innerText = `${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}`;
   wrapper.children[0].children[0].children[1].children[1].children[1].innerText = `${data.deadline.year}/${data.deadline.month}/${data.deadline.day}`;
   wrapper.children[0].children[1].children[1].value = data.description;
