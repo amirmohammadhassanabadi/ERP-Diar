@@ -12,7 +12,7 @@ taskRouter.get("/referenceableusers", JWT.validateToken, taskController.getRefer
 taskRouter.get("/agent", JWT.validateToken, taskController.getVerifiedAgents);
 taskRouter.post("/addtasks", JWT.validateToken, taskMiddleWare.taskVerify, taskController.addTask); 
 taskRouter.post("/changestatus", JWT.validateToken, taskController.changeTaskStatus);
-taskRouter.delete("/deletetask/:id", JWT.validateToken, taskController.deleteTask); 
+// taskRouter.delete("/deletetask/:id", JWT.validateToken, taskController.deleteTask); 
 taskRouter.post("/changetaskagent", JWT.validateToken, taskController.referTaskAgent); // Not Tested
 taskRouter.get("/subordinatetasks", JWT.validateToken, taskController.getSubordinateTask); // Not Tested
 taskRouter.get("/taskinfo/:taskid", JWT.validateToken, taskController.getTaskInfo); // Not Tested

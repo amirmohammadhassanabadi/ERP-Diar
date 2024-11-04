@@ -483,7 +483,11 @@ const handlePopupUserList = async function () {
   if (response.statusCode !== 200 || response.data.length === 0) {
     console.log(response);
 
-    console.error("err code:", response.statusCode, "OR empty data");
+    if (response.statusCode == 401) {
+      location.href = "/auth/login";
+    }else if (response.statusCode) {
+      popupHandler(response.statusCode, "مشکلی پیش آمده لطفا دوباره  تلاش کنید");
+    }
     return;
   }
   // console.log(response.data);
@@ -876,15 +880,6 @@ const generateDeadlineTxt = (days) => {
   if (days > 0) return `${days} روز مانده`;
   else if (days === 0) return `<strong>امروز</strong>`;
   else return `${-days} روز گذشته`;
-};
-
-const handleDeleteTask = async function (taskId) {
-  try {
-    const data = await deleteAPI(`deletetask/${taskId}`);
-    return true;
-  } catch (error) {
-    return false;
-  }
 };
 
 document.querySelector(".task-info-desc").value = "test test test";

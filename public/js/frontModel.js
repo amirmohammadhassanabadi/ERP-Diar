@@ -1,12 +1,17 @@
 import { getAPI, postAPI, deleteAPI } from '/js/API/fetch.js';
 import { getUserInfo } from '/js/data/user.data.js';
+import { popupHandler } from "/js/includes/popup.js";
 
 let taskData;
 
 async function getTasks() {
   const taskRes = await getAPI('/tasks/gettasks');
   if (taskRes.statusCode !== 200 || !taskRes) {
-    console.error(taskRes.statusCode);
+    if (taskRes.statusCode == 401) {
+      location.href = "/auth/login";
+    }else if(taskRes.statusCode == 500){
+      popupHandler(taskRes.statusCode, "مشکلی پیش آمده لطفا دوباره تلاش کنید")
+    }
     return false;
   }
 
@@ -25,7 +30,11 @@ const toggleTaskState = async (taskStatus, taskId) => {
   });
 
   if (response.statusCode !== 200) {
-    console.error(response.statusCode);
+    if (response.statusCode == 404 || response.statusCode == 500) {
+      popupHandler(response.statusCode, "مشکلی پیش اومده لطفا دوباره تلاش کنید");
+    }else if(response.statusCode ==403){
+      location.href = "/auth/login";
+    }
     return false;
   }
   return true;
@@ -56,7 +65,9 @@ const toggleTaskState = async (taskStatus, taskId) => {
 const addNewTask = async function (payload) {
   const postTask = await postAPI('/tasks/addtasks', payload);
   if (postTask.statusCode !== 200) {
-    console.error(postTask.statusCode);
+    if (postTask.statusCode == 408) {
+      popupHandler(postTask.statusCode, "فیلد عنوان تسک اجباری می باشد")
+    }
     return 0;
     // throw new Error('could not post task (' + postTask.statusCode + ')');
   }
