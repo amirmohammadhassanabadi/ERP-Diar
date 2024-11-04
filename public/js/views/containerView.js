@@ -58,8 +58,6 @@ function taskInfoWrapperFiller(wrapper, data) {
      </div>
       `;
   } else {
-    console.log(data.agents[data.agents.length - 1]);
-
     history += `
       <div class="historyItem">
        <div class="person-info-wrapper">
@@ -87,7 +85,6 @@ document.querySelector(".container").addEventListener("click", async (e) => {
     const taskId = e.target.parentElement.parentElement.dataset.taskId;
 
     const response = await getAPI(`/tasks/taskinfo/${taskId}`);
-    console.log(response);
 
     if (response.statusCode == 200) {
       taskInfowrapper.classList.toggle("dis-none");
@@ -95,7 +92,6 @@ document.querySelector(".container").addEventListener("click", async (e) => {
       taskInfoWrapperFiller(taskInfowrapper, response.data);
     } else {
       popupHandler(response.statusCode, "مشکلی پیش آمده لطفا دوباره تلاش کنید");
-      console.log("error");
       
     }
   }
@@ -150,12 +146,10 @@ referPopupWrapper.addEventListener("click", async (e) => {
         handleReferredToUser();
       }
     } else if (data.statusCode == 403) {
-      console.log("ok");
       popupHandler(403, "کاربر دسترسی ارجاع تسک را ندارد");
     } else if (data.statusCode == 500) {
       popupHandler(data.statusCode, "مشکلی پیش آمده لطفا دوباره تلاش کنید");
     }
-    console.log(document.querySelector(".referPopup > textarea").value);
   } else if (e.target.classList.contains("cancelBtn")) {
     referPopupWrapper.classList.toggle("dis-none");
     referPopupWrapper.classList.toggle("dis-flex");
@@ -167,7 +161,6 @@ referPopupWrapper.addEventListener("click", async (e) => {
     document.querySelector(".referPopup > textarea").value
   ) {
     const userId = document.querySelector(".user__name")?.dataset.userId;
-    console.log("clicked");
 
     const payload = {
       taskId: referPopupWrapper.children[0].value,
@@ -224,7 +217,6 @@ const handleReferredToUser = function () {
 
     // select user display
     const userDisplayEl = document.querySelectorAll(".user__display")[1];
-    console.log(userDisplayEl);
 
     // render user__display with clicked user's info
     await view.renderHTML(
@@ -253,8 +245,6 @@ const handleReferredToUser = function () {
 const handlereferToCloseBtn = function () {
   const userDisplayEl = document.querySelectorAll(".user__display")[1];
   const closeBtn = document.querySelectorAll(".user__close__btn")[0];
-  console.log(closeBtn);
-  console.log(userDisplayEl);
 
   userDisplayEl.addEventListener("mouseenter", function () {
     closeBtn.classList.remove("hidden");
@@ -483,7 +473,6 @@ const handleReferralsBtn = function () {
 const handlePopupUserList = async function () {
   const response = await getAPI("/tasks/agent");
   if (response.statusCode !== 200 || response.data.length === 0) {
-    console.log(response);
 
     if (response.statusCode == 401) {
       location.href = "/auth/login";
@@ -492,7 +481,6 @@ const handlePopupUserList = async function () {
     }
     return;
   }
-  // console.log(response.data);
   const users = await response.data;
 
   const popupUserList = document.querySelector(".popup__overlay");
@@ -534,7 +522,6 @@ const closeUserListOnClick = function () {
 };
 
 const generateUsersListMarkup = function (user) {
-  // console.log(user.fullName);
 
   return `
     <li>
@@ -588,7 +575,6 @@ const handleSelectedReferral = function (users) {
 
 const generateUserReferralMarkup = function (id, users) {
   const targetUsr = users.find((usr) => usr.id === id);
-  console.log(targetUsr);
 
   return `
    <div class="user__name" data-user-id="${targetUsr.id}"> ${
@@ -748,11 +734,7 @@ const handlePopupSubmit = function () {
     //   generateSingleTask.bind(null, false, tskData),
     //   taskContainerEl
     // );
-    console.log(
-      document
-        .querySelector(".nav__item-active")
-        .classList.contains("my__tasks")
-    );
+
     const isAssignedToSelf = tskData.creator === newAgents.dataset.userId;
 
     if (
@@ -838,7 +820,6 @@ const generateTaskContainer = async function (status) {
 const generateSingleTask = function (status, task) {
   let i = 0;
   let markup;
-  // console.log(task);
 
   if (task.status === status) {
     markup = `
