@@ -94,7 +94,7 @@ exports.getReferredTasks = async (req, res) => {
           ],
           deleteOption: task.creator.id == req.user.id ? true : false,
         };
-      }),
+      }).reverse(),
     });
   } catch (error) {
     res
