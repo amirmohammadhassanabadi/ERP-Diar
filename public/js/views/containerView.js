@@ -743,8 +743,8 @@ const handlePopupSubmit = function () {
         .classList.contains("my__tasks") &&
       isAssignedToSelf
     ) {
-      taskContainerEl.insertAdjacentHTML(
-        "beforeend",
+      document.querySelector(".task__list").insertAdjacentHTML(
+        "afterbegin",
         generateSingleTask(false, tskData)
       );
       incrementTaskNum(1);
@@ -754,8 +754,8 @@ const handlePopupSubmit = function () {
         .classList.contains("assigned__tasks") &&
       !isAssignedToSelf
     ) {
-      taskContainerEl.insertAdjacentHTML(
-        "beforeend",
+      document.querySelector(".task__list").insertAdjacentHTML(
+        "afterbegin",
         AssignedToMarkup([tskData])
       );
     }
