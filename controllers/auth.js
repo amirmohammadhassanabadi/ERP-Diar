@@ -126,7 +126,16 @@ exports.logOut = (req, res) => {
 
 exports.changePassword = async (req, res) => {
   try {
-    const { password, confirmPassword } = req.body;
+    const { oldPassword, password, confirmPassword } = req.body;
+
+    let user = await User.findById(req.user.id);
+    const matched = await bcrypt.compare(oldPassword, user.password);
+
+    if (!matched) {
+      return res
+      .status(403)
+      .json({ statusCode: 403, message: `password is not current` });
+    }
 
     if (password != confirmPassword) {
       return res
@@ -135,8 +144,9 @@ exports.changePassword = async (req, res) => {
     }
 
     const hashed = await bcrypt.hash(password, 12);
+    user.password = hashed;
+    await user.save();
 
-    await User.findByIdAndUpdate(req.user.id, { password: hashed });
     return res.status(200).json({ statusCode: 200 });
   } catch (error) {
     return res
