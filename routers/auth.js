@@ -11,6 +11,6 @@ authRouter.get("/logout", JWT.validateToken, authController.logOut);
 authRouter.post("/adduser", JWT.validateToken, signUpAccess, authController.addUser);
 authRouter.get("/user/info", JWT.validateToken, authController.getLoggedInUserInfo); // Not Tested
 authRouter.get("/signup", JWT.validateToken, signUpAccess, authController.renderSignupPage);
-authRouter.get("changepassword", JWT.validateToken, authController.changePassword);
+authRouter.post("/changepassword", JWT.validateToken, authController.changePassword);
 
 module.exports = { authRouter };

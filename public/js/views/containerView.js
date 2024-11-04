@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 function taskInfoWrapperFiller(wrapper, data) {
   wrapper.children[0].children[0].children[0].children[0].innerText =
     data.title;
-    wrapper.children[0].children[0].children[0].children[1].innerText = data.id;
-    
+  wrapper.children[0].children[0].children[0].children[1].innerText = data.id;
+
   wrapper.children[0].children[0].children[1].children[0].children[1].innerText = `${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}`;
   wrapper.children[0].children[0].children[1].children[1].children[1].innerText = `${data.deadline.year}/${data.deadline.month}/${data.deadline.day}`;
   wrapper.children[0].children[1].children[1].value = data.description;
@@ -94,7 +94,6 @@ document.querySelector(".container").addEventListener("click", async (e) => {
       taskInfoWrapperFiller(taskInfowrapper, response.data);
     } else {
       popupHandler(response.statusCode, "مشکلی پیش آمده لطفا دوباره تلاش کنید");
-      
     }
   }
 });
@@ -175,21 +174,22 @@ referPopupWrapper.addEventListener("click", async (e) => {
       // 1. remove clicked task
       const targetTask = [...document.querySelectorAll(".task")].filter(
         (taskEl) =>
-          taskEl.dataset.taskId === referPopupWrapper.children[0].value);
+          taskEl.dataset.taskId === referPopupWrapper.children[0].value
+      );
 
-        targetTask[0].remove();
+      targetTask[0].remove();
 
-        // 2. empty fields
-        e.target.parentElement.previousElementSibling.value = "";
-        removeReferToUser();
-    
-        // 3. hide overlay wrapper
-    
-        referPopupWrapper.classList.toggle("dis-none");
-        referPopupWrapper.classList.toggle("dis-flex");
-    
-        //4. decrement task count
-        incrementTaskNum(-1);
+      // 2. empty fields
+      e.target.parentElement.previousElementSibling.value = "";
+      removeReferToUser();
+
+      // 3. hide overlay wrapper
+
+      referPopupWrapper.classList.toggle("dis-none");
+      referPopupWrapper.classList.toggle("dis-flex");
+
+      //4. decrement task count
+      incrementTaskNum(-1);
       popupHandler(response.statusCode, "تسک با موفقیت ارجاع داده شد");
     } else if (response.statusCode == 403) {
       popupHandler(response.statusCode, "کاربر دسترسی ارجاع تسک را ندارد");
@@ -197,8 +197,9 @@ referPopupWrapper.addEventListener("click", async (e) => {
       popupHandler(response.statusCode, "مشکلی پیش آمده لطفا دوباره تلاش کنید");
     } else if (response.statusCode == 419) {
       popupHandler(response.statusCode, "فیلد توضیحات اجباری می باشد");
-      document.querySelector(".referPopup > textarea").style.border = "1px solid red";
-    }else if (response.statusCode == 419) {
+      document.querySelector(".referPopup > textarea").style.border =
+        "1px solid red";
+    } else if (response.statusCode == 419) {
       popupHandler(response.statusCode, "تسک یا مسئول اجام معتبر نیستند");
     }
   }
@@ -475,11 +476,13 @@ const handleReferralsBtn = function () {
 const handlePopupUserList = async function () {
   const response = await getAPI("/tasks/agent");
   if (response.statusCode !== 200 || response.data.length === 0) {
-
     if (response.statusCode == 401) {
       location.href = "/auth/login";
-    }else if (response.statusCode) {
-      popupHandler(response.statusCode, "مشکلی پیش آمده لطفا دوباره  تلاش کنید");
+    } else if (response.statusCode) {
+      popupHandler(
+        response.statusCode,
+        "مشکلی پیش آمده لطفا دوباره  تلاش کنید"
+      );
     }
     return;
   }
@@ -524,7 +527,6 @@ const closeUserListOnClick = function () {
 };
 
 const generateUsersListMarkup = function (user) {
-
   return `
     <li>
       <div class="user__name" data-user-id="${user.id}"> ${user.fullName} </div>
@@ -616,16 +618,59 @@ const removePopupUsers = function () {
   agentBtn.classList.remove("hidden");
 };
 
-const handleChangePassBtns = function (handler) {
-  const parentEl = document.querySelector(".popup__changepass__down");
+// Reset Password
+document
+  .querySelector(".overlay__changepass")
+  .addEventListener("click", async (e) => {
+    if (e.target.classList.contains("submit__pass-btn")) {
+      const response = await postAPI("/auth/changepassword", {
+        oldPassword:
+          e.target.parentElement.parentElement.children[0].children[2].value,
+        password:
+          e.target.parentElement.parentElement.children[0].children[4].value,
+        confirmPassword:
+          e.target.parentElement.parentElement.children[0].children[6].value,
+      });
 
-  parentEl.addEventListener("click", (e) => {
-    const btn = e.target.closest("button");
-    if (!btn) return;
-
-    btn.classList.contains("submit__pass-btn") ? handler(1) : handler(0);
+      if (response.statusCode == 200) {
+        popupHandler(200, "رمز عبور با موفقیت تغییر کرد");
+        setTimeout(() => {
+          location.href = "/auth/login";
+        }, 3000);
+      } else if (response.statusCode == 403) {
+        popupHandler(response.statusCode, "رمز عبور فعلی صحیح نمی باشد");
+        e.target.parentElement.parentElement.children[0].children[2].style.borderBottom =
+          "1px solid red";
+      } else if (response.statusCode == 400) {
+        popupHandler(response.statusCode, "رمز های جدید تطابق ندارند");
+        e.target.parentElement.parentElement.children[0].children[4].style.borderBottom =
+          "1px solid red";
+        e.target.parentElement.parentElement.children[0].children[6].style.borderBottom =
+          "1px solid red";
+      } else if (response.statusCode == 500) {
+        popupHandler(
+          response.statusCode,
+          "مشکلی پیش آمده لطفا دوباره تلاش کنید"
+        );
+      }
+    } else if (e.target.classList.contains("cancel__pass-btn")) {
+      e.target.parentElement.parentElement.children[0].children[2].value = "";
+      e.target.parentElement.parentElement.children[0].children[4].value = "";
+      e.target.parentElement.parentElement.children[0].children[6].value = "";
+      document.querySelector(".overlay__changepass").classList.toggle("hidden");
+    }
   });
-};
+
+// const handleChangePassBtns = function (handler) {
+//   const parentEl = document.querySelector(".popup__changepass__down");
+
+//   parentEl.addEventListener("click", (e) => {
+//     const btn = e.target.closest("button");
+//     if (!btn) return;
+
+//     // btn.classList.contains("submit__pass-btn") ? handler(1) : handler(0);
+//   });
+// };
 
 const handleCheckbox = function (handler) {
   const parentEl = document.querySelector(".task__container");
@@ -745,10 +790,9 @@ const handlePopupSubmit = function () {
         .classList.contains("my__tasks") &&
       isAssignedToSelf
     ) {
-      document.querySelector(".task__list").insertAdjacentHTML(
-        "afterbegin",
-        generateSingleTask(false, tskData)
-      );
+      document
+        .querySelector(".task__list")
+        .insertAdjacentHTML("afterbegin", generateSingleTask(false, tskData));
       incrementTaskNum(1);
     } else if (
       document
@@ -756,10 +800,9 @@ const handlePopupSubmit = function () {
         .classList.contains("assigned__tasks") &&
       !isAssignedToSelf
     ) {
-      document.querySelector(".task__list").insertAdjacentHTML(
-        "afterbegin",
-        AssignedToMarkup([tskData])
-      );
+      document
+        .querySelector(".task__list")
+        .insertAdjacentHTML("afterbegin", AssignedToMarkup([tskData]));
     }
 
     // =====================================
@@ -888,5 +931,5 @@ export default {
   renderConfirmPopup,
   removeTaskEl,
   incrementTaskNum,
-  handleChangePassBtns,
+  // handleChangePassBtns,
 };

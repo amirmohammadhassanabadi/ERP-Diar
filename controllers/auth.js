@@ -96,7 +96,6 @@ exports.addUser = async (req, res) => {
 
 exports.getLoggedInUserInfo = (req, res) => {
   try {
-    const userInfo = req.user;
     return res.status(200).json({
       statusCode: 200,
       data: {
@@ -147,6 +146,7 @@ exports.changePassword = async (req, res) => {
     user.password = hashed;
     await user.save();
 
+    res.clearCookie("access-token");
     return res.status(200).json({ statusCode: 200 });
   } catch (error) {
     return res

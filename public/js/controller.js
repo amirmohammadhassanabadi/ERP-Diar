@@ -149,7 +149,7 @@ const init = function () {
   containerView.handlePopupSubmit();
   containerView.handleReferralsBtn();
   containerView.handleOverlayLayer();
-  containerView.handleChangePassBtns(controlChangePassBtns);
+  // containerView.handleChangePassBtns(controlChangePassBtns);
   // containerView.handleContainerNav();
 };
 
