@@ -658,6 +658,12 @@ document
       e.target.parentElement.parentElement.children[0].children[4].value = "";
       e.target.parentElement.parentElement.children[0].children[6].value = "";
       document.querySelector(".overlay__changepass").classList.toggle("hidden");
+    }else if (e.target.classList.contains("overlay__changepass")) {
+      document.querySelector(".overlay__changepass").classList.toggle("hidden");
+      e.target.children[0].children[0].children[2].value = "";
+      e.target.children[0].children[0].children[4].value = "";
+      e.target.children[0].children[0].children[6].value = "";
+      
     }
   });
 
