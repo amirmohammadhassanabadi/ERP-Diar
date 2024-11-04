@@ -616,6 +616,11 @@ input[type='checkbox'] {
   margin-bottom: 1rem;
 }
 
+.pass-input:focus{
+  outline: 0;
+  border-bottom: 1px solid var(--black);
+}
+
 #descInput {
   margin-top: 0.5rem;
   padding: 0.5rem;
