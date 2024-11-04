@@ -95,6 +95,8 @@ document.querySelector(".container").addEventListener("click", async (e) => {
       taskInfoWrapperFiller(taskInfowrapper, response.data);
     } else {
       popupHandler(response.statusCode, "مشکلی پیش آمده لطفا دوباره تلاش کنید");
+      console.log("error");
+      
     }
   }
 });
