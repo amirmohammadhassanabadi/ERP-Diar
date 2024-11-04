@@ -8,13 +8,12 @@ import { popupHandler } from "/js/includes/popup.js";
 document.addEventListener("DOMContentLoaded", async () => {
   const userInfo = await getUserInfo();
 
-  document.getElementById('profile_img').innerText =
+  document.getElementById("profile_img").innerText =
     userInfo.username[0] + userInfo.username[1];
-  document.getElementById('profile_name').innerText = userInfo.fullName;
-  const infoList = document.querySelectorAll('.profile__info__list > li');
+  document.getElementById("profile_name").innerText = userInfo.fullName;
+  const infoList = document.querySelectorAll(".profile__info__list > li");
   [...infoList][0].children[0].innerText = userInfo.fullName;
   [...infoList][1].children[0].innerText = userInfo.username;
-
 });
 
 function taskInfoWrapperFiller(wrapper, data) {
@@ -36,8 +35,8 @@ function taskInfoWrapperFiller(wrapper, data) {
        </div>
      </div>
     `;
-    if (data.agents.length > 1) {
-      history += `
+  if (data.agents.length > 1) {
+    history += `
       <div class="historyItem">
        <div class="person-info-wrapper">
          <div class="history-item-right">
@@ -57,11 +56,11 @@ function taskInfoWrapperFiller(wrapper, data) {
          </div>
        </div>
      </div>
-      `
-    }else {
-      console.log(data.agents[data.agents.length - 1]);
-      
-      history += `
+      `;
+  } else {
+    console.log(data.agents[data.agents.length - 1]);
+
+    history += `
       <div class="historyItem">
        <div class="person-info-wrapper">
          <div class="history-item-right">
@@ -71,22 +70,15 @@ function taskInfoWrapperFiller(wrapper, data) {
          </div>
        </div>
      </div>
-      `
-    }
+      `;
+  }
   document.querySelector(".historyBox").innerHTML = history;
 }
 
 const taskInfowrapper = document.getElementById("taskInfowrapper");
 const referPopupWrapper = document.querySelector(".referPopupWrapper");
 document.querySelector(".container").addEventListener("click", async (e) => {
-  if (e.target.classList.contains("deleteTaskBtn")) {
-    const response = await deleteAPI(
-      `/tasks/deletetask/${e.target.parentElement.parentElement.dataset.taskId}`
-    );
-    if (response.statusCode == 200) {
-      e.target.parentElement.parentElement.remove();
-    }
-  } else if (e.target.classList.contains("referBtn")) {
+  if (e.target.classList.contains("referBtn")) {
     referPopupWrapper.children[0].value =
       e.target.parentElement.parentElement.dataset.taskId;
     referPopupWrapper.classList.toggle("dis-none");
@@ -96,23 +88,25 @@ document.querySelector(".container").addEventListener("click", async (e) => {
 
     const response = await getAPI(`/tasks/taskinfo/${taskId}`);
     console.log(response);
-    
+
     if (response.statusCode == 200) {
       taskInfowrapper.classList.toggle("dis-none");
       taskInfowrapper.classList.toggle("dis-flex");
       taskInfoWrapperFiller(taskInfowrapper, response.data);
+    } else {
+      popupHandler(response.statusCode, "مشکلی پیش آمده لطفا دوباره تلاش کنید");
     }
   }
 });
 
-taskInfowrapper.addEventListener("click", e => {
-  if (e.target.id == "taskInfowrapper") {   
-    taskInfowrapper.classList.remove("dis-flex")
+taskInfowrapper.addEventListener("click", (e) => {
+  if (e.target.id == "taskInfowrapper") {
+    taskInfowrapper.classList.remove("dis-flex");
     taskInfowrapper.classList.add("dis-none");
-  }else if(e.target.classList.contains("referHistoryBtn")){
+  } else if (e.target.classList.contains("referHistoryBtn")) {
     e.target.children[0].classList.toggle("dis-none");
   }
-})
+});
 
 function renderReffrencableUsers(users) {
   return users.map((user) => {
@@ -155,22 +149,9 @@ referPopupWrapper.addEventListener("click", async (e) => {
       }
     } else if (data.statusCode == 403) {
       console.log("ok");
-      popupHandler(
-        403,
-        document.querySelector(".alert-wrapper"),
-        document.querySelector(".main-alert"),
-        document.querySelector(".main-alert > h3"),
-        "کاربر دسترسی ارجاع تسک را ندارد"
-      );
+      popupHandler(403, "کاربر دسترسی ارجاع تسک را ندارد");
     } else if (data.statusCode == 500) {
-      popupHandler(
-        403,
-
-        document.querySelector(".alert-wrapper"),
-        document.querySelector(".main-alert"),
-        document.querySelector(".main-alert > h3"),
-        "مشکلی پیش آمده لطفا دوباره تلاش کنید"
-      );
+      popupHandler(data.statusCode, "مشکلی پیش آمده لطفا دوباره تلاش کنید");
     }
     console.log(document.querySelector(".referPopup > textarea").value);
   } else if (e.target.classList.contains("cancelBtn")) {
@@ -193,26 +174,36 @@ referPopupWrapper.addEventListener("click", async (e) => {
     };
     const response = await postAPI("/tasks/changetaskagent", payload);
 
-    console.log(response);
-    // 1. remove clicked task
-    const targetTask = [...document.querySelectorAll(".task")].filter(
-      (taskEl) => taskEl.dataset.taskId === referPopupWrapper.children[0].value
-    );
+    if (response.statusCode == 200) {
+      // 1. remove clicked task
+      const targetTask = [...document.querySelectorAll(".task")].filter(
+        (taskEl) =>
+          taskEl.dataset.taskId === referPopupWrapper.children[0].value);
 
-    targetTask[0].remove();
+        targetTask[0].remove();
 
-    // 2. empty fields
-    e.target.parentElement.previousElementSibling.value = "";
-    removeReferToUser();
-
-    // 3. hide overlay wrapper
-
-    referPopupWrapper.classList.toggle('dis-none');
-    referPopupWrapper.classList.toggle('dis-flex');
-
-    //4. decrement task count
-    incrementTaskNum(-1);
-
+        // 2. empty fields
+        e.target.parentElement.previousElementSibling.value = "";
+        removeReferToUser();
+    
+        // 3. hide overlay wrapper
+    
+        referPopupWrapper.classList.toggle("dis-none");
+        referPopupWrapper.classList.toggle("dis-flex");
+    
+        //4. decrement task count
+        incrementTaskNum(-1);
+      popupHandler(response.statusCode, "تسک با موفقیت ارجاع داده شد");
+    } else if (response.statusCode == 403) {
+      popupHandler(response.statusCode, "کاربر دسترسی ارجاع تسک را ندارد");
+    } else if (response.statusCode == 404 || response.statusCode == 500) {
+      popupHandler(response.statusCode, "مشکلی پیش آمده لطفا دوباره تلاش کنید");
+    } else if (response.statusCode == 419) {
+      popupHandler(response.statusCode, "فیلد توضیحات اجباری می باشد");
+      document.querySelector(".referPopup > textarea").style.border = "1px solid red";
+    }else if (response.statusCode == 419) {
+      popupHandler(response.statusCode, "تسک یا مسئول اجام معتبر نیستند");
+    }
   }
 });
 
@@ -275,11 +266,9 @@ const handlereferToCloseBtn = function () {
 };
 
 const removeReferToUser = function () {
-
-  const userDisplayEl = document.querySelectorAll('.user__display')[1];
-  const agentBtn = document.querySelector('.agentBtn');
-  const userList = document.getElementById('referUserPoppup');
-
+  const userDisplayEl = document.querySelectorAll(".user__display")[1];
+  const agentBtn = document.querySelector(".agentBtn");
+  const userList = document.getElementById("referUserPoppup");
 
   if (userList?.classList.contains("dis-block")) {
     userList.classList.remove("dis-block");
@@ -390,8 +379,7 @@ const navChangeTaskReload = async function (status) {
 };
 
 const navChangeAsignedTasks = async function () {
-  const data = await getAPI('/tasks/getrefferedtasks');
-
+  const data = await getAPI("/tasks/getrefferedtasks");
 
   const taskContainer = parentEl.querySelector(".task__container");
 
@@ -405,9 +393,13 @@ const AssignedToMarkup = (tasks) => {
     .map((task) => {
       return `
     <div class="creator-container">
-  <li class="task ${task.status ? "done-task" : ""}" data-task-status="${task.status}" data-task-id="${task.id}">
+  <li class="task ${task.status ? "done-task" : ""}" data-task-status="${
+        task.status
+      }" data-task-id="${task.id}">
   <div class="task__right">
-  <span class="task-text">${task.title} ${task.status ? "<span class='done-box'>انجام شده</span>" : ""}</span>
+  <span class="task-text">${task.title} ${
+        task.status ? "<span class='done-box'>انجام شده</span>" : ""
+      }</span>
   </div>
   <div class="task__left">
   <div class="assignedto">
@@ -465,8 +457,7 @@ const handleOverlayLayer = function () {
     overlayEl.classList.add("hidden");
     clearAddTaskPopup();
 
-    const popupList = document.querySelector('.popup__overlay');
-
+    const popupList = document.querySelector(".popup__overlay");
 
     if (popupList && !popupList.classList.contains("hidden"))
       popupList.classList.add("hidden");
@@ -632,13 +623,13 @@ const removePopupUsers = function () {
 };
 
 const handleChangePassBtns = function (handler) {
-  const parentEl = document.querySelector('.popup__changepass__down');
+  const parentEl = document.querySelector(".popup__changepass__down");
 
-  parentEl.addEventListener('click', e => {
-    const btn = e.target.closest('button');
+  parentEl.addEventListener("click", (e) => {
+    const btn = e.target.closest("button");
     if (!btn) return;
 
-    btn.classList.contains('submit__pass-btn') ? handler(1) : handler(0);
+    btn.classList.contains("submit__pass-btn") ? handler(1) : handler(0);
   });
 };
 
@@ -917,6 +908,5 @@ export default {
   renderConfirmPopup,
   removeTaskEl,
   incrementTaskNum,
-  handleChangePassBtns
-
+  handleChangePassBtns,
 };

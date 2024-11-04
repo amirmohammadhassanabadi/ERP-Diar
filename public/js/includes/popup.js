@@ -4,17 +4,17 @@ function popupStyle(mainElement, contentElement, bg, color) {
     contentElement.style.color = color;
 }
 
-function popupHandler(statusCode, containerElement, mainElement, contentElement, message) {
+function popupHandler(statusCode, message) {
     if (statusCode == 200) {
-        popupStyle(mainElement, contentElement, "var(--popup-success-bg)", "var(--popup-success-200-bg)");
+        popupStyle(document.querySelector(".main-alert"), document.querySelector(".main-alert > h3"), "var(--popup-success-bg)", "var(--popup-success-200-bg)");
     }else{
-        popupStyle(mainElement, contentElement, "var(--light-red)", "var(--red)");
+        popupStyle(document.querySelector(".main-alert"), document.querySelector(".main-alert > h3"), "var(--light-red)", "var(--red)");
     }
-  containerElement.style.animation =
+  document.querySelector(".alert-wrapper").style.animation =
     "showAlert 1s ease forwards";
-    contentElement.innerText = message;
+    document.querySelector(".main-alert > h3").innerText = message;
   setTimeout(() => {
-    containerElement.style.animation =
+    document.querySelector(".alert-wrapper").style.animation =
       "hideAlert 1s ease forwards";
   }, 5000);
 }
