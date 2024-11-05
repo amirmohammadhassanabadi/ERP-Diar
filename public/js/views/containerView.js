@@ -679,7 +679,7 @@ const clearResetPasswordPopup = () => {
     "1px solid var(--color-gray-light-2)";
   document.querySelector(
     ".overlay__changepass"
-  ).children[0].children[0].children[2].children[0].value = "";
+  ).children[0].children[0].children[2].children[0].value = ""; 
   document.querySelector(
     ".overlay__changepass"
   ).children[0].children[0].children[4].children[0].style.borderBottom =
