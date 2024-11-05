@@ -67,7 +67,14 @@ exports.addUser = async (req, res) => {
         statusCode: 409,
       });
     }
-
+    
+    let userColor = process.env.userColor
+    userColor = userColor.split(",")
+    userColor = userColor[Math.floor(Math.random() * userColor.length)]
+    
+    const colors = JSON.parse(process.env.USER_COLORS);
+    console.log(colors);
+    
     const defaultPass = process.env.DEFAULT_PASSWORD;
 
     const hashed = await bcrypt.hash(defaultPass, 12);
@@ -78,9 +85,8 @@ exports.addUser = async (req, res) => {
       password: hashed,
       department: department,
       level: level,
+      color: userColor
     });
-
-    console.log(user);
 
     await user.save();
 

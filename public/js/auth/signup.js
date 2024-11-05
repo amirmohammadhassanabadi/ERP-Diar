@@ -18,7 +18,7 @@ document.getElementById("signUpBtn").addEventListener("click", (e) => {
       if (data.statusCode === 200) {
         popupHandler(
           200,
-          "کابر با موفقیت ثبت نام شد"
+          "کاربر با موفقیت ثبت نام شد"
         );
       } else if (data.statusCode === 400) {
         let msg = ""
