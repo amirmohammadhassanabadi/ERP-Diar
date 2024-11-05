@@ -72,9 +72,6 @@ exports.addUser = async (req, res) => {
     userColor = userColor.split(",")
     userColor = userColor[Math.floor(Math.random() * userColor.length)]
     
-    const colors = JSON.parse(process.env.USER_COLORS);
-    console.log(colors);
-    
     const defaultPass = process.env.DEFAULT_PASSWORD;
 
     const hashed = await bcrypt.hash(defaultPass, 12);

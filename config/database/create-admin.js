@@ -18,6 +18,7 @@ exports.createAdmin = async () => {
       password: hashedPassword,
       department: adminInfo.department,
       level: adminInfo.level,
+      color: adminInfo.color
     });
 
     const  savedAdmin = await adminUser.save();
