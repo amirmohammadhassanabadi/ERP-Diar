@@ -32,9 +32,7 @@ exports.getTasks = async (req, res) => {
             agents: [task.agents[task.agents.length - 1]],
           };
         })
-        .reverse();
-        console.log(tasks);
-        
+        .reverse();     
 
       res.status(200).json({
         statusCode: 200,

@@ -625,11 +625,14 @@ document
     if (e.target.classList.contains("submit__pass-btn")) {
       const response = await postAPI("/auth/changepassword", {
         oldPassword:
-          e.target.parentElement.parentElement.children[0].children[2].value,
+          e.target.parentElement.parentElement.children[0].children[2]
+            .children[0].value,
         password:
-          e.target.parentElement.parentElement.children[0].children[4].value,
+          e.target.parentElement.parentElement.children[0].children[4]
+            .children[0].value,
         confirmPassword:
-          e.target.parentElement.parentElement.children[0].children[6].value,
+          e.target.parentElement.parentElement.children[0].children[6]
+            .children[0].value,
       });
 
       if (response.statusCode == 200) {
@@ -639,13 +642,13 @@ document
         }, 3000);
       } else if (response.statusCode == 403) {
         popupHandler(response.statusCode, "رمز عبور فعلی صحیح نمی باشد");
-        e.target.parentElement.parentElement.children[0].children[2].style.borderBottom =
+        e.target.parentElement.parentElement.children[0].children[2].children[0].style.borderBottom =
           "1px solid red";
       } else if (response.statusCode == 400) {
         popupHandler(response.statusCode, "رمز های جدید تطابق ندارند");
-        e.target.parentElement.parentElement.children[0].children[4].style.borderBottom =
+        e.target.parentElement.parentElement.children[0].children[4].children[0].style.borderBottom =
           "1px solid red";
-        e.target.parentElement.parentElement.children[0].children[6].style.borderBottom =
+        e.target.parentElement.parentElement.children[0].children[6].children[0].style.borderBottom =
           "1px solid red";
       } else if (response.statusCode == 500) {
         popupHandler(
@@ -653,19 +656,45 @@ document
           "مشکلی پیش آمده لطفا دوباره تلاش کنید"
         );
       }
-    } else if (e.target.classList.contains("cancel__pass-btn")) {
-      e.target.parentElement.parentElement.children[0].children[2].value = "";
-      e.target.parentElement.parentElement.children[0].children[4].value = "";
-      e.target.parentElement.parentElement.children[0].children[6].value = "";
-      document.querySelector(".overlay__changepass").classList.toggle("hidden");
-    }else if (e.target.classList.contains("overlay__changepass")) {
-      document.querySelector(".overlay__changepass").classList.toggle("hidden");
-      e.target.children[0].children[0].children[2].value = "";
-      e.target.children[0].children[0].children[4].value = "";
-      e.target.children[0].children[0].children[6].value = "";
-      
+    } else if (e.target.classList.contains("cancel__pass-btn") || e.target.classList.contains("overlay__changepass")) {
+      clearResetPasswordPopup();
+    } else if (e.target.classList.contains("showPassIcon")) {
+      if (e.target.parentElement.previousElementSibling.type == "password") {
+        e.target.parentElement.previousElementSibling.type = "text";
+        e.target.classList.remove("fa-eye");
+        e.target.classList.add("fa-eye-slash");
+      } else {
+        e.target.parentElement.previousElementSibling.type = "password";
+        e.target.classList.add("fa-eye");
+        e.target.classList.remove("fa-eye-slash");
+      }
     }
   });
+
+const clearResetPasswordPopup = () => {
+  document.querySelector(".overlay__changepass").classList.toggle("hidden");
+  document.querySelector(
+    ".overlay__changepass"
+  ).children[0].children[0].children[2].children[0].style.borderBottom =
+    "1px solid var(--color-gray-light-2)";
+  document.querySelector(
+    ".overlay__changepass"
+  ).children[0].children[0].children[2].children[0].value = "";
+  document.querySelector(
+    ".overlay__changepass"
+  ).children[0].children[0].children[4].children[0].style.borderBottom =
+    "1px solid var(--color-gray-light-2)";
+  document.querySelector(
+    ".overlay__changepass"
+  ).children[0].children[0].children[4].children[0].value = "";
+  document.querySelector(
+    ".overlay__changepass"
+  ).children[0].children[0].children[6].children[0].style.borderBottom =
+    "1px solid var(--color-gray-light-2)";
+  document.querySelector(
+    ".overlay__changepass"
+  ).children[0].children[0].children[6].children[0].value = "";
+};
 
 // const handleChangePassBtns = function (handler) {
 //   const parentEl = document.querySelector(".popup__changepass__down");

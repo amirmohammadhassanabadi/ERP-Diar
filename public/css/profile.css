@@ -443,7 +443,7 @@ menu ul::after {
   font-size: 1rem;
 }
 
-input[type='checkbox'] {
+input[type="checkbox"] {
   width: 1.25rem;
   height: 1.25rem;
   /* border: 20px solid var(--color-grad-3); */
@@ -608,7 +608,11 @@ input[type='checkbox'] {
   margin-bottom: 1rem;
 }
 
-.pass-input {
+div.pass-input-wrapper {
+  position: relative;
+}
+
+div.pass-input-wrapper > .pass-input {
   padding: 1rem 0.5rem 0.5rem 1rem;
   width: 100%;
   border: none;
@@ -616,7 +620,23 @@ input[type='checkbox'] {
   margin-bottom: 1rem;
 }
 
-.pass-input:focus{
+div.pass-input-wrapper > div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 0.5rem;
+}
+
+div.pass-input-wrapper > div > i {
+  color: var(--color-gray-dark-1);
+  cursor: pointer;
+}
+
+div.pass-input-wrapper > .pass-input:focus {
   outline: 0;
   border-bottom: 1px solid var(--black);
 }
@@ -896,34 +916,34 @@ input[type='checkbox'] {
   margin: 0;
 }
 
-.singleTaskInfoBtn{
-  padding: .7rem 1rem;
+.singleTaskInfoBtn {
+  padding: 0.7rem 1rem;
   background-color: var(--color-gray-light-3);
   color: var(--black);
   color: var(--white);
-  margin-right: .5rem;
+  margin-right: 0.5rem;
   border: 0;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   line-height: 0;
 }
 
-.done-task{
+.done-task {
   background-color: rgb(216, 255, 216);
   border-right: 2px solid green;
 }
 
-.done-box{
-  padding: .5rem;
+.done-box {
+  padding: 0.5rem;
   background-color: green;
   color: var(--white);
   margin-right: 1rem;
 }
 
-.singleTaskInfoBtn:hover{
+.singleTaskInfoBtn:hover {
   background-color: var(--color-gray-dark-1);
 }
 
-#taskInfowrapper{
+#taskInfowrapper {
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -935,17 +955,17 @@ input[type='checkbox'] {
   z-index: 4;
 }
 
-#taskInfowrapper > .task-info{
+#taskInfowrapper > .task-info {
   padding: 1.5rem;
   width: 50%;
   background-color: #f0f0f0;
 }
 
-#taskInfowrapper > .task-info > .top-info > .top-info-right > h3{
+#taskInfowrapper > .task-info > .top-info > .top-info-right > h3 {
   font-size: 1.5rem;
 }
 
-#taskInfowrapper > .task-info > .top-info > .top-info-right > span{
+#taskInfowrapper > .task-info > .top-info > .top-info-right > span {
   color: var(--color-gray-dark-1);
 }
 
@@ -960,11 +980,16 @@ input[type='checkbox'] {
   flex-direction: column;
 }
 
-#taskInfowrapper > .task-info > .top-info > .top-info-left > div > span:nth-child(1){
+#taskInfowrapper
+  > .task-info
+  > .top-info
+  > .top-info-left
+  > div
+  > span:nth-child(1) {
   color: var(--color-gray-dark-1);
 }
 
-#taskInfowrapper > .task-info > .middle-text > h4{
+#taskInfowrapper > .task-info > .middle-text > h4 {
   margin-bottom: 0.5rem;
 }
 
@@ -974,13 +999,13 @@ input[type='checkbox'] {
   resize: none;
 }
 
-.historyBtnWrapper{
+.historyBtnWrapper {
   width: 100%;
   text-align: center;
   margin-top: 1rem;
 }
 
-.referHistoryBtn{
+.referHistoryBtn {
   padding: 1rem;
   width: 50%;
   background-color: var(--light-gray);
@@ -989,11 +1014,11 @@ input[type='checkbox'] {
   position: relative;
 }
 
-.referHistoryBtn:hover{
+.referHistoryBtn:hover {
   background-color: var(--color-gray-light-3);
 }
 
-.referHistoryBtn > .historyBox{
+.referHistoryBtn > .historyBox {
   width: 100%;
   height: fit-content;
   padding: 1rem;
@@ -1006,29 +1031,29 @@ input[type='checkbox'] {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.referHistoryBtn > .historyBox >.historyItem{
+.referHistoryBtn > .historyBox > .historyItem {
   background-color: var(--white-bg);
   margin-bottom: 1rem;
 }
 
-.referHistoryBtn > .historyBox >.historyItem > .person-info-wrapper {
+.referHistoryBtn > .historyBox > .historyItem > .person-info-wrapper {
   display: flex;
   justify-content: space-between;
-  padding: 1rem .5rem;
+  padding: 1rem 0.5rem;
   border-bottom: 1px solid var(--black);
 }
 
-.referHistoryBtn > .historyBox >.historyItem > .desc-item{
-  padding: .5rem;
+.referHistoryBtn > .historyBox > .historyItem > .desc-item {
+  padding: 0.5rem;
 }
 
-.referHistoryBtn > .historyBox >.historyItem > .desc-item > h5{
-  margin-bottom: .5rem;
+.referHistoryBtn > .historyBox > .historyItem > .desc-item > h5 {
+  margin-bottom: 0.5rem;
 }
 
-.referHistoryBtn > .historyBox >.historyItem > .desc-item > p{
+.referHistoryBtn > .historyBox > .historyItem > .desc-item > p {
   text-align: justify;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 /*  RESPONSIVE  */
 
