@@ -9,12 +9,6 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
   fullName: { type: String, required: true },
-  tasks: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Task",
-    }
-  ],
   macaddress: String,
   level: { type: String, enum: userLevelEnum },
   department: {

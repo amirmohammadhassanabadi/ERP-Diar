@@ -41,6 +41,7 @@ const taskSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.Buffer,
     },
   ],
+  color: {type: String, required: true}
 });
 
 const Task = new mongoose.model("Task", taskSchema);
