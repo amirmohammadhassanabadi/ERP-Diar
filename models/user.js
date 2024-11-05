@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     enum: userDepartmentEnum,
   },
+  color: {type: String, required: true}
 });
 
 const User = new mongoose.model("User", userSchema);
