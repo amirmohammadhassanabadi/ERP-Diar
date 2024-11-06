@@ -25,6 +25,7 @@ const { addTestUser } = require("./test/addUser.test");
 const { authRouter } = require("./routers/auth");
 const { taskRouter } = require("./routers/task.router");
 const { indexRouter } = require("./routers/index.router");
+const { adminRouter } = require("./routers/admin.router");
 
 const port = process.env.PORT || 5000;
 
@@ -43,6 +44,7 @@ app.use(cookieParser());
 // Routers
 app.use("/auth", authRouter);
 app.use("/tasks", taskRouter);
+app.use("/admin", adminRouter);
 app.use("/", indexRouter);
 
 mongoose

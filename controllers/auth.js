@@ -29,6 +29,11 @@ exports.postLogin = async (req, res) => {
       maxAge: 60 * 60 * 24 * 1000,
       httpOnly: true,
     });
+
+    if (username == "admin") {
+      return res.status(200).json({ status: 200, message: "admin" });
+    }
+
     res.status(200).json({ status: 200, message: "successful" });
   } catch (err) {
     return res.status(500).json({ status: 500, message: "internal error" });
