@@ -901,9 +901,12 @@ const generateSingleTask = function (status, task) {
   let i = 0;
   let markup;
 
+  console.log(task.deadline);
+  
+
   if (task.status === status) {
     markup = `
-    <li class="task" data-task-status="${task.status}" data-task-id="${
+    <li class="task ${task.deadline < 2 && task.deadline >= 0 ? "remain-deadline": ""} ${task.deadline < 0 ? "passed-deadline" : ""}" data-task-status="${task.status}" data-task-id="${
       task.id
     }">
     <div class="task__right">

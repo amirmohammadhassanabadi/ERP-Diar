@@ -9,3 +9,11 @@
 .dis-block{
     display: block;
 }
+
+.passed-deadline{
+    background-color: #FFDCDC !important;
+}
+
+.remain-deadline{
+    background-color: #FEFFCA !important;
+}
