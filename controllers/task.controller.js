@@ -306,6 +306,11 @@ exports.referTaskAgent = async (req, res) => {
         writer: req.user.id,
         date: new Date(),
       };
+      task.history[task.history] = {
+        date: new Date(),
+        description: report,
+        agent: req.user.id
+      }      
 
       await task.save();
       res
