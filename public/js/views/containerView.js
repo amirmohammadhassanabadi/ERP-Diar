@@ -901,8 +901,8 @@ const generateTaskContainer = async function (status) {
 const generateSingleTask = function (status, task) {
   let i = 0;
   let markup;
-
-  console.log(task.deadline);
+  
+  console.log(task.id);
   
 
   if (task.status === status) {

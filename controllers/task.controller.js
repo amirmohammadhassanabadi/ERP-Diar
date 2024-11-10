@@ -11,7 +11,9 @@ exports.getTasks = async (req, res) => {
     if (req.user) {
       let tasks = await Task.find()
         .populate("agents", "_id username fullName department")
-        .populate("creator", "_id username fullName department");
+        .populate("creator", "_id username fullName department")
+        // .populate("history agent",  "_id username fullName department")
+
 
       tasks = tasks
         .filter((task) => {

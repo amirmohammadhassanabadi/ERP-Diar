@@ -17,6 +17,7 @@ async function addTestUser() {
     password: password,
     department: "it",
     level: 4,
+    color: "#1f1f1f"
   });
 
   await testUser.save();
