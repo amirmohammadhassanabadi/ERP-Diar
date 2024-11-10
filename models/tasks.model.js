@@ -15,15 +15,17 @@ const taskSchema = new mongoose.Schema({
     ref: "User",
     require: true,
   },
-  history: {
-    date:  { type: Date, default: Date.now, required: true },
-    agent: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      require: true,
-    },
-    description:  { type: String, required: true }
-  },
+  history: [
+    {
+      date:  { type: Date, default: Date.now, required: true },
+      agent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        require: true,
+      },
+      description:  { type: String, required: true }
+    }
+  ],
   createdAt: { type: Date, default: Date.now() },
   deadline: { type: Date },
   reports: [ 

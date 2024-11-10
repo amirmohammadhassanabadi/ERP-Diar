@@ -140,6 +140,11 @@ exports.addTask = async (req, res) => {
     description: description,
     status: false,
     agents: agents,
+    history: [{
+      date:  new Date(),
+      agent: agents,
+      description: description
+    }],
     creator: req.user.id,
     createdAt: Date.now(),
     deadline: deadline,
