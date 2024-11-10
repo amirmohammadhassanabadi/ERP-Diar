@@ -69,7 +69,6 @@ header .header__profile {
   text-align: center;
   line-height: 2rem;
   color: var(--color-white);
-  background-color: #e0cfaf; /* user profile color*/
   margin-right: 0.5rem;
   display: inline-block;
 }

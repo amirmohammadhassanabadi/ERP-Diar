@@ -111,6 +111,7 @@ exports.getLoggedInUserInfo = (req, res) => {
         fullName: req.user.fullName,
         username: req.user.username,
         department: req.user.department,
+        color: req.user.color
       },
     });
   } catch (error) {

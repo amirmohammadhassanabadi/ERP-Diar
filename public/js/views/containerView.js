@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("profile_img").innerText =
     userInfo.username[0] + userInfo.username[1];
+    document.getElementById("profile_img").style.backgroundColor = userInfo.color;
   document.getElementById("profile_name").innerText = userInfo.fullName;
   const infoList = document.querySelectorAll(".profile__info__list > li");
   [...infoList][0].children[0].innerText = userInfo.fullName;
