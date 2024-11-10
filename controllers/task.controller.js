@@ -10,10 +10,12 @@ exports.getTasks = async (req, res) => {
   try {
     if (req.user) {
       let tasks = await Task.find()
+        .populate({
+          path: "history.agent",
+          select: "_id username fullName department color",
+        })
         .populate("agents", "_id username fullName department")
-        .populate("creator", "_id username fullName department")
-        // .populate("history agent",  "_id username fullName department")
-
+        .populate("creator", "_id username fullName department color");
 
       tasks = tasks
         .filter((task) => {
@@ -31,10 +33,10 @@ exports.getTasks = async (req, res) => {
                 new Date(new Date().toDateString()).getTime()) /
               (1000 * 60 * 60 * 24),
             creator: task.creator,
-            agents: [task.agents[task.agents.length - 1]],
+            agents: [task.history[task.history.length - 1].agent],
           };
         })
-        .reverse();     
+        .reverse();
 
       res.status(200).json({
         statusCode: 200,
@@ -44,6 +46,7 @@ exports.getTasks = async (req, res) => {
       res.status(401).json({ statusCode: 401, message: "Unauthorized" });
     }
   } catch (error) {
+    console.log(error.message);
     res
       .status(500)
       .json({ statusCode: 500, message: `internal error - ${error.message}` });
@@ -68,33 +71,35 @@ exports.getReferredTasks = async (req, res) => {
 
     return res.status(200).json({
       statusCode: 200,
-      data: tasks.map((task) => {
-        return {
-          id: task._id,
-          title: task.title,
-          description: task.description,
-          status: task.status,
-          deadline:
-            (new Date(task.deadline).getTime() -
-              new Date(new Date().toDateString()).getTime()) /
-            (1000 * 60 * 60 * 24),
-          creator: {
-            id: task.creator.id,
-            fullName: task.creator.fullName,
-            username: task.creator.username,
-            department: task.creator.department,
-          },
-          agents: [
-            {
-              id: task.agents[task.agents.length - 1].id,
-              fullName: task.agents[task.agents.length - 1].fullName,
-              username: task.agents[task.agents.length - 1].username,
-              department: task.agents[task.agents.length - 1].department,
+      data: tasks
+        .map((task) => {
+          return {
+            id: task._id,
+            title: task.title,
+            description: task.description,
+            status: task.status,
+            deadline:
+              (new Date(task.deadline).getTime() -
+                new Date(new Date().toDateString()).getTime()) /
+              (1000 * 60 * 60 * 24),
+            creator: {
+              id: task.creator.id,
+              fullName: task.creator.fullName,
+              username: task.creator.username,
+              department: task.creator.department,
             },
-          ],
-          deleteOption: task.creator.id == req.user.id ? true : false,
-        };
-      }).reverse(),
+            agents: [
+              {
+                id: task.agents[task.agents.length - 1].id,
+                fullName: task.agents[task.agents.length - 1].fullName,
+                username: task.agents[task.agents.length - 1].username,
+                department: task.agents[task.agents.length - 1].department,
+              },
+            ],
+            deleteOption: task.creator.id == req.user.id ? true : false,
+          };
+        })
+        .reverse(),
     });
   } catch (error) {
     res
@@ -142,11 +147,13 @@ exports.addTask = async (req, res) => {
     description: description,
     status: false,
     agents: agents,
-    history: [{
-      date:  new Date(),
-      agent: agents,
-      description: description
-    }],
+    history: [
+      {
+        date: new Date(),
+        agent: agents,
+        description: description,
+      },
+    ],
     creator: req.user.id,
     createdAt: Date.now(),
     deadline: deadline,
@@ -155,10 +162,11 @@ exports.addTask = async (req, res) => {
   newTask = await newTask.save();
   const temp = await Task.findById(newTask._id).populate("agents");
 
-  console.log((new Date(newTask.deadline).getTime() -
-  new Date(new Date().toDateString()).getTime()) /
-(1000 * 60 * 60 * 24));
-  
+  console.log(
+    (new Date(newTask.deadline).getTime() -
+      new Date(new Date().toDateString()).getTime()) /
+      (1000 * 60 * 60 * 24)
+  );
 
   res.status(200).json({
     statusCode: 200,
@@ -308,11 +316,11 @@ exports.referTaskAgent = async (req, res) => {
         writer: req.user.id,
         date: new Date(),
       };
-      task.history[task.history] = {
+      task.history[task.history.length] = {
         date: new Date(),
         description: report,
-        agent: req.user.id
-      }      
+        agent: req.user.id,
+      };
 
       await task.save();
       res
@@ -370,42 +378,80 @@ exports.getSubordinateTask = async (req, res) => {
 exports.getTaskInfo = async (req, res) => {
   try {
     const taskId = req.params.taskid;
-    const task = await Task.findById(taskId).populate("creator").populate("agents");
-    
+    const task = await Task.findById(taskId)
+      .populate("creator")
+      .populate("agents")
+      .populate({
+        path: "history.agent",
+        select: "_id username fullName department color",
+      });
+
     if (!task) {
       return res
-      .status(404)
-      .json({ statusCode: 404, message: `task id invalid` });  
+        .status(404)
+        .json({ statusCode: 404, message: `task id invalid` });
     }
 
-    return res.status(200).json({statusCode: 200, data: {
-      id: task.id,
-      title: task.title,
-      description: task.description,
-      status: task.status,
-      agents: task.agents.map(item => {
-        return {
-          id: item.id,
-          username: item.username,
-          fullName: item.fullName,
-          department: item.department
-        }
-      } ),
-      creator: {
-        id: task.creator.id,
-        username: task.creator.username,
-        fullName: task.creator.fullName,
-        department: task.creator.department
+    return res.status(200).json({
+      statusCode: 200,
+      data: {
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        status: task.status,
+        agents: task.agents.map((item) => {
+          return {
+            id: item.id,
+            username: item.username,
+            fullName: item.fullName,
+            department: item.department,
+          };
+        }),
+        creator: {
+          id: task.creator.id,
+          username: task.creator.username,
+          fullName: task.creator.fullName,
+          department: task.creator.department,
+        },
+        createdAt: dateConverter.gregorianToSolar(
+          new Date(task.createdAt).getFullYear(),
+          new Date(task.createdAt).getMonth() + 1,
+          new Date(task.createdAt).getDate(),
+          "object"
+        ),
+        deadline: dateConverter.gregorianToSolar(
+          new Date(task.deadline).getFullYear(),
+          new Date(task.deadline).getMonth() + 1,
+          new Date(task.deadline).getDate(),
+          "object"
+        ),
+        reports: {
+          description: task.reports.description,
+          writer: task.reports.writer,
+          date: task.reports.date
+            ? dateConverter.gregorianToSolar(
+                new Date(task.reports.date).getFullYear(),
+                new Date(task.reports.date).getMonth() + 1,
+                new Date(task.reports.date).getDate(),
+                "object"
+              )
+            : null,
+        },
+        history: task.history.map((item) => {
+          return {
+            date: item.date,
+            agent: {
+              id: item.agent.id,
+              username: item.agent.username,
+              fullName: item.agent.fullName,
+              department: item.agent.department,
+              color: item.agent.color,
+            },
+            description: item.description
+          };
+        }),
       },
-      createdAt: dateConverter.gregorianToSolar(new Date(task.createdAt).getFullYear(), (new Date(task.createdAt).getMonth()) + 1, new Date(task.createdAt).getDate(), "object"),
-      deadline: dateConverter.gregorianToSolar(new Date(task.deadline).getFullYear(), (new Date(task.deadline).getMonth()) + 1, new Date(task.deadline).getDate(), "object"),
-      reports: {
-        description: task.reports.description,
-        writer: task.reports.writer,
-        date: task.reports.date ? dateConverter.gregorianToSolar(new Date(task.reports.date).getFullYear(), (new Date(task.reports.date).getMonth()) + 1, new Date(task.reports.date).getDate(), "object") : null
-      }
-    }})
-    
+    });
   } catch (error) {
     return res
       .status(500)
