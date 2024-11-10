@@ -24,10 +24,6 @@ async function addTestUser() {
   return console.log("test User added");
 }
 
-async function getUser() {
-  const user = await User.findOne({ username: "user" });
-}
-
 module.exports = {
     addTestUser,
 };
