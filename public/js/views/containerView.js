@@ -25,55 +25,55 @@ function taskInfoWrapperFiller(wrapper, data) {
   wrapper.children[0].children[0].children[1].children[0].children[1].innerText = `${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}`;
   wrapper.children[0].children[0].children[1].children[1].children[1].innerText = `${data.deadline.year}/${data.deadline.month}/${data.deadline.day}`;
   wrapper.children[0].children[1].children[1].value = data.description;
-  let history = "";
-  history += `
-      <div class="historyItem">
-       <div class="person-info-wrapper">
-         <div class="history-item-right">
-           <span> 1 - </span>
-           <span> سازنده: </span>
-           <span> ${data.creator.fullName} </span>
-         </div>
-         <div class="history-item-right">${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}</div>
-       </div>
-     </div>
-    `;
-  if (data.agents.length > 1) {
-    history += `
-      <div class="historyItem">
-       <div class="person-info-wrapper">
-         <div class="history-item-right">
-           <span> 2 - </span>
-           <span> ارجاع کننده: </span>
-           <span> ${data.agents[data.agents.length - 2].fullName} </span>
-         </div>
-       </div>
-     </div>
+  // let history = "";
+  // history += `
+  //     <div class="historyItem">
+  //      <div class="person-info-wrapper">
+  //        <div class="history-item-right">
+  //          <span> 1 - </span>
+  //          <span> سازنده: </span>
+  //          <span> ${data.creator.fullName} </span>
+  //        </div>
+  //        <div class="history-item-right">${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}</div>
+  //      </div>
+  //    </div>
+  //   `;
+  // if (data.agents.length > 1) {
+  //   history += `
+  //     <div class="historyItem">
+  //      <div class="person-info-wrapper">
+  //        <div class="history-item-right">
+  //          <span> 2 - </span>
+  //          <span> ارجاع کننده: </span>
+  //          <span> ${data.agents[data.agents.length - 2].fullName} </span>
+  //        </div>
+  //      </div>
+  //    </div>
 
-      <div class="historyItem">
-       <div class="person-info-wrapper">
-         <div class="history-item-right">
-           <span> 3 - </span>
-           <span> مسئول انجام: </span>
-           <span> ${data.agents[data.agents.length - 1].fullName} </span>
-         </div>
-       </div>
-     </div>
-      `;
-  } else {
-    history += `
-      <div class="historyItem">
-       <div class="person-info-wrapper">
-         <div class="history-item-right">
-           <span> 2 - </span>
-           <span> مسئول انجام: </span>
-           <span> ${data.agents[data.agents.length - 1].fullName} </span>
-         </div>
-       </div>
-     </div>
-      `;
-  }
-  document.querySelector(".historyBox").innerHTML = history;
+  //     <div class="historyItem">
+  //      <div class="person-info-wrapper">
+  //        <div class="history-item-right">
+  //          <span> 3 - </span>
+  //          <span> مسئول انجام: </span>
+  //          <span> ${data.agents[data.agents.length - 1].fullName} </span>
+  //        </div>
+  //      </div>
+  //    </div>
+  //     `;
+  // } else {
+  //   history += `
+  //     <div class="historyItem">
+  //      <div class="person-info-wrapper">
+  //        <div class="history-item-right">
+  //          <span> 2 - </span>
+  //          <span> مسئول انجام: </span>
+  //          <span> ${data.agents[data.agents.length - 1].fullName} </span>
+  //        </div>
+  //      </div>
+  //    </div>
+  //     `;
+  // }
+  // document.querySelector(".historyBox").innerHTML = history;
 }
 
 const taskInfowrapper = document.getElementById("taskInfowrapper");
@@ -127,6 +127,14 @@ function renderReffrencableUsers(users) {
 // if already has event listener, flag=1 so we don't add more
 //   ev listeners. send to controller later with no flag REMINDER
 let referUserEvListenerFlag;
+
+taskInfowrapper.addEventListener("mouseover", e => {
+  if (e.target.classList.contains("referPersonBox")) {
+    console.log(e.target.offsetLeft);
+    
+    
+  }
+})
 
 referPopupWrapper.addEventListener("click", async (e) => {
   if (e.target.classList.contains("referPopupWrapper")) {
