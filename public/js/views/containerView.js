@@ -10,70 +10,115 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("profile_img").innerText =
     userInfo.username[0] + userInfo.username[1];
-    document.getElementById("profile_img").style.backgroundColor = userInfo.color;
+  document.getElementById("profile_img").style.backgroundColor = userInfo.color;
   document.getElementById("profile_name").innerText = userInfo.fullName;
   const infoList = document.querySelectorAll(".profile__info__list > li");
   [...infoList][0].children[0].innerText = userInfo.fullName;
   [...infoList][1].children[0].innerText = userInfo.username;
 });
 
+
 function taskInfoWrapperFiller(wrapper, data) {
   wrapper.children[0].children[0].children[0].children[0].innerText =
     data.title;
   wrapper.children[0].children[0].children[0].children[1].innerText = data.id;
-
   wrapper.children[0].children[0].children[1].children[0].children[1].innerText = `${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}`;
   wrapper.children[0].children[0].children[1].children[1].children[1].innerText = `${data.deadline.year}/${data.deadline.month}/${data.deadline.day}`;
   wrapper.children[0].children[1].children[1].value = data.description;
-  // let history = "";
-  // history += `
-  //     <div class="historyItem">
-  //      <div class="person-info-wrapper">
-  //        <div class="history-item-right">
-  //          <span> 1 - </span>
-  //          <span> سازنده: </span>
-  //          <span> ${data.creator.fullName} </span>
-  //        </div>
-  //        <div class="history-item-right">${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}</div>
-  //      </div>
-  //    </div>
-  //   `;
-  // if (data.agents.length > 1) {
-  //   history += `
-  //     <div class="historyItem">
-  //      <div class="person-info-wrapper">
-  //        <div class="history-item-right">
-  //          <span> 2 - </span>
-  //          <span> ارجاع کننده: </span>
-  //          <span> ${data.agents[data.agents.length - 2].fullName} </span>
-  //        </div>
-  //      </div>
-  //    </div>
 
-  //     <div class="historyItem">
-  //      <div class="person-info-wrapper">
-  //        <div class="history-item-right">
-  //          <span> 3 - </span>
-  //          <span> مسئول انجام: </span>
-  //          <span> ${data.agents[data.agents.length - 1].fullName} </span>
-  //        </div>
-  //      </div>
-  //    </div>
-  //     `;
-  // } else {
-  //   history += `
-  //     <div class="historyItem">
-  //      <div class="person-info-wrapper">
-  //        <div class="history-item-right">
-  //          <span> 2 - </span>
-  //          <span> مسئول انجام: </span>
-  //          <span> ${data.agents[data.agents.length - 1].fullName} </span>
-  //        </div>
-  //      </div>
-  //    </div>
-  //     `;
-  // }
-  // document.querySelector(".historyBox").innerHTML = history;
+  let history = `
+    <div class="referPersonBox" style="background-color: ${data.creator.color};">
+      ${data.creator.username[0]}${data.creator.username[1]}
+    <div class="referPersonInfo dis-none">
+      <div class="top-info">
+        <div class="right">
+          <h4>${data.creator.fullName}</h4>
+          <span>${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}</span>
+        </div>
+        <div class="left" style="border: 1px solid #7700ff; color: #7700ff;">
+          <div>سازنده</div>
+        </div>
+      </div>
+
+      <div class="line-divider"></div>
+
+      <div class="referPersonDesc">
+        <p>
+          ${data.description}
+        </p>
+      </div>
+    </div>
+   </div>
+  `;
+
+  for (let i = 0; i < data.history.length; i++) {
+    if (i != data.history.length - 1) {
+      // console.log(data.history[i]);
+
+      history += `
+          <div class="referPersonBox" style="background-color: ${data.history[i].agent.color};">
+      ${data.history[i].agent.username[0]}${data.history[i].agent.username[1]}
+    <div class="referPersonInfo dis-none">
+      <div class="top-info">
+        <div class="right">
+          <h4>${data.history[i].agent.fullName}</h4>
+          <span>${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}</span>
+        </div>
+        <div class="left" style="border: 1px solid #43a63e; color: #43a63e;">
+          <div>ارجاع دهنده</div>
+        </div>
+      </div>
+
+      <div class="line-divider"></div>
+
+      <div class="referPersonDesc">
+        <p>
+          ${data.history[i].description}
+        </p>
+      </div>
+    </div>
+   </div>
+  `;
+    } else {
+      history += `
+      <div class="referPersonBox" style="background-color: ${data.history[i].agent.color};">
+  ${data.history[i].agent.username[0]}${data.history[i].agent.username[1]}
+<div class="referPersonInfo dis-none">
+  <div class="top-info">
+    <div class="right">
+      <h4>${data.history[i].agent.fullName}</h4>
+      <span>${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}</span>
+    </div>
+    <div class="left" style="border: 1px solid #d54228; color: #d54228;">
+      <div>مسئول انجام</div>
+    </div>
+  </div>
+
+  <div class="line-divider"></div>
+
+  <div class="referPersonDesc">
+    <p>
+      ${data.history[i].description}
+    </p>
+  </div>
+</div>
+</div>
+`;
+    }
+  }
+
+  wrapper.children[0].children[1].children[2].children[1].children[0].innerHTML +=
+    history;
+  let referPersonBox = document.querySelectorAll(".referPersonBox");
+  let referPersonBoxArr = Array.from(referPersonBox);
+  referPersonBoxArr.forEach((elem) => {
+    elem.addEventListener("mouseleave", (e) => {
+      console.log("out");
+  
+      e.target.children[0].classList.add("dis-none");
+      e.target.children[0].classList.remove("dis-block");
+    });
+  });
 }
 
 const taskInfowrapper = document.getElementById("taskInfowrapper");
@@ -128,13 +173,21 @@ function renderReffrencableUsers(users) {
 //   ev listeners. send to controller later with no flag REMINDER
 let referUserEvListenerFlag;
 
-taskInfowrapper.addEventListener("mouseover", e => {
+taskInfowrapper.addEventListener("mouseover", (e) => {
   if (e.target.classList.contains("referPersonBox")) {
-    console.log(e.target.offsetLeft);
-    
-    
+    e.target.children[0].classList.add("dis-block");
+    e.target.children[0].classList.remove("dis-none");
   }
-})
+});
+
+// taskInfowrapper.addEventListener("mouseenter", e => {
+//   if (e.target.classList.contains("referPersonBox")) {
+//     // e.target.children[0].classList.add("dis-none");
+//     // e.target.children[0].classList.remove("dis-block");
+//     console.log("ok");
+
+//   }
+// })
 
 referPopupWrapper.addEventListener("click", async (e) => {
   if (e.target.classList.contains("referPopupWrapper")) {
@@ -665,7 +718,10 @@ document
           "مشکلی پیش آمده لطفا دوباره تلاش کنید"
         );
       }
-    } else if (e.target.classList.contains("cancel__pass-btn") || e.target.classList.contains("overlay__changepass")) {
+    } else if (
+      e.target.classList.contains("cancel__pass-btn") ||
+      e.target.classList.contains("overlay__changepass")
+    ) {
       clearResetPasswordPopup();
     } else if (e.target.classList.contains("showPassIcon")) {
       if (e.target.parentElement.previousElementSibling.type == "password") {
@@ -688,7 +744,7 @@ const clearResetPasswordPopup = () => {
     "1px solid var(--color-gray-light-2)";
   document.querySelector(
     ".overlay__changepass"
-  ).children[0].children[0].children[2].children[0].value = ""; 
+  ).children[0].children[0].children[2].children[0].value = "";
   document.querySelector(
     ".overlay__changepass"
   ).children[0].children[0].children[4].children[0].style.borderBottom =
@@ -909,15 +965,16 @@ const generateTaskContainer = async function (status) {
 const generateSingleTask = function (status, task) {
   let i = 0;
   let markup;
-  
+
   console.log(task.id);
-  
 
   if (task.status === status) {
     markup = `
-    <li class="task ${task.deadline < 2 && task.deadline >= 0 ? "remain-deadline": ""} ${task.deadline < 0 ? "passed-deadline" : ""}" data-task-status="${task.status}" data-task-id="${
-      task.id
-    }">
+    <li class="task ${
+      task.deadline < 2 && task.deadline >= 0 ? "remain-deadline" : ""
+    } ${task.deadline < 0 ? "passed-deadline" : ""}" data-task-status="${
+      task.status
+    }" data-task-id="${task.id}">
     <div class="task__right">
       <input class="checkbox" type="checkbox" ${
         status ? "checked" : ""

@@ -17,18 +17,18 @@ const taskSchema = new mongoose.Schema({
   },
   history: [
     {
-      date:  { type: Date, default: Date.now, required: true },
+      date: { type: Date, default: Date.now, required: true },
       agent: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         require: true,
       },
-      description:  { type: String, required: true }
-    }
+      description: { type: String },
+    },
   ],
   createdAt: { type: Date, default: Date.now() },
   deadline: { type: Date },
-  reports: [ 
+  reports: [
     {
       description: { type: String },
       writer: {

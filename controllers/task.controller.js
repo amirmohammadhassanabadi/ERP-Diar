@@ -316,10 +316,10 @@ exports.referTaskAgent = async (req, res) => {
         writer: req.user.id,
         date: new Date(),
       };
+      task.history[task.history.length - 1].description = report;
       task.history[task.history.length] = {
         date: new Date(),
-        description: report,
-        agent: req.user.id,
+        agent: newAgent,
       };
 
       await task.save();
@@ -328,6 +328,8 @@ exports.referTaskAgent = async (req, res) => {
         .json({ statusCode: 200, message: "task referred to agent" });
     }
   } catch (error) {
+    console.log(error.message);
+    
     return res
       .status(500)
       .json({ statusCode: 500, message: `internal error - ${error.message}` });
@@ -412,6 +414,7 @@ exports.getTaskInfo = async (req, res) => {
           username: task.creator.username,
           fullName: task.creator.fullName,
           department: task.creator.department,
+          color: task.creator.color
         },
         createdAt: dateConverter.gregorianToSolar(
           new Date(task.createdAt).getFullYear(),
