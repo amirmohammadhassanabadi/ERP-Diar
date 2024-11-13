@@ -53,8 +53,6 @@ function taskInfoWrapperFiller(wrapper, data) {
 
   for (let i = 0; i < data.history.length; i++) {
     if (i != data.history.length - 1) {
-      // console.log(data.history[i]);
-
       history += `
           <div class="referPersonBox" style="background-color: ${data.history[i].agent.color};">
       ${data.history[i].agent.username[0]}${data.history[i].agent.username[1]}
@@ -62,7 +60,7 @@ function taskInfoWrapperFiller(wrapper, data) {
       <div class="top-info">
         <div class="right">
           <h4>${data.history[i].agent.fullName}</h4>
-          <span>${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}</span>
+          <span>${data.history[i].date.year}/${data.history[i].date.month}/${data.history[i].date.day}</span>
         </div>
         <div class="left" style="border: 1px solid #43a63e; color: #43a63e;">
           <div>ارجاع دهنده</div>
@@ -87,7 +85,7 @@ function taskInfoWrapperFiller(wrapper, data) {
   <div class="top-info">
     <div class="right">
       <h4>${data.history[i].agent.fullName}</h4>
-      <span>${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}</span>
+      <span>${data.history[i].date.year}/${data.history[i].date.month}/${data.history[i].date.day}</span>
     </div>
     <div class="left" style="border: 1px solid #d54228; color: #d54228;">
       <div>مسئول انجام</div>
@@ -98,7 +96,6 @@ function taskInfoWrapperFiller(wrapper, data) {
 
   <div class="referPersonDesc">
     <p>
-      ${data.history[i].description}
     </p>
   </div>
 </div>

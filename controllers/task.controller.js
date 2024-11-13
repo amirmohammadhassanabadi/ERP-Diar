@@ -442,7 +442,12 @@ exports.getTaskInfo = async (req, res) => {
         },
         history: task.history.map((item) => {
           return {
-            date: item.date,
+            date: dateConverter.gregorianToSolar(
+              new Date(item.date).getFullYear(),
+              new Date(item.date).getMonth() + 1,
+              new Date(item.date).getDate(),
+              "object"
+            ),
             agent: {
               id: item.agent.id,
               username: item.agent.username,
