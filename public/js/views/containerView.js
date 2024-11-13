@@ -104,7 +104,7 @@ function taskInfoWrapperFiller(wrapper, data) {
     }
   }
 
-  wrapper.children[0].children[2].children[2].children[1].children[0].innerHTML +=
+  wrapper.children[0].children[2].children[2].children[1].children[0].innerHTML =
     history;
   let referPersonBox = document.querySelectorAll(".referPersonBox");
   let referPersonBoxArr = Array.from(referPersonBox);
@@ -142,7 +142,7 @@ document.querySelector(".container").addEventListener("click", async (e) => {
 });
 
 taskInfowrapper.addEventListener("click", (e) => {
-  if (e.target.id == "taskInfowrapper") {
+  if (e.target.id == "taskInfowrapper" || e.target.classList.contains("fa-times")) {
     taskInfowrapper.classList.remove("dis-flex");
     taskInfowrapper.classList.add("dis-none");
   } else if (e.target.classList.contains("referHistoryBtn")) {
