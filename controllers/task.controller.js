@@ -162,12 +162,6 @@ exports.addTask = async (req, res) => {
   newTask = await newTask.save();
   const temp = await Task.findById(newTask._id).populate("agents");
 
-  console.log(
-    (new Date(newTask.deadline).getTime() -
-      new Date(new Date().toDateString()).getTime()) /
-      (1000 * 60 * 60 * 24)
-  );
-
   res.status(200).json({
     statusCode: 200,
     data: {
@@ -311,11 +305,6 @@ exports.referTaskAgent = async (req, res) => {
       targetedAgent.level > req.user.level
     ) {
       task.agents[task.agents.length] = newAgent;
-      task.reports[task.reports.length] = {
-        description: report,
-        writer: req.user.id,
-        date: new Date(),
-      };
       task.history[task.history.length - 1].description = report;
       task.history[task.history.length] = {
         date: new Date(),
