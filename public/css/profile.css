@@ -954,14 +954,40 @@ div.pass-input-wrapper > .pass-input:focus {
   z-index: 4;
 }
 
+#taskInfowrapper > .task-info > .taskInfoHeader {
+  background-color: var(--popup-navy);
+  padding: .5rem;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  width: 100%;
+  border-radius: .5rem .5rem 0 0;
+  display: flex;
+  justify-content: end;
+}
+
+#taskInfowrapper > .task-info > .taskInfoHeader > i {
+  color: var(--white);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+#taskInfowrapper > .task-info > .taskInfoHeader > i:hover {
+  color: var(--red);
+  transition: all .3s ease;
+}
+
 #taskInfowrapper > .task-info {
   padding: 1.5rem;
   width: 42%;
   background-color: #f0f0f0;
+  border-radius: 0 0 .5rem .5rem;
+  position: relative;
 }
 
 #taskInfowrapper > .task-info > .top-info > .top-info-right > h3 {
   font-size: 1.5rem;
+  color: var(--popup-title-gold);
 }
 
 #taskInfowrapper > .task-info > .top-info > .top-info-right > span {

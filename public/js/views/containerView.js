@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 function taskInfoWrapperFiller(wrapper, data) {
-  wrapper.children[0].children[0].children[0].children[0].innerText =
+  wrapper.children[0].children[1].children[0].children[0].innerText =
     data.title;
-  wrapper.children[0].children[0].children[0].children[1].innerText = data.id;
-  wrapper.children[0].children[0].children[1].children[0].children[1].innerText = `${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}`;
-  wrapper.children[0].children[0].children[1].children[1].children[1].innerText = `${data.deadline.year}/${data.deadline.month}/${data.deadline.day}`;
-  wrapper.children[0].children[1].children[1].value = data.description;
+  wrapper.children[0].children[1].children[0].children[1].innerText = data.id;
+  wrapper.children[0].children[1].children[1].children[0].children[1].innerText = `${data.createdAt.year}/${data.createdAt.month}/${data.createdAt.day}`;
+  wrapper.children[0].children[1].children[1].children[1].children[1].innerText = `${data.deadline.year}/${data.deadline.month}/${data.deadline.day}`;
+  wrapper.children[0].children[2].children[1].value = data.description;
 
   let history = `
     <div class="referPersonBox" style="background-color: ${data.creator.color};">
@@ -104,7 +104,7 @@ function taskInfoWrapperFiller(wrapper, data) {
     }
   }
 
-  wrapper.children[0].children[1].children[2].children[1].children[0].innerHTML +=
+  wrapper.children[0].children[2].children[2].children[1].children[0].innerHTML +=
     history;
   let referPersonBox = document.querySelectorAll(".referPersonBox");
   let referPersonBoxArr = Array.from(referPersonBox);

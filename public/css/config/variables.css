@@ -1,6 +1,7 @@
 :root {
   /* Colors */
   --navy: #202f4e;
+  --popup-navy: #05214C;
   --color-primary: #202f4e;
   --color-grad-1: #304d6d;
   --color-grad-2: #2a6fb9;
@@ -9,6 +10,7 @@
   --color-secondary: #cfab5d;
   --gold-shadow: #ffca58;
   --gold: #cfab5d;
+  --popup-title-gold: #AE904A;
 
   --popup-success-bg: #d9ffeb;
   --popup-success-200-bg: #3f9600;
