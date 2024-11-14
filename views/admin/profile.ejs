@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="/css/config/animation.css" />
     <link rel="stylesheet" href="/css/includes/alert.css" />
     <link rel="stylesheet" href="/css/config/class.css" />
-    <link rel="stylesheet" href="/css/profile.css" />
+    <link rel="stylesheet" href="/css/admin-profile.css" />
   </head>
 
   <body>
@@ -42,13 +42,6 @@
           <span id="profile_img"></span>
           <span id="profile_name"></span>
         </div>
-        <ul class="profile__info__list hidden">
-          <li>نام و نام خانوادگی: <strong>کسری گلی راد</strong></li>
-          <li>نام کاربری: <strong>kasragolirad</strong></li>
-          <li>
-            <button class="change__pas__btn task__btn">تغییر رمز عبور</button>
-          </li>
-        </ul>
       </div>
     </header>
     <main>
@@ -59,7 +52,7 @@
             <span>داشبورد</span>
           </li>
           <div class="divider"></div>
-          <li class="menu__item menu__tasks">
+          <li class="menu__item menu__tasks user-setting">
             <i class="fas fa-users" style="color: #676767"></i>
             <span>تنظیمات کاربران</span>
           </li>
@@ -69,7 +62,29 @@
           </li>
         </ul>
       </div>
-      <div class="container"></div>
+      <div class="container">
+        <div class="user-add-wrapper">
+          <a href="/auth/signup">افزودن کاربر</a>
+        </div>
+        <div class="users-container">
+          <div>
+            <div class="profile-img-wrapper">
+              <div>
+                <span>
+                  KR
+                </span>
+              </div>
+            </div>
+            <div class="user-info">
+              <span>کسری گلی راد</span>
+              <span>kasra</span>
+              <span>4 سطح</span>
+              <span>IT - فناوری اطلاعات</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </main>
 
 
@@ -77,5 +92,6 @@
     src="https://kit.fontawesome.com/7a20fd358e.js"
     crossorigin="anonymous"
   ></script>
+  <script src="/js/admin/menu.js"></script>
   </body>
 </html>

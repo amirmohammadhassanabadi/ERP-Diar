@@ -18,9 +18,6 @@ if (process.env.NODE_ENV === "development") {
 // Create Admin
 const admin = require("./config/database/create-admin");
 
-// Testing Imports
-const { addTestUser } = require("./test/addUser.test");
-
 // importing routers
 const { authRouter } = require("./routers/auth");
 const { taskRouter } = require("./routers/task.router");
@@ -55,6 +52,3 @@ mongoose
     });
     return admin.createAdmin();
   })
-  .then(() => {
-    return addTestUser();
-  });
