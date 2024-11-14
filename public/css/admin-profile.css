@@ -238,4 +238,91 @@ header {
     color: var(--color-white);
     text-decoration: none;
   }
+  /* --------------------------------------------------- */
+  .users-container {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+  }
+
+  .users-container > .users-box-container {
+    width: 55%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .users-container > .users-box-container > .users-box {
+    width: 45%;
+    padding: 1rem;
+    background-color: var(--white);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: .4rem;
+    border: 1px solid var(--color-gray-light-2);
+  }
+
+  .users-container > .users-box-container > .users-box >.profile-img-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+  }
+
+  .users-container > .users-box-container > .users-box >.profile-img-wrapper > div {
+    width: 75px;
+    height: 75px;
+    border-radius: 1rem;
+    background-color: cornflowerblue;
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .users-container > .users-box-container > .users-box >.profile-img-wrapper > div > div {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 0;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+
+  .users-container > .users-box-container > .users-box > .user-info {
+    margin: 1rem 0 3rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .users-container > .users-box-container > .users-box > .user-info > span {
+    font-size: 1.3rem;
+  }
+
+  .users-container > .users-box-container > .users-box > .user-info > span:not(:last-child){
+    margin-bottom: .3rem;
+  }
+
+  .users-container > .users-box-container > .users-box > .user-info > span:nth-child(1) {
+    font-weight: 600;
+  }
+
+  .users-container > .users-box-container > .users-box > .btns {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .users-container > .users-box-container > .users-box > .btns > button {
+    width: 40%;
+    padding: .5rem 0;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: var(--white);
+    border: 1px solid var(--color-gray-light-3);
+    border-radius: .3rem;
+    font-weight: 600;
+  }
+
+  .users-container > .users-box-container > .users-box > .btns > button:nth-child(2){
+    color: var(--color-red);
+  }
   /* ================================================ */
