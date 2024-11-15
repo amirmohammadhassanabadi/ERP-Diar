@@ -19,7 +19,7 @@ exports.getAllUsers = async (req, res) => {
 
     return res.status(200).json({
         statusCode: 200,
-        data: users
+        data: users.reverse()
     })
  } catch (error) {
     return res.status(500).json({
@@ -27,4 +27,8 @@ exports.getAllUsers = async (req, res) => {
         message: `internal error - ${error.message}`
     })
  }   
+}
+
+exports.removeUser = async (req, res) => {
+    
 }
