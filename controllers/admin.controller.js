@@ -37,9 +37,11 @@ try {
     return res.status(400).json({statusCode: 400});
     }
 
-    await User.findByIdAndRemove(userId);
+    await User.findByIdAndDelete(userId);
     return res.status(200).json({statusCode: 200})
 } catch (error) {
+    console.log(error.message);
+    
     return res.status(500).json({
         statusCode: 500,
         message: `internal error - ${error.message}`

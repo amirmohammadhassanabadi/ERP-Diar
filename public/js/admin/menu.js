@@ -21,9 +21,9 @@ function renderUsers(users) {
                 <span>واحد ${user.department}</span>
               </div>
 
-              <div class="btns">
-                <button data-userid="${user._id}">ویرایش</button>
-                <button>حذف</button>
+              <div class="btns" data-userid="${user._id}">
+                <button class="edit-user">ویرایش</button>
+                <button class="remove-user">حذف</button>
               </div>
             </div>
         `
@@ -44,7 +44,7 @@ document.querySelector(".menu").addEventListener("click", async e => {
             userCont += `
                 <div class="users-container">
                     <div class="users-box-container">
-                        ${renderUsers(response.data).join()}
+                        ${renderUsers(response.data).join("")}
                     </div>
                 </div>
             `
