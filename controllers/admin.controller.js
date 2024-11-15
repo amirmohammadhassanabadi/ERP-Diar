@@ -7,17 +7,22 @@ exports.rederAdminPage = (req, res) => {
 exports.getAllUsers = async (req, res) => {
  try {
     const users = await User.find();
+    console.log(users);
+    
 
     if (!users) {
-        throw new Error("something wrong happend");
+        return res.status(500).json({
+            statusCode: 500,
+            message: `internal error`
+        })
     }
 
-    res.status(200).json({
+    return res.status(200).json({
         statusCode: 200,
         data: users
     })
  } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
         statusCode: 500,
         message: `internal error - ${error.message}`
     })

@@ -4,8 +4,8 @@ function containerReseter() {
     document.querySelector(".container").innerHTML = "";
 }
 
-document.querySelector(".menu").addEventListener("click", e => {
-    if (e.target.classList.contains("user-setting") || e.target.parent.classList.contains("user-setting")) {
+document.querySelector(".menu").addEventListener("click", async e => {
+    if (e.target.classList.contains("user-setting") || e.target.parentElement.classList.contains("user-setting")) {
         containerReseter();
         let userCont = `
             <div class="user-add-wrapper">
@@ -13,6 +13,9 @@ document.querySelector(".menu").addEventListener("click", e => {
             </div>
         `;
 
+        const response = await getAPI("/admin/getallusers");
+        console.log(response);
+        
 
         document.querySelector(".container").innerHTML = userCont;
     }
