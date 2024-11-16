@@ -18,6 +18,8 @@ exports.getTasks = async (req, res) => {
         .populate("creator", "_id username fullName department color");
 
         if (tasks.length > 0) {
+          console.log("inner");
+          
           tasks = tasks
           .filter((task) => {
             const flag = task.history[task.history.length - 1].id == req.user.id;
@@ -39,6 +41,9 @@ exports.getTasks = async (req, res) => {
           })
           .reverse(); 
         }
+
+        console.log(tasks);
+        
 
       res.status(200).json({
         statusCode: 200,
