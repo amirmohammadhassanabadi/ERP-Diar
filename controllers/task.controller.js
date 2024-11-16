@@ -22,6 +22,10 @@ exports.getTasks = async (req, res) => {
           
           tasks = tasks
           .filter((task) => {
+            console.log(task.history[task.history.length - 1].id);
+            console.log(req.user.id);
+            
+
             const flag = task.history[task.history.length - 1].id == req.user.id;
             if (flag) return task;
           })
