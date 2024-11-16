@@ -17,6 +17,9 @@ exports.getTasks = async (req, res) => {
         .populate("agents", "_id username fullName department")
         .populate("creator", "_id username fullName department color");
 
+        console.log(tasks);
+        
+
         if (tasks.length > 0) {
           console.log("inner");
           
