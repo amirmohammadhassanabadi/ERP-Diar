@@ -51,7 +51,7 @@ exports.renderSignupPage = async (req, res) => {
     dprmt.shift();
   }
 
-  for (let i = 4; i > Number(level); i--) {
+  for (let i = 5; i > Number(level); i--) {
     authLevel.push(i);
   }
 
