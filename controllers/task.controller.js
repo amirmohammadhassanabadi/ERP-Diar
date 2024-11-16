@@ -17,26 +17,28 @@ exports.getTasks = async (req, res) => {
         .populate("agents", "_id username fullName department")
         .populate("creator", "_id username fullName department color");
 
-      tasks = tasks
-        .filter((task) => {
-          const flag = task.agents[task.agents.length - 1].id == req.user.id;
-          if (flag) return task;
-        })
-        .map((task) => {
-          return {
-            id: task._id,
-            title: task.title,
-            description: task.description,
-            status: task.status,
-            deadline:
-              (new Date(task.deadline).getTime() -
-                new Date(new Date().toDateString()).getTime()) /
-              (1000 * 60 * 60 * 24),
-            creator: task.creator,
-            agents: [task.history[task.history.length - 1].agent],
-          };
-        })
-        .reverse();
+        if (tasks.length > 0) {
+          tasks = tasks
+          .filter((task) => {
+            const flag = task.history[task.history.length - 1].id == req.user.id;
+            if (flag) return task;
+          })
+          .map((task) => {
+            return {
+              id: task._id,
+              title: task.title,
+              description: task.description,
+              status: task.status,
+              deadline:
+                (new Date(task.deadline).getTime() -
+                  new Date(new Date().toDateString()).getTime()) /
+                (1000 * 60 * 60 * 24),
+              creator: task.creator,
+              agents: [task.history[task.history.length - 1].agent],
+            };
+          })
+          .reverse(); 
+        }
 
       res.status(200).json({
         statusCode: 200,
