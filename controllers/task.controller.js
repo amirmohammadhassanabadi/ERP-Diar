@@ -17,19 +17,11 @@ exports.getTasks = async (req, res) => {
         .populate("agents", "_id username fullName department")
         .populate("creator", "_id username fullName department color");
 
-        console.log(tasks);
-        
-
-        if (tasks.length > 0) {
-          console.log("inner");
-          
-          tasks = tasks
+      if (tasks.length > 0) {
+        tasks = tasks
           .filter((task) => {
-            console.log(task.history[task.history.length - 1].id);
-            console.log(req.user.id);
-            
-
-            const flag = task.history[task.history.length - 1].id == req.user.id;
+            const flag =
+              task.history[task.history.length - 1].agent._id == req.user.id;
             if (flag) return task;
           })
           .map((task) => {
@@ -46,11 +38,8 @@ exports.getTasks = async (req, res) => {
               agents: [task.history[task.history.length - 1].agent],
             };
           })
-          .reverse(); 
-        }
-
-        console.log(tasks);
-        
+          .reverse();
+      }
 
       res.status(200).json({
         statusCode: 200,
@@ -332,7 +321,7 @@ exports.referTaskAgent = async (req, res) => {
     }
   } catch (error) {
     console.log(error.message);
-    
+
     return res
       .status(500)
       .json({ statusCode: 500, message: `internal error - ${error.message}` });
@@ -417,7 +406,7 @@ exports.getTaskInfo = async (req, res) => {
           username: task.creator.username,
           fullName: task.creator.fullName,
           department: task.creator.department,
-          color: task.creator.color
+          color: task.creator.color,
         },
         createdAt: dateConverter.gregorianToSolar(
           new Date(task.createdAt).getFullYear(),
@@ -458,7 +447,7 @@ exports.getTaskInfo = async (req, res) => {
               department: item.agent.department,
               color: item.agent.color,
             },
-            description: item.description
+            description: item.description,
           };
         }),
       },
